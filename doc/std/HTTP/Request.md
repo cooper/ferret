@@ -8,7 +8,7 @@ This is the HTTP::Request class.
 ## Initializer
 
 ```
-$request = Request($client: Client, $url: Str, $httpMethod: Method)
+$req = Request($client: Client, $url: Str, $httpMethod: Method)
 ```
 
 HTTP request objects generally are not created directly. Instead, use the
@@ -28,7 +28,7 @@ methods provided by the [`Client`](Client.md) class.
 ### connect
 
 ```
-$request.connect()
+$req.connect()
 ```
 
 Initializes the asynchronous HTTP connection.
@@ -42,7 +42,7 @@ event will be called.
 ### connected
 
 ```
-$request.connected()
+$req.connected()
 ```
 
 Hook. Called when the connection opens.
@@ -55,7 +55,7 @@ May be called multiple times if the request is redirected or retried.
 ### redirect
 
 ```
-$request.redirect()
+$req.redirect()
 ```
 
 Hook. Called when the request was redirected by an HTTP location header.
@@ -67,7 +67,7 @@ Hook. Called when the request was redirected by an HTTP location header.
 ### error
 
 ```
-$request.error()
+$req.error()
 ```
 
 Hook. Called when a connection error occurs.
@@ -79,7 +79,7 @@ Hook. Called when a connection error occurs.
 ### response
 
 ```
-$request.response()
+$req.response()
 ```
 
 Hook. Called when an HTTP response is constructed.

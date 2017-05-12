@@ -2,6 +2,8 @@ package Math
 class Point
 #< represents a 2D point
 
+$docOption_instanceName = "pt"
+
 #> the point `(0,0)`
 share $origin ?= Point(0, 0)
 

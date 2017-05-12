@@ -8,7 +8,7 @@ Represents a 2D point.
 ## Initializer
 
 ```
-$point = Point($x: Num, $y: Num)
+$pt = Point($x: Num, $y: Num)
 ```
 
 Creates a point given x- and y- coordinates.
@@ -25,7 +25,7 @@ Creates a point given x- and y- coordinates.
 ### distanceTo
 
 ```
-$point.distanceTo($pt2: Point)
+$pt.distanceTo($pt2: Point)
 ```
 
 Returns the distance between this point and another.
@@ -40,7 +40,7 @@ Returns the distance between this point and another.
 ### midpoint
 
 ```
-$point.midpoint($pt2: Point)
+$pt.midpoint($pt2: Point)
 ```
 
 Given another point, returns the point centered between them.
@@ -55,7 +55,7 @@ Given another point, returns the point centered between them.
 ### distanceFromOrigin
 
 ```
-$point.distanceFromOrigin
+$pt.distanceFromOrigin
 ```
 
 Computed property. Distance between this point and the origin `(0, 0)`.

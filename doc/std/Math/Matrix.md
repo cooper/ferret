@@ -9,7 +9,7 @@ of any dimensions.
 ## Initializer
 
 ```
-$matrix = Matrix($m: Int)
+$mtrx = Matrix($m: Int)
 ```
 
 Creates a matrix with the given entries and row count.
@@ -26,7 +26,7 @@ Creates a matrix with the given entries and row count.
 ### rows
 
 ```
-$matrix.rows
+$mtrx.rows
 ```
 
 Computed property. Number of rows.
@@ -36,7 +36,7 @@ Computed property. Number of rows.
 ### columns
 
 ```
-$matrix.columns
+$mtrx.columns
 ```
 
 Computed property. Number of columns.
@@ -46,7 +46,7 @@ Computed property. Number of columns.
 ### dimensionHR
 
 ```
-$matrix.dimensionHR
+$mtrx.dimensionHR
 ```
 
 Computed property. Human-readable dimensions.
@@ -56,7 +56,7 @@ Computed property. Human-readable dimensions.
 ### rowList
 
 ```
-$matrix.rowList
+$mtrx.rowList
 ```
 
 Computed property. A list whose elements are lists of items in each row.
@@ -66,7 +66,7 @@ Computed property. A list whose elements are lists of items in each row.
 ### map
 
 ```
-$matrix.map($code: Code)
+$mtrx.map($code: Code)
 ```
 
 Creates a matrix with the given transformation applied to each entry.
@@ -81,7 +81,7 @@ Creates a matrix with the given transformation applied to each entry.
 ### mapWith
 
 ```
-$matrix.mapWith($rhs: Matrix, $code: Code)
+$mtrx.mapWith($rhs: Matrix, $code: Code)
 ```
 
 Creates a matrix with the given operation performed between each entry and
@@ -99,7 +99,7 @@ its corresponding entry in another matrix of the same dimensions.
 ### Addition operator (+)
 
 ```
-$matrix + ($ehs: Num)
+$mtrx + ($ehs: Num)
 ```
 
 Scalar addition.
@@ -111,7 +111,7 @@ Scalar addition.
 ### Subtraction operator (-)
 
 ```
-$matrix - ($rhs: Num)
+$mtrx - ($rhs: Num)
 ```
 
 Scalar subtraction.
@@ -123,7 +123,7 @@ Scalar subtraction.
 ### Subtraction operator (-)
 
 ```
-$matrix - ($lhs: Num)
+$mtrx - ($lhs: Num)
 ```
 
 Allows you to take the opposite matrix.
@@ -135,7 +135,7 @@ Allows you to take the opposite matrix.
 ### Multiplication operator (*)
 
 ```
-$matrix * ($ehs: Num)
+$mtrx * ($ehs: Num)
 ```
 
 Scalar multiplication.
@@ -147,7 +147,7 @@ Scalar multiplication.
 ### Division operator (/)
 
 ```
-$matrix / ($rhs: Num)
+$mtrx / ($rhs: Num)
 ```
 
 Scalar division.
@@ -159,7 +159,7 @@ Scalar division.
 ### Addition operator (+)
 
 ```
-$matrix + ($ehs: Matrix)
+$mtrx + ($ehs: Matrix)
 ```
 
 Entry-wise matrix addition.
@@ -171,7 +171,7 @@ Entry-wise matrix addition.
 ### Subtraction operator (-)
 
 ```
-$matrix - ($rhs: Matrix)
+$mtrx - ($rhs: Matrix)
 ```
 
 Entry-wise matrix subtraction.

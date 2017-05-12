@@ -3,6 +3,8 @@ class Vector
 #< Represents a [vector](https://en.wikipedia.org/wiki/Vector_space) of any
 #| dimension.
 
+$docOption_instanceName = "v"
+
 #> Creates a vector with the given components.
 init {
     want @items: Num...

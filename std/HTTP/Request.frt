@@ -1,6 +1,8 @@
 package HTTP
 class Request
 
+$docOption_instanceName = "req"
+
 #> HTTP request objects generally are not created directly. Instead, use the
 #| methods provided by the [`Client`](Client.md) class.
 init {

@@ -9,7 +9,7 @@ dimension.
 ## Initializer
 
 ```
-$vector = Vector()
+$v = Vector()
 ```
 
 Creates a vector with the given components.
@@ -24,7 +24,7 @@ Creates a vector with the given components.
 ### dimension
 
 ```
-$vector.dimension
+$v.dimension
 ```
 
 Computed property. Dimension of the vector.
@@ -34,7 +34,7 @@ Computed property. Dimension of the vector.
 ### dimensionHR
 
 ```
-$vector.dimensionHR
+$v.dimensionHR
 ```
 
 Computed property. Human-readable dimension of the vector.
@@ -44,7 +44,7 @@ Computed property. Human-readable dimension of the vector.
 ### magnitude
 
 ```
-$vector.magnitude
+$v.magnitude
 ```
 
 Computed property. Magnitude of the vector.
@@ -54,7 +54,7 @@ Computed property. Magnitude of the vector.
 ### unitVector
 
 ```
-$vector.unitVector
+$v.unitVector
 ```
 
 Computed property. The unit vector in the direction of this vector.
@@ -64,7 +64,7 @@ Computed property. The unit vector in the direction of this vector.
 ### axisUnitVector
 
 ```
-$vector.axisUnitVector($axis: VectorAxis)
+$v.axisUnitVector($axis: VectorAxis)
 ```
 
 Returns the unit vector in the direction of the given axis.
@@ -79,7 +79,7 @@ Returns the unit vector in the direction of the given axis.
 ### x
 
 ```
-$vector.x
+$v.x
 ```
 
 Computed property. For a >=1D vector, the first comonent.
@@ -89,7 +89,7 @@ Computed property. For a >=1D vector, the first comonent.
 ### y
 
 ```
-$vector.y
+$v.y
 ```
 
 Computed property. For a >=2D vector, the second component.
@@ -99,7 +99,7 @@ Computed property. For a >=2D vector, the second component.
 ### z
 
 ```
-$vector.z
+$v.z
 ```
 
 Computed property. For a >=3D vector, the third component.
@@ -109,7 +109,7 @@ Computed property. For a >=3D vector, the third component.
 ### direction
 
 ```
-$vector.direction
+$v.direction
 ```
 
 Computed property. For a 2D vector, its direction, measured in radians.
@@ -119,7 +119,7 @@ Computed property. For a 2D vector, its direction, measured in radians.
 ### Addition operator (+)
 
 ```
-$vector + ($ehs: Vector)
+$v + ($ehs: Vector)
 ```
 
 Addition of two vectors.
@@ -131,7 +131,7 @@ Addition of two vectors.
 ### Subtraction operator (-)
 
 ```
-$vector - ($lhs: Num)
+$v - ($lhs: Num)
 ```
 
 Allows you to take the opposite vector `-$u`.
@@ -143,7 +143,7 @@ Allows you to take the opposite vector `-$u`.
 ### Subtraction operator (-)
 
 ```
-$vector - ($rhs: Vector)
+$v - ($rhs: Vector)
 ```
 
 Subtraction of a vector from another.
@@ -155,7 +155,7 @@ Subtraction of a vector from another.
 ### Multiplication operator (*)
 
 ```
-$vector * ($ehs: Num)
+$v * ($ehs: Num)
 ```
 
 Scalar multiplication of the vector.
@@ -167,7 +167,7 @@ Scalar multiplication of the vector.
 ### Division operator (/)
 
 ```
-$vector / ($rhs: Num)
+$v / ($rhs: Num)
 ```
 
 Scalar division of the vector.
@@ -179,7 +179,7 @@ Scalar division of the vector.
 ### Multiplication operator (*)
 
 ```
-$vector * ($ehs: Vector)
+$v * ($ehs: Vector)
 ```
 
 Dot product of two vectors.
@@ -191,7 +191,7 @@ Dot product of two vectors.
 ### Equality operator (==)
 
 ```
-$vector == ($ehs: Vector)
+$v == ($ehs: Vector)
 ```
 
 Vector equality.
@@ -203,7 +203,7 @@ Vector equality.
 ### dot
 
 ```
-$vector.dot($ehs: Vector)
+$v.dot($ehs: Vector)
 ```
 
 Dot product of this vector and another of the same dimension.
@@ -218,7 +218,7 @@ Dot product of this vector and another of the same dimension.
 ### cross
 
 ```
-$vector.cross($ehs: Vector)
+$v.cross($ehs: Vector)
 ```
 
 Cross product of two 3D vectors.
@@ -233,7 +233,7 @@ Cross product of two 3D vectors.
 ### angleBetween
 
 ```
-$vector.angleBetween($ehs: Vector)
+$v.angleBetween($ehs: Vector)
 ```
 
 Angle between this vector and another of the same dimension, measured in
@@ -249,7 +249,7 @@ radians.
 ### orthogonalTo
 
 ```
-$vector.orthogonalTo($ehs: Vector)
+$v.orthogonalTo($ehs: Vector)
 ```
 
 True if this vector is orthogonal to another of the same dimension.
@@ -264,7 +264,7 @@ True if this vector is orthogonal to another of the same dimension.
 ### parallelTo
 
 ```
-$vector.parallelTo($ehs: Vector)
+$v.parallelTo($ehs: Vector)
 ```
 
 True if this vector is parallel to another of the same dimension.
@@ -279,7 +279,7 @@ True if this vector is parallel to another of the same dimension.
 ### getValue
 
 ```
-$vector.getValue($index: Num)
+$v.getValue($index: Num)
 ```
 
 Fetches the component at the given index. Allows Vector to conform to
@@ -295,7 +295,7 @@ IndexedRead such that `$vector[N]` is the N+1th component.
 ### copy
 
 ```
-$vector.copy()
+$v.copy()
 ```
 
 Returns a copy of the vector.

@@ -3,6 +3,8 @@ class Matrix
 #< Represents a [matrix](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 #| of any dimensions.
 
+$docOption_instanceName = "mtrx"
+
 #> creates a matrix with the given entries and row count
 init {
     need @m: Int            #< number of rows

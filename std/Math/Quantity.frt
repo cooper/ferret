@@ -2,6 +2,8 @@ package Math
 class Quantity
 #< A number associated with a unit
 
+$docOption_instanceName = "q"
+
 init {
     need @num:  Num
     need @unit: Unit
