@@ -90,6 +90,21 @@ Computed property. [Square root](https://math.stackexchange.com/a/44500) of the 
 
 
 
+### root
+
+```
+$z.root($n: Num)
+```
+
+Nth root of the complex number.
+
+
+#### Arguments
+
+* __n__: [Num](/doc/std/Number.md)  
+
+
+
 ### Addition operator (+)
 
 ```

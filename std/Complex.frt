@@ -76,6 +76,12 @@ prop sqrt {
     return $r.sqrt * $f / $f.abs
 }
 
+#> Nth root of the complex number
+method root {
+    need $n: Num
+    return @abs.root($n) * Math.e ^ (i * @arg / $n)
+}
+
 #> addition of complex numbers
 operator + {
     need $rhs: Complex
