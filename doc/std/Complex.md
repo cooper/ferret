@@ -83,7 +83,7 @@ number.
 ### Addition operator (+)
 
 ```
-$z + $rhs: Complex
+$z + ($rhs: Complex)
 ```
 
 Addition of complex numbers.
@@ -98,7 +98,7 @@ Addition of complex numbers.
 ### Addition operator (+)
 
 ```
-$z + $ehs: Num
+$z + ($ehs: Num)
 ```
 
 Addition of complex and real numbers.
@@ -113,7 +113,7 @@ Addition of complex and real numbers.
 ### Subtraction operator (-)
 
 ```
-$z - $rhs: Complex
+$z - ($rhs: Complex)
 ```
 
 Subtraction of complex numbers.
@@ -128,7 +128,7 @@ Subtraction of complex numbers.
 ### Subtraction operator (-)
 
 ```
-$z - $rhs: Num
+$z - ($rhs: Num)
 ```
 
 Subtraction of real number from complex number.
@@ -143,7 +143,7 @@ Subtraction of real number from complex number.
 ### Subtraction operator (-)
 
 ```
-$z - $lhs: Num
+$z - ($lhs: Num)
 ```
 
 Subtraction of complex number from real number.
@@ -158,7 +158,7 @@ Subtraction of complex number from real number.
 ### Multiplication operator (*)
 
 ```
-$z * $rhs: Complex
+$z * ($rhs: Complex)
 ```
 
 Multiplication of complex numbers.
@@ -173,7 +173,7 @@ Multiplication of complex numbers.
 ### Multiplication operator (*)
 
 ```
-$z * $ehs: Num
+$z * ($ehs: Num)
 ```
 
 Multiplication of real and complex numbers.
@@ -188,7 +188,7 @@ Multiplication of real and complex numbers.
 ### Division operator (/)
 
 ```
-$z / $rhs: Complex
+$z / ($rhs: Complex)
 ```
 
 Division of complex numbers.
@@ -203,7 +203,7 @@ Division of complex numbers.
 ### Division operator (/)
 
 ```
-$z / $rhs: Num
+$z / ($rhs: Num)
 ```
 
 Division of complex number by real number.
@@ -218,7 +218,7 @@ Division of complex number by real number.
 ### Exponent operator (^)
 
 ```
-$z ^ $rhs: Num
+$z ^ ($rhs: Num)
 ```
 
 Complex number to real power.
@@ -252,10 +252,10 @@ power operator which is faster but less precise.
 ### Exponent operator (^)
 
 ```
-$z ^ $lhs: Num
+$z ^ ($lhs: Num)
 ```
 
-
+Real number to a complex power.
 
 
 #### Arguments
@@ -267,7 +267,7 @@ $z ^ $lhs: Num
 ### Equality operator (==)
 
 ```
-$z == $ehs: Complex
+$z == ($ehs: Complex)
 ```
 
 Equality of complex numbers.
@@ -282,7 +282,7 @@ Equality of complex numbers.
 ### Equality operator (==)
 
 ```
-$z == $ehs: Num
+$z == ($ehs: Num)
 ```
 
 Equality of complex number and real number.

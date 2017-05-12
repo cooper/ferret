@@ -159,7 +159,7 @@ method pow {
     )
 }
 
-#| Real number to a complex power
+#> Real number to a complex power
 operator ^ {
     need $lhs: Num
     return Complex.polar($lhs ^ @a, @b * Math.log($lhs))

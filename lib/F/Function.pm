@@ -283,7 +283,7 @@ sub markdown_fmt {
 
         # operator
         $method->{operator}                             ?
-        $instn_name." $$method{operator} ".$signature   :
+        $instn_name." $$method{operator} ($signature)"  :
 
         # property
         $method->{is_prop}                              ?
