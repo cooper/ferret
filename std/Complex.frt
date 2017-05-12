@@ -63,10 +63,17 @@ prop arg {
     return Math.atan2(@b, @a)
 }
 
-#> [Conjugate](https://en.wikipedia.org/wiki/Complex_conjugate) of complex the
+#> [Conjugate](https://en.wikipedia.org/wiki/Complex_conjugate) of the complex
 #| number
 prop conj {
     return Complex(@a, -@b)
+}
+
+#> [Square root](https://math.stackexchange.com/a/44500) of the complex number
+prop sqrt {
+    $r = @abs
+    $f = *self + $r
+    return $r.sqrt * $f / $f.abs
 }
 
 #> addition of complex numbers

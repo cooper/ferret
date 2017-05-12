@@ -75,8 +75,18 @@ In polar form, this is `θ`.
 $z.conj
 ```
 
-Computed property. [Conjugate](https://en.wikipedia.org/wiki/Complex_conjugate) of complex the
+Computed property. [Conjugate](https://en.wikipedia.org/wiki/Complex_conjugate) of the complex
 number.
+
+
+
+### sqrt
+
+```
+$z.sqrt
+```
+
+Computed property. [Square root](https://math.stackexchange.com/a/44500) of the complex number.
 
 
 
