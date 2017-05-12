@@ -299,7 +299,7 @@ sub markdown_fmt {
     # handle arguments.
     my $arguments = '';
     my @args = $method->arguments;
-    if (@args) {
+    if (@args && !$method->{operator}) {
         $method->{markdown_heading_level}++;
         $arguments .= $method->get_markdown_heading('Arguments')."\n";
         foreach my $arg (@args) {

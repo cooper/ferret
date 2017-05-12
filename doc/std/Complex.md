@@ -89,9 +89,6 @@ $z + ($rhs: Complex)
 Addition of complex numbers.
 
 
-#### Arguments
-
-* __rhs__: [Complex](/doc/std/Complex.md)  
 
 
 
@@ -104,9 +101,6 @@ $z + ($ehs: Num)
 Addition of complex and real numbers.
 
 
-#### Arguments
-
-* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -119,9 +113,6 @@ $z - ($rhs: Complex)
 Subtraction of complex numbers.
 
 
-#### Arguments
-
-* __rhs__: [Complex](/doc/std/Complex.md)  
 
 
 
@@ -134,9 +125,6 @@ $z - ($rhs: Num)
 Subtraction of real number from complex number.
 
 
-#### Arguments
-
-* __rhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -149,9 +137,6 @@ $z - ($lhs: Num)
 Subtraction of complex number from real number.
 
 
-#### Arguments
-
-* __lhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -164,9 +149,6 @@ $z * ($rhs: Complex)
 Multiplication of complex numbers.
 
 
-#### Arguments
-
-* __rhs__: [Complex](/doc/std/Complex.md)  
 
 
 
@@ -179,9 +161,6 @@ $z * ($ehs: Num)
 Multiplication of real and complex numbers.
 
 
-#### Arguments
-
-* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -194,9 +173,6 @@ $z / ($rhs: Complex)
 Division of complex numbers.
 
 
-#### Arguments
-
-* __rhs__: [Complex](/doc/std/Complex.md)  
 
 
 
@@ -209,9 +185,6 @@ $z / ($rhs: Num)
 Division of complex number by real number.
 
 
-#### Arguments
-
-* __rhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -227,9 +200,6 @@ This can get expensive for large powers.
 For a quicker but less precise alternative, use [`.pow()`](#pow).
 
 
-#### Arguments
-
-* __rhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -258,9 +228,6 @@ $z ^ ($lhs: Num)
 Real number to a complex power.
 
 
-#### Arguments
-
-* __lhs__: [Num](/doc/std/Number.md)  
 
 
 
@@ -273,9 +240,6 @@ $z == ($ehs: Complex)
 Equality of complex numbers.
 
 
-#### Arguments
-
-* __ehs__: [Complex](/doc/std/Complex.md)  
 
 
 
@@ -288,9 +252,6 @@ $z == ($ehs: Num)
 Equality of complex number and real number.
 
 
-#### Arguments
-
-* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
