@@ -94,6 +94,27 @@ sub perl_fmt {
     return "assign_$fmt_name" => $fmt_args;
 }
 
+# $docOption_* = "constant string"
+sub markdown_fmt {
+    my $a = shift;
+    my $var = $a->assign_to;
+    my $str = $a->assign_value;
+    
+    # only concerned with lexical variable assignments
+    # to constant strings at the document level
+    return if $var->type ne 'LexicalVariable';
+    return if $str->type ne 'String';
+    return if $a->first_upper_scope->parent_owner->type ne 'Document';
+    
+    if (!index($var->{var_name}, 'docOption_')) {
+        my $opt = substr $var->{var_name}, 10;
+        my $doc = $var->document;
+        $doc->{doc_opts}{$opt} = $str->{value};
+    }
+    
+    return;
+}
+
 sub is_PropertyOwner    { shift->assign_to->is_type('PropertyOwner')    }
 sub property_name       { shift->assign_to->property_name               }
 sub property_name_code  { shift->assign_to->property_name_code          }

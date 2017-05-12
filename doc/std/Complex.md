@@ -18,7 +18,7 @@ Complex numbers can also be constructed from a polar representations
 ## Initializer
 
 ```
-$complex = Complex($a: Num, $b: Num)
+$z = Complex($a: Num, $b: Num)
 ```
 
 Creates a complex number with the given real and imaginary parts. This is
@@ -43,7 +43,7 @@ use [`Complex.polar()`](#polar).
 ### abs
 
 ```
-$complex.abs
+$z.abs
 ```
 
 Computed property. [Absolute value](https://en.wikipedia.org/wiki/Absolute_value#Complex_numbers)
@@ -57,7 +57,7 @@ In polar form, this is `r`.
 ### arg
 
 ```
-$complex.arg
+$z.arg
 ```
 
 Computed property. [Argument](https://en.wikipedia.org/wiki/Argument_(complex_analysis)) of
@@ -72,7 +72,7 @@ In polar form, this is `θ`.
 ### conj
 
 ```
-$complex.conj
+$z.conj
 ```
 
 Computed property. [Conjugate](https://en.wikipedia.org/wiki/Complex_conjugate) of complex the
@@ -83,7 +83,7 @@ number.
 ### Addition operator (+)
 
 ```
-$complex + $rhs: Complex
+$z + $rhs: Complex
 ```
 
 Addition of complex numbers.
@@ -98,7 +98,7 @@ Addition of complex numbers.
 ### Addition operator (+)
 
 ```
-$complex + $ehs: Num
+$z + $ehs: Num
 ```
 
 Addition of complex and real numbers.
@@ -113,7 +113,7 @@ Addition of complex and real numbers.
 ### Subtraction operator (-)
 
 ```
-$complex - $rhs: Complex
+$z - $rhs: Complex
 ```
 
 Subtraction of complex numbers.
@@ -128,7 +128,7 @@ Subtraction of complex numbers.
 ### Subtraction operator (-)
 
 ```
-$complex - $rhs: Num
+$z - $rhs: Num
 ```
 
 Subtraction of real number from complex number.
@@ -143,7 +143,7 @@ Subtraction of real number from complex number.
 ### Subtraction operator (-)
 
 ```
-$complex - $lhs: Num
+$z - $lhs: Num
 ```
 
 Subtraction of complex number from real number.
@@ -158,7 +158,7 @@ Subtraction of complex number from real number.
 ### Multiplication operator (*)
 
 ```
-$complex * $rhs: Complex
+$z * $rhs: Complex
 ```
 
 Multiplication of complex numbers.
@@ -173,7 +173,7 @@ Multiplication of complex numbers.
 ### Multiplication operator (*)
 
 ```
-$complex * $ehs: Num
+$z * $ehs: Num
 ```
 
 Multiplication of real and complex numbers.
@@ -188,7 +188,7 @@ Multiplication of real and complex numbers.
 ### Division operator (/)
 
 ```
-$complex / $rhs: Complex
+$z / $rhs: Complex
 ```
 
 Division of complex numbers.
@@ -203,7 +203,7 @@ Division of complex numbers.
 ### Division operator (/)
 
 ```
-$complex / $rhs: Num
+$z / $rhs: Num
 ```
 
 Division of complex number by real number.
@@ -218,7 +218,7 @@ Division of complex number by real number.
 ### Exponent operator (^)
 
 ```
-$complex ^ $rhs: Num
+$z ^ $rhs: Num
 ```
 
 Complex number to real power.
@@ -236,7 +236,7 @@ For a quicker but less precise alternative, use [`.pow()`](#pow).
 ### pow
 
 ```
-$complex.pow($rhs: Num)
+$z.pow($rhs: Num)
 ```
 
 Complex number to real power. This is an alternative implementation to the
@@ -252,7 +252,7 @@ power operator which is faster but less precise.
 ### Exponent operator (^)
 
 ```
-$complex ^ $lhs: Num
+$z ^ $lhs: Num
 ```
 
 
@@ -267,7 +267,7 @@ $complex ^ $lhs: Num
 ### Equality operator (==)
 
 ```
-$complex == $ehs: Complex
+$z == $ehs: Complex
 ```
 
 Equality of complex numbers.
@@ -282,7 +282,7 @@ Equality of complex numbers.
 ### Equality operator (==)
 
 ```
-$complex == $ehs: Num
+$z == $ehs: Num
 ```
 
 Equality of complex number and real number.
@@ -297,7 +297,7 @@ Equality of complex number and real number.
 ### description
 
 ```
-$complex.description()
+$z.description()
 ```
 
 ## Class functions
@@ -317,7 +317,7 @@ Create a complex number in polar form given radius `r` and angle `θ`.
 
 * __r__: [Num](/doc/std/Number.md) - Distance from the origin in the complex plane.
 
-* __θ__: [Num](/doc/std/Number.md) - The angle between the positive real axis and the.
+* __θ__: [Num](/doc/std/Number.md) - Angle between the positive real axis and the.
 
 
 

@@ -252,6 +252,7 @@ sub perl_fmt {
 
 sub markdown_fmt {
     my $method = shift;
+    my $doc = $method->document;
     
     # create heading.
     my $head = $method->get_markdown_heading(
@@ -271,7 +272,7 @@ sub markdown_fmt {
     my ($class_name, $instn_name, $owner_name);
     if ($method->class) {
         $class_name = $method->class->{name};
-        $instn_name = '$'.lc($class_name);
+        $instn_name = '$'.($doc->{doc_opts}{instanceName} // lc($class_name));
         $owner_name = $method->{main} ? $class_name : $instn_name;
     }
     else {

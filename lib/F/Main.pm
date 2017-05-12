@@ -38,8 +38,14 @@ sub perl_fmt_do {
 
 sub markdown_fmt_do {
     my ($main, $mini) = @_;
+    
+    # do all assignments for $docOption_*
+    $_->markdown_fmt for $main->filter_descendants(type => 'Assignment');
+    
+    # do children of main
     my $markdown = join "\n", map { $_->markdown_fmt_do } $main->children;
     return $markdown if $mini;
+
     return trim(F::get_format('Markdown', main => {
         content   => $markdown,
         file_name => $main->{name},

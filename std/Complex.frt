@@ -11,6 +11,8 @@ class Complex 1.0
 #| Complex numbers can also be constructed from a polar representations
 #| `r(cosθ + isinθ)` or `re^(iθ)` with [`Complex.polar()`](#polar).
 
+$docOption_instanceName = "z"
+
 #> Creates a complex number with the given real and imaginary parts. This is
 #| only useful to create a complex number from variable parts, since Ferret
 #| has native support for inline `a + bi` notation.
@@ -34,7 +36,7 @@ init {
 #| `z = r(cosθ + isinθ)`
 func polar {
     need $r: Num        #< distance from the origin in the complex plane
-    need $θ: Num        #< the angle between the positive real axis and the
+    need $θ: Num        #< angle between the positive real axis and the
                         #| position vector, measured in radians
     return Complex(
         $r * Math.cos($θ),
