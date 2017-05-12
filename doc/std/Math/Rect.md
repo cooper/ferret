@@ -106,14 +106,6 @@ Computed property. Center point of the rectangle.
 
 
 
-### description
-
-```
-$rect.description()
-```
-
-
-
 
 
 End of the Math::Rect class.

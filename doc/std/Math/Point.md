@@ -60,14 +60,6 @@ $point.distanceFromOrigin
 
 Computed property. Distance between this point and the origin `(0, 0)`.
 
-
-
-### description
-
-```
-$point.description()
-```
-
 ## Class properties
 
 ### origin

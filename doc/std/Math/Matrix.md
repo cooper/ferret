@@ -99,113 +99,82 @@ its corresponding entry in another matrix of the same dimensions.
 ### Addition operator (+)
 
 ```
-$matrix + $ehs: Num
+$matrix + ($ehs: Num)
 ```
 
 Scalar addition.
 
 
-#### Arguments
-
-* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
 ### Subtraction operator (-)
 
 ```
-$matrix - $rhs: Num
+$matrix - ($rhs: Num)
 ```
 
 Scalar subtraction.
 
 
-#### Arguments
-
-* __rhs__: [Num](/doc/std/Number.md)  
 
 
 
 ### Subtraction operator (-)
 
 ```
-$matrix - $lhs: Num
+$matrix - ($lhs: Num)
 ```
 
 Allows you to take the opposite matrix.
 
 
-#### Arguments
-
-* __lhs__: [Num](/doc/std/Number.md)  
 
 
 
 ### Multiplication operator (*)
 
 ```
-$matrix * $ehs: Num
+$matrix * ($ehs: Num)
 ```
 
 Scalar multiplication.
 
 
-#### Arguments
-
-* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
 ### Division operator (/)
 
 ```
-$matrix / $rhs: Num
+$matrix / ($rhs: Num)
 ```
 
 Scalar division.
 
 
-#### Arguments
-
-* __rhs__: [Num](/doc/std/Number.md)  
 
 
 
 ### Addition operator (+)
 
 ```
-$matrix + $ehs: Matrix
+$matrix + ($ehs: Matrix)
 ```
 
 Entry-wise matrix addition.
 
 
-#### Arguments
-
-* __ehs__: Matrix - Another matrix of the same dimensions.
 
 
 
 ### Subtraction operator (-)
 
 ```
-$matrix - $rhs: Matrix
+$matrix - ($rhs: Matrix)
 ```
 
 Entry-wise matrix subtraction.
-
-
-#### Arguments
-
-* __rhs__: Matrix - Another matrix of the same dimensions.
-
-
-
-### description
-
-```
-$matrix.description()
-```
 
 
 

@@ -203,22 +203,6 @@ For a quicker but less precise alternative, use [`.pow()`](#pow).
 
 
 
-### pow
-
-```
-$z.pow($rhs: Num)
-```
-
-Complex number to real power. This is an alternative implementation to the
-power operator which is faster but less precise.
-
-
-#### Arguments
-
-* __rhs__: [Num](/doc/std/Number.md)  
-
-
-
 ### Exponent operator (^)
 
 ```
@@ -255,11 +239,19 @@ Equality of complex number and real number.
 
 
 
-### description
+### pow
 
 ```
-$z.description()
+$z.pow($rhs: Num)
 ```
+
+Complex number to real power. This is an alternative implementation to the
+power operator which is faster but less precise.
+
+
+#### Arguments
+
+* __rhs__: [Num](/doc/std/Number.md)  
 
 ## Class functions
 

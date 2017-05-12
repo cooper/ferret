@@ -52,14 +52,6 @@ Computed property. Midpoint of the line segment.
 
 
 
-### description
-
-```
-$line.description()
-```
-
-
-
 
 
 End of the Math::Line class.

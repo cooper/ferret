@@ -99,30 +99,24 @@ Computed property. Name of the day of the week.
 ### Addition operator (+)
 
 ```
-$time + $ehs: Duration
+$time + ($ehs: Duration)
 ```
 
 Add a duration to a timepoint.
 
 
-#### Arguments
-
-* __ehs__: Duration  
 
 
 
 ### Subtraction operator (-)
 
 ```
-$time - $rhs: Duration
+$time - ($rhs: Duration)
 ```
 
 Subtract a duration from a timepoint.
 
 
-#### Arguments
-
-* __rhs__: Duration  
 
 
 
@@ -133,16 +127,6 @@ $time.copy()
 ```
 
 Make a copy of this timepoint.
-
-
-
-
-
-### description
-
-```
-$time.description()
-```
 
 ## Class functions
 

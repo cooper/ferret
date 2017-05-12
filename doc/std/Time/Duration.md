@@ -118,30 +118,24 @@ Computed property. Nanoseconds.
 ### Addition operator (+)
 
 ```
-$duration + $ehs: Duration
+$duration + ($ehs: Duration)
 ```
 
 Add two durations.
 
 
-#### Arguments
-
-* __ehs__: Duration  
 
 
 
 ### Subtraction operator (-)
 
 ```
-$duration - $rhs: Duration
+$duration - ($rhs: Duration)
 ```
 
 Subtract a duration from this one.
 
 
-#### Arguments
-
-* __rhs__: Duration  
 
 
 
@@ -152,16 +146,6 @@ $duration.copy()
 ```
 
 Make a copy of this duration.
-
-
-
-
-
-### description
-
-```
-$duration.description()
-```
 
 
 

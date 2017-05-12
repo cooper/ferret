@@ -119,105 +119,84 @@ Computed property. For a 2D vector, its direction, measured in radians.
 ### Addition operator (+)
 
 ```
-$vector + $ehs: Vector
+$vector + ($ehs: Vector)
 ```
 
 Addition of two vectors.
 
 
-#### Arguments
-
-* __ehs__: Vector  
 
 
 
 ### Subtraction operator (-)
 
 ```
-$vector - $lhs: Num
+$vector - ($lhs: Num)
 ```
 
 Allows you to take the opposite vector `-$u`.
 
 
-#### Arguments
-
-* __lhs__: [Num](/doc/std/Number.md)  
 
 
 
 ### Subtraction operator (-)
 
 ```
-$vector - $rhs: Vector
+$vector - ($rhs: Vector)
 ```
 
 Subtraction of a vector from another.
 
 
-#### Arguments
-
-* __rhs__: Vector  
 
 
 
 ### Multiplication operator (*)
 
 ```
-$vector * $ehs: Num
+$vector * ($ehs: Num)
 ```
 
 Scalar multiplication of the vector.
 
 
-#### Arguments
-
-* __ehs__: [Num](/doc/std/Number.md)  
 
 
 
 ### Division operator (/)
 
 ```
-$vector / $rhs: Num
+$vector / ($rhs: Num)
 ```
 
 Scalar division of the vector.
 
 
-#### Arguments
-
-* __rhs__: [Num](/doc/std/Number.md)  
 
 
 
 ### Multiplication operator (*)
 
 ```
-$vector * $ehs: Vector
+$vector * ($ehs: Vector)
 ```
 
 Dot product of two vectors.
 
 
-#### Arguments
-
-* __ehs__: Vector  
 
 
 
 ### Equality operator (==)
 
 ```
-$vector == $ehs: Vector
+$vector == ($ehs: Vector)
 ```
 
 Vector equality.
 
 
-#### Arguments
-
-* __ehs__: Vector  
 
 
 
@@ -320,16 +299,6 @@ $vector.copy()
 ```
 
 Returns a copy of the vector.
-
-
-
-
-
-### description
-
-```
-$vector.description()
-```
 
 ## Class functions
 

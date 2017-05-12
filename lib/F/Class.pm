@@ -104,7 +104,8 @@ sub markdown_fmt {
     my (@methods, @class_funcs, $init);
     foreach my $method (@all_methods) {
         next unless $method->public;
-
+        next if $method->{name} eq 'description';
+        
         # this is the initializer.
         if ($method->{main} && $method->{name} eq 'initializer__') {
             $init = $method;

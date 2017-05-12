@@ -153,16 +153,6 @@ Creates a new IRC::Connection with the same options.
 
 
 
-### description
-
-```
-$connection.description()
-```
-
-
-
-
-
 End of the IRC::Connection class.
 
 This file was generated automatically by the Ferret compiler from

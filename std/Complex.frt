@@ -148,17 +148,6 @@ operator ^ {
     return *self * *self ^ ($rhs - 1)
 }
 
-#> Complex number to real power. This is an alternative implementation to the
-#| power operator which is faster but less precise.
-method pow {
-    need $rhs: Num
-    $log = Math.log(@abs)
-    return Complex.polar(
-        Math.exp($rhs * $log),
-        $rhs * @arg
-    )
-}
-
 #> Real number to a complex power
 operator ^ {
     need $lhs: Num
@@ -175,6 +164,17 @@ operator == {
 operator == {
     need $ehs: Num
     return @a == $ehs && @b == 0
+}
+
+#> Complex number to real power. This is an alternative implementation to the
+#| power operator which is faster but less precise.
+method pow {
+    need $rhs: Num
+    $log = Math.log(@abs)
+    return Complex.polar(
+        Math.exp($rhs * $log),
+        $rhs * @arg
+    )
 }
 
 method description {
