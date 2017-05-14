@@ -19,9 +19,6 @@ $docOption_instanceName = "z"
 #|
 #| If the given imaginary part is zero, the constructor returns the real part
 #| as a [real number](Number.md).
-#|
-#| To instead create a complex number from `r` and `θ`,
-#| use [`Complex.polar()`](#polar).
 init {
     need @a: Num #< real part
     need @b: Num #< imaginary part (a real number, though)
@@ -29,6 +26,16 @@ init {
     # if we have no imaginary part, return a real number
     if @b == 0
         return @a
+}
+
+#> Create a complex number in polar form given radius `r` and angle `θ`.
+#|
+#| `z = r(cosθ + isinθ)`
+init {
+    need $r: Num        #< distance from the origin in the complex plane
+    need $θ: Num        #< angle between the positive real axis and the
+                        #| position vector, measured in radians
+    return Complex.polar($r, $θ)
 }
 
 #> Create a complex number in polar form given radius `r` and angle `θ`.

@@ -18,25 +18,19 @@ Complex numbers can also be constructed from a polar representations
 ## Initializer
 
 ```
-$z = Complex($a: Num, $b: Num)
+$z = Complex($r: Num, $θ: Num)
 ```
 
-Creates a complex number with the given real and imaginary parts. This is
-only useful to create a complex number from variable parts, since Ferret
-has native support for inline `a + bi` notation.
+Create a complex number in polar form given radius `r` and angle `θ`.
 
-If the given imaginary part is zero, the constructor returns the real part
-as a [real number](Number.md).
-
-To instead create a complex number from `r` and `θ`,
-use [`Complex.polar()`](#polar).
+`z = r(cosθ + isinθ)`.
 
 
 ### Arguments
 
-* __a__: [Num](/doc/std/Number.md) - Real part.
+* __r__: [Num](/doc/std/Number.md) - Distance from the origin in the complex plane.
 
-* __b__: [Num](/doc/std/Number.md) - Imaginary part (a real number, though).
+* __θ__: [Num](/doc/std/Number.md) - Angle between the positive real axis and the.
 
 ## Methods
 
