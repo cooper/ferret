@@ -363,6 +363,7 @@ sub set_property_weak {
 # property names
 sub properties {
     my ($obj, $include_inherited) = @_;
+    return if $obj->{is_special};
     my %done;
     my @names = grep { defined $obj->{properties}{$_} and $done{$_} = 1 }
         keys %{ $obj->{properties} };
