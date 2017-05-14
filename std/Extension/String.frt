@@ -39,10 +39,6 @@ method fromWord {
     return @split(/\s+/, limit: $wordN + 1)[$wordN]
 }
 
-prop lastWord {
-    return @word(-1)
-}
-
 prop? empty {
     return @length == 0
 }
