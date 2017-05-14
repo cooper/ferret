@@ -820,7 +820,7 @@ for ($<key_var>, $<value_var>) in <collection> { <statements> }
 Performs an iteration over a collection.
 
 Right of the `for` keyword must be a lexical variable whose value is set to each
-subsequent element in the iteration. If the collection offers two-variable
+subsequent element of the iteration. If the collection offers two-variable
 iteration, such as with a hash key or list index, you may optionally specify two
 lexical variables in the form of `($key, $val)`.
 

@@ -1,23 +1,23 @@
 # Functions
 
 In Ferret, all named functions and methods are implemented transparently as
-[events](https://github.com/cooper/evented-object). This means that for every
+**events**. This means that for every
 function or method name, any number of responders may exist, each of which
 accepts its own arguments and spits out its own return values. The result is
 that Ferret libraries and programs are extremely extensible.
 
 ### Function vs Event
 
-Technically, a *Function* (with a capital F, as in an object of type Function)
-is the same as in many other languages - a group of statements which accepts
-zero or more values as input and returns zero or more values as output. An
-*Event*, on the other hand, is a collection of Functions hidden behind a
-single name.
+Technically, a *Function* (with a capital F) is the same as in many other
+languages - a group of statements which accepts zero or more values as input and
+returns zero or more values as output. An *Event*, on the other hand, is a
+collection of Functions hidden behind a single name.
 
 However, because all named functions (`func NAME {}`) and methods
-(`method NAME {}`, `hook NAME`) are implemented as events, the word *function*
-is usually used to describe events. The only way you can create a true Function
-is with an inline or anonymous function (`func {}` without a name).
+(`method NAME {}`, `operator OP {}`, `hook NAME`) are implemented as events, the
+word *function* is usually used to describe events. The only way you can create
+a true Function is with an inline or anonymous function
+(`func {}` without a name).
 
 The *Code* type represents something callable. Events as well as anonymous
 functions conform to it.
@@ -59,7 +59,7 @@ The argument variable names are not arbitrary, nor is their order. Both are used
 in determining the function's [signature](#signatures).
 
 The simplest form of an argument declaration is `want` or `need` followed by
-a variable name. Optionally you can specify accepted types and a fallback value.
+a variable name. Optionally you can specify accepted types and fallback values.
 
 
 ```

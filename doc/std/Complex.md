@@ -18,6 +18,28 @@ Complex numbers can also be constructed from a polar representations
 ## Initializer
 
 ```
+$z = Complex($a: Num, $b: Num)
+```
+
+Creates a complex number with the given real and imaginary parts. This is
+only useful to create a complex number from variable parts, since Ferret
+has native support for inline `a + bi` notation.
+
+If the given imaginary part is zero, the constructor returns the real part
+as a [real number](Number.md).
+
+
+### Arguments
+
+* __a__: [Num](/doc/std/Number.md) - Real part.
+
+* __b__: [Num](/doc/std/Number.md) - Imaginary part (a real number, though).
+
+
+
+## Initializer
+
+```
 $z = Complex($r: Num, $θ: Num)
 ```
 

@@ -101,14 +101,14 @@ sub markdown_fmt {
     my @class_vars   = $class->filter_children(type => 'Instruction.SharedDeclaration');
 
     # separate methods into initializer, class functions, and normal.
-    my (@methods, @class_funcs, $init);
+    my (@methods, @class_funcs, @init);
     foreach my $method (@all_methods) {
         next unless $method->public;
         next if $method->{name} eq 'description';
         
-        # this is the initializer.
+        # this is an initializer.
         if ($method->{main} && $method->{name} eq 'initializer__') {
-            $init = $method;
+            push @init, $method;
             next;
         }
 
@@ -183,6 +183,10 @@ sub markdown_fmt {
         $class->{markdown_heading_level}--;
     }
 
+    # initializers
+    my $init = '';
+    $init .= $_->markdown_fmt_do."\n" for @init;
+
     return class => {
         name            => $class_full_name,
         description     => dot_trim($class->doc_comment),
@@ -191,7 +195,7 @@ sub markdown_fmt {
             " version $$class{version}"         :
             '',
         heading         => $head || '',
-        initializer     => $init ? $init->markdown_fmt_do : '',
+        initializer     => $init,
         methods         => $methods,
         types           => $types,
         class_functions => $class_functions,
