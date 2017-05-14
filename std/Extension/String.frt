@@ -27,12 +27,20 @@ type Any {
 
 method word {
     need $wordI: Num
-    return @split(" ", limit: $wordI + 2)[$wordI]
+    if $wordI < 0
+        return @split(/\s+/)[$wordI]
+    return @split(/\s+/, limit: $wordI + 2)[$wordI]
 }
 
 method fromWord {
     need $wordN: Num
-    return @split(" ", limit: $wordN + 1)[$wordN]
+    if $wordN < 0
+        return @split(/\s+/)[$wordN]
+    return @split(/\s+/, limit: $wordN + 1)[$wordN]
+}
+
+prop lastWord {
+    return @word(-1)
 }
 
 prop? empty {

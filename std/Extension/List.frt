@@ -164,6 +164,10 @@ prop sum0 {
     return $c
 }
 
+prop lastItem {
+    return *self[@lastIndex]
+}
+
 #> Returns an iterator for the list. This allows lists to be used in a for loop.
 prop iterator {
     return ListIterator(*self) : Iterator
