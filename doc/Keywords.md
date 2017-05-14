@@ -12,24 +12,26 @@ of variables, functions, classes, or any other types of symbols.
 package <name> [<version>]
 ```
 
-Declares the document's package name. Package names determine the current
-context object, which is essentially a namespace. The name declared with the
-`package` keyword is absolute (root level), not relative to the current package.
-Anywhere that a package has not been declared, `package main` is inferred.
+Declares the current package.
+
+The name declared with the `package` keyword is
+absolute (root level), not relative to the current package. Anywhere that a
+package has not been declared, `package main` is inferred.
 
 ```
 package Hello 1.0
 ```
 
-Packages may be organized into different namespaces using the namespace separator
-(`::`). Packages inherit from the namespaces above them. For example, package
-`Math::Trig` inherits from the `Math` package.
+Packages may be organized into different namespaces using the namespace
+separator (`::`). Packages inherit from the namespaces above them. For example,
+`Math::Trig` inherits all symbols from the `Math` package.
 
 ```
 package A::B    # A::B inherits all of A's symbols
 ```
 
-Once declared, the package extends until whichever of these comes first:
+Multiple packages may exist in a single file. Once declared, a package extends
+until the first occurrence of the following:
 * a corresponding [`end`](#end) keyword, which sets the package back to `main`
 * another `package` declaration
 * the end of the file
@@ -42,7 +44,9 @@ See [Contexts](Scopes.md#context) for general information on namespaces.
 class <name> [<version>]
 ```
 
-Declares a class. Many class declarations can exist within a single document.
+Declares a class.
+
+Many class declarations can exist within a single document.
 Terminated with the [`end`](#end) keyword or another `class` declaration.
 
 ```
@@ -65,10 +69,12 @@ Terminates a [`class`](#class) or [`package`](#class).
 load <package_name>
 ```
 
-Explicitly indicates that a package should be loaded. Packages are loaded
+Explicitly indicates that a package should be loaded.
+
+Packages are loaded
 automatically simply by referencing their names, so `load` is **almost never
 required**. Its occasional use case is when a package should be loaded but is
-not actually referenced within the current file.
+not otherwise explicitly referenced.
 
 With normal autoloading, all requirements referenced anywhere with in the file
 are loaded before beginning the execution of the code within the file. When
@@ -113,7 +119,8 @@ Represents the boolean false value, a global object.
 undefined
 ```
 
-Represents the undefined value, a global object.
+Represents the undefined value, a global object. This represents the absence of
+a meaningful value.
 
 ```
 $x = 1
@@ -132,7 +139,9 @@ unused variable, and the compiler will detect that it is a first occurrence.
 share $<name> [= <value>]
 ```
 
-Shared variable declaration. It is named such to reflect its behavior, which is
+Shared variable declaration.
+
+The keyword is named such to reflect its behavior, which is
 to share a variable from a package or class.
 
 Sharing a variable inside a class makes it a public property of the class
@@ -155,11 +164,13 @@ $x              # no reference error since shared
 var $<name> [= <value>]
 ```
 
-Local variable declaration. When a variable is declared with this keyword, the
+Local variable declaration.
+
+When a variable is declared with this keyword, the
 operations involving the variable will not affect a variable of the same name in
 any outer scope. Because a simple assignment to a nonexistent variable has the
 same effect, `var` is typically used as a convenient way to declare a variable
-with an initial undefined value. However, it is also useful when creating a new
+with no initial value. However, it is also useful when creating a new
 variable distinct from another of the same name in an external scope.
 
 ```
@@ -291,8 +302,10 @@ weaken <object>[<index>]
 ```
 
 Weakens the association between the given variable, property, or index and its
-value. In other words, it decreases the value's reference count by one. This is
-useful in the case of cyclical references.
+value.
+
+In other words, this keyword decreases the value's reference count by one. This
+is useful in the case of cyclical references.
 
 If the object is not referred to elsewhere, it will be immediately consumed by
 the garbage collector upon the `weaken` statement.
@@ -311,8 +324,7 @@ weaken $myHash["somewhere"]
 func [<name>] { <statements> }
 ```
 
-Declares an event or anonymous function. It is spelled `func` because all
-named functions are implemented as events.
+Declares an event or anonymous function.
 
 If `name` is provided, the event will be assigned to a property of the
 [scope of interest](Scopes.md#scope-of-interest). Named functions can be nested
@@ -608,6 +620,9 @@ $line.midpoint  # returns a Point, created on the spot
 operator <op> { <statements> }
 ```
 
+Exactly the same as the [`method`](#method) keyword, except that it is used by
+convention for operator implementations.
+
 Defines an operator overload method for the operator `op`. This allows you to
 add custom operator implementations involving the instances of the class.
 
@@ -686,8 +701,8 @@ if "hi".length == 2
 else { <statements> }
 ```
 
-Compliment to [`if`](#if). Specifies an alternate set of operations in the case
-of a false condition.
+Compliment to [`if`](#if). Specifies an alternate set of instructions in the
+case of a false condition.
 
 If the body of the else is a single statement, the curly brackets `{` and
 `}` may be omitted, provided that the statement occurs on a separate line from
@@ -711,12 +726,14 @@ else
 
 ### else if
 
-`else if` (always spelled as two separate words) is a combination keyword
-tokenized as `KEYWORD_ELSIF`.
+Allows you to chain [`if`](#if) conditional statements.
 
-It allows you to chain [`if`](#if) conditional statements. The chain will
-continue until one of the conditions has a boolean true value. In that case,
-none of the remaining `else if` or `else` statements will be executed.
+`else if`, although always spelled as two separate words, is a combination
+keyword.
+
+The `if`/`else if` chain will continue until one of the conditions has a boolean
+true value. In that case, none of the remaining `else if` or `else` statements
+will be executed.
 
 If the body of the `else if` is a single statement, the curly brackets `{` and
 `}` may be omitted, provided that the statement occurs on a separate line from
@@ -750,10 +767,11 @@ else
 return [<value>]
 ```
 
-Terminates the current function or method, returning `value`. If the return
-value is omitted or no `return` statement is ever reached, the function yields
-the return object ([special variable](Variables.md#special-variables)
-`*return`).
+Terminates the current function or method, returning `value`.
+
+If the return value is omitted or no `return` statement is ever reached, the
+function yields the return object
+([special variable](Variables.md#special-variables) `*return`).
 
 When used within an event callback, it is possible that the provided value will
 not ultimately be returned by the event call. If multiple callbacks have an
@@ -801,10 +819,10 @@ for ($<key_var>, $<value_var>) in <collection> { <statements> }
 
 Performs an iteration over a collection.
 
-Collection types include `List`, `Hash`, and `Set`. Right of the keyword must be
-a lexical variable representing the current value. If the `collection` has a key
-or index, you may optionally specify two lexical variables in the form of
-`($key, $val)`.
+Right of the `for` keyword must be a lexical variable whose value is set to each
+subsequent element in the iteration. If the collection offers two-variable
+iteration, such as with a hash key or list index, you may optionally specify two
+lexical variables in the form of `($key, $val)`.
 
 The parentheses are required when using two variables and forbidden when using
 one. The variable(s) are defined only within the body of the `for` statement.
@@ -890,8 +908,9 @@ Expects an expression over which to iterate.
 next
 ```
 
-Jumps to the next iteration of the current [`for`](#for) loop. This is like
-`continue` in C.
+Jumps to the next iteration of the current [`for`](#for) loop.
+
+This is like `continue` in C.
 
 ## last
 
@@ -899,7 +918,9 @@ Jumps to the next iteration of the current [`for`](#for) loop. This is like
 last
 ```
 
-Immediately exits the current [`for`](#for) loop. This is like `break` in C.
+Immediately exits the current [`for`](#for) loop.
+
+This is like `break` in C.
 
 ## redo
 
@@ -959,8 +980,10 @@ ok()    # says "hello" then "goodbye"
 type[?] <name> { <conditions/transforms/expressions> }
 ```
 
-Defines a type interface for dynamic type checking. This is especially useful
-for functions or methods utilizing [`want`](#want) or [`need`](#need).
+Defines a type interface for dynamic type checking.
+
+This is especially useful for functions or methods utilizing [`want`](#want) or
+[`need`](#need).
 
 Interfaces are generally declared at document or class level, but they are valid
 within almost any scope.
@@ -1125,7 +1148,9 @@ Note that the type in the example exists in the standard library as
 throw <error_expression>
 ```
 
-Throws a fatal exception. `throw` requires one argument: an error object.
+Throws a fatal exception.
+
+`throw` requires one argument: an error object.
 
 When `throw` is reached, the default behavior is to print the human-readable
 version of the error and terminate the process with a nonzero status. This is
@@ -1152,7 +1177,9 @@ somethingFatal() catch $e {
 fail <error_expression>
 ```
 
-Throws a nonfatal exception. `fail` is valid only within functions, methods, and
+Throws a nonfatal exception.
+
+`fail` is valid only within functions, methods, and
 callbacks. It requires one argument: an error object.
 
 When `fail` is reached, the `error` return pair is set to the provided error
@@ -1190,9 +1217,11 @@ alwaysFails() catch $e {
 catch [$<err_var>] { <statements> }
 ```
 
-Allows handling of both fatal and nonfatal exceptions. Unlike in many
-programming languages, `catch` does not have a compliment keyword `try`.
-Instead, `catch` must occur at the end of a potentially failable instruction.
+Allows handling of both fatal and nonfatal exceptions.
+
+Unlike in many programming languages, `catch` does not have a compliment keyword
+`try`. Instead, `catch` must occur at the end of a potentially failable
+instruction.
 
 If a fatal exception occurs in the execution of the instruction, the `catch`
 block will be immediately executed, optionally with the error object as its
@@ -1260,15 +1289,19 @@ alias Str = String
 inside <object> { <statements> }
 ```
 
-Temporarily sets a focal object for a shorthand syntax using
+Temporarily sets the topic variable `$_` to `<object>`.
+
+
+
+This is useful for a shorthand property syntax using
 [property variables](Variables.md#property-variables). Rather than writing
 `$obj.x`, simply `.x` works within the block. This is useful when accessing or
 altering several properties at once.
 
 This is similar to JavaScript's
 [`with`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with),
-but it is safer and lacks the ambiguity because the sigil `.` distinguishes
-properties from lexical variables with `$`.
+but it is safer and less ambiguous because the `.` sigil distinguishes
+properties from lexical variables which use `$`.
 
 ```
 $x = 5
@@ -1284,10 +1317,11 @@ inspect($person) # (age: 26, name: "Pam")
 
 ### if inside
 
-`if inside` (always spelled as two separate words) is a combination keyword,
-tokenized as `KEYWORD_IFINS`. It provides a convenient way to write the common
+Provides a convenient way to write the common
 scenario of [`if`](#if) and [`inside`](#for) together:
 `if $x { inside $x { ... } }` can be written simply as `if inside $x { ... }`.
+
+`if inside`, although always spelled as two words, is a combination keyword.
 
 ```
 func getNames {
@@ -1348,10 +1382,11 @@ Compliment to [`gather`](#gather). Adds a value to a consolidated list.
 
 ### gather for
 
-`gather for` (always spelled as two separate words) is a combination keyword,
-tokenized as `KEYWORD_GATHFOR`. It provides a convenient way to write the common
+Provides a convenient way to write the common
 scenario of [`gather`](#gather) and [`for`](#for) together:
 `gather { for { ... } }` can be written simply as `gather for { ... }`.
+
+`gather for`, although always spelled as two words, is a combination keyword.
 
 ```
 $evenSingleDigits = gather for $n in 0..9 {
