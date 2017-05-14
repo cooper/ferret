@@ -23,7 +23,7 @@ func welcome {
     # we can't actually depend on this always being the case, but a
     # lot of IRC servers have nick!ident@host as the final word here.
     # if not, we will get that info the first time we recv a message from %me.
-    if $msg.params[-1] =~ /^(.+)!(.+)\@(.+)$/ {
+    if $msg.params[-1] =~ /(\S+)!(.+)\@(.+)$/ {
         %me.nick = $1
         %me.user = $2
         %me.host = $3
