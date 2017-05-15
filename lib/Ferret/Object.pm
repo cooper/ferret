@@ -474,7 +474,7 @@ sub parent_names {
 
         # it's a prototype
         if ($parent->{proto_class}) {
-            push @parents, $parent->{proto_class}{name};
+            push @parents, $parent->{proto_class}->full_name;
             next;
         }
 
@@ -631,7 +631,7 @@ sub description {
         return _pstring($d_func->call);
     }
 
-    my ($skipped, $prop_str) = (0, '');
+    my ($skipped, @lines) = 0;
     my @parents = $obj->parent_names;
     foreach my $prop_name ($obj->properties(1)) {
 
@@ -652,8 +652,6 @@ sub description {
             next;
         }
 
-        $prop_str ||= "\n";
-
         # indiciate it's inherited
         $prop_name = "($prop_name)" if $owner != $obj;
 
@@ -661,12 +659,29 @@ sub description {
         $value = $opts{ignore}{$value}++ ? '(recursion)' :
             blessed $value ? join "\n    ", split /\n/,
             _pdescription($value, %opts) : '(computed)';
-        $prop_str .= '    '.$prop_name." = $value\n";
+        push @lines, "$prop_name = $value";
 
     }
-    $prop_str .= "\n    $skipped more inherited\n" if $skipped;
 
-    return sprintf '[ %s ](%s)', join(', ', @parents), $prop_str;
+    # mention skipped properties
+    if ($skipped) {
+        my $y = $skipped == 1 ? 'y' : 'ies';
+        push @lines, "$skipped inherited propert$y"
+    }
+    
+    # one parent or comma-separated list
+    my $parents;
+    if (@parents > 1) {
+        $parents = join(', ', @parents);
+        $parents = "[ $parents ]";
+    }
+    else {
+        $parents = $parents[0];
+    }
+
+    my $prop_str = @lines > 1 ?
+        join("\n", '', map("    $_", @lines), '') : " @lines ";
+    return sprintf '%s(%s)', $parents, $prop_str;
 }
 
 # one-line truncated description.
