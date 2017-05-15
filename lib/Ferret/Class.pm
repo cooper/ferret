@@ -311,6 +311,13 @@ sub _global_class_prototype {
                 str_value => $class->signature_string
             );
         });
+        $proto->set_property(fullName => sub {
+            my ($class) = @_;
+            Ferret::String->new(
+                $class->f,
+                str_value => $class->full_name
+            )
+        });
         $proto;
     };
 }
@@ -346,6 +353,19 @@ sub signature_string {
 }
 
 sub detailed_signature_string { &signature_string }
+
+sub name {
+    my $class = shift;
+    return $class->{name};
+}
+
+sub full_name {
+    my $class = shift;
+    my $name = $class->{full_name};
+    return $class->name if !length $name;
+    $name =~ s/^(CORE|main):://;
+    return $name;
+}
 
 sub description {
     my $class = shift;

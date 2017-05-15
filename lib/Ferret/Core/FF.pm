@@ -385,6 +385,8 @@ sub get_class {
             parent          => $context_maybe,
             just_created    => 1
         );
+        $class->{full_name} = $context_maybe->full_name.q(::).$name
+            if $context_maybe;
         ($context_maybe || $file_scope)->set_property($name => $class);
         $created++;
     }

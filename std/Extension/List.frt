@@ -164,6 +164,7 @@ prop sum0 {
     return $c
 }
 
+#> Returns the last element in the list.
 prop lastItem {
     return *self[@lastIndex]
 }

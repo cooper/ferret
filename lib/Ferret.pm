@@ -308,6 +308,7 @@ sub add_binding {
     # create a class.
     my $class = Ferret::Class->new($f,
         name         => $opts{name},
+        full_name    => $context->full_name.q(::).$opts{name},
         version      => $opts{version},
         perl_package => $opts{perl_package},
         parent_class => $parent_class
