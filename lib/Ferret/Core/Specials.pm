@@ -156,6 +156,7 @@ sub _addParent {
 sub _addListener {
     my ($obj, $args) = @_;
     my $listener = delete $args->{object};
+    $obj->add_parent($listener);
     $obj->add_listener($listener, $args);
 }
 

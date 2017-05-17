@@ -16,8 +16,8 @@ init {
     @handlers.*addParent(Handlers.handlers)
 
     # default server, user, object pools
-    @server   = Server(connection: *self, name: @addr)
-    @me       = User(connection: *self, nick: @nick, user: @user)
+    @server   = Server(conn: *self, name: @addr)
+    @me       = User(conn: *self, nick: @nick, user: @user)
     @users    = [:]
     @channels = [:]
     @servers  = [:]
@@ -93,7 +93,7 @@ method getChannel {
     need $name: Str #< channel name
     if $channel = @channels[$name.lowercase]
         return $channel
-    return Channel(connection: *self, name: $name)
+    return Channel(conn: *self, name: $name)
 }
 
 #> Fetches a user object from a nickname
@@ -101,7 +101,7 @@ method getUser {
     need $nick: Str #< nickname associated with the user
     if $user = @users[$nick.lowercase]
         return $user
-    return User(connection: *self, nick: $nick)
+    return User(conn: *self, nick: $nick)
 }
 
 #> Fetches a server object from a server name
@@ -109,7 +109,7 @@ method getServer {
     need $name: Str #< server name
     if $server = @servers[$name.lowercase]
         return $server
-    return Server(connection: *self, name: $name)
+    return Server(conn: *self, name: $name)
 }
 
 #=== Hooks ===#

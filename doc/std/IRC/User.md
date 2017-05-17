@@ -8,7 +8,7 @@ This is the IRC::User class.
 ## Initializer
 
 ```
-$user = User($connection: Connection, $nick: Str)
+$user = User($conn: Connection, $nick: Str)
 ```
 
 Creates a new User class instance.
@@ -16,7 +16,7 @@ Creates a new User class instance.
 
 ### Arguments
 
-* __connection__: Connection  
+* __conn__: Connection  
 
 * __nick__: [Str](/doc/std/String.md)  
 

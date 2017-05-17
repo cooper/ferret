@@ -2,13 +2,13 @@ package IRC
 class Channel
 
 init {
-    need @connection: Connection
+    need @conn: Connection
     need @name: Str
-    weaken @connection
+    weaken @conn
 }
 
 #> Sends a message to the channel
 method privmsg {
     need $message: Str::Any
-    @connection.sendPrivmsg(@name, $message)
+    @conn.sendPrivmsg(@name, $message)
 }

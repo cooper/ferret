@@ -174,6 +174,13 @@ prop lastItem {
     return *self[@lastIndex]
 }
 
+#> If the list has length one, returns an empty string, otherwise `"s"`
+prop s {
+    if @length == 1
+        return ""
+    return "s"
+}
+
 #> Returns an iterator for the list. This allows lists to be used in a for loop.
 prop iterator {
     return ListIterator(*self) : Iterator

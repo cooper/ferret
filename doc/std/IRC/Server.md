@@ -8,7 +8,7 @@ This is the IRC::Server class.
 ## Initializer
 
 ```
-$server = Server($connection: Connection, $name: Str)
+$server = Server($conn: Connection, $name: Str)
 ```
 
 Creates a new Server class instance.
@@ -16,7 +16,7 @@ Creates a new Server class instance.
 
 ### Arguments
 
-* __connection__: Connection  
+* __conn__: Connection  
 
 * __name__: [Str](/doc/std/String.md)  
 

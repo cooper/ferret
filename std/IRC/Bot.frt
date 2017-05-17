@@ -9,26 +9,26 @@ init {
 }
 
 method addConnection {
-    need $connection: Connection
-    @conns.push($connection)
-    $connection.handlers.*addParent(@handlers)
-    $connection.handlers.*addListener(@handlers, bot: *self)
+    need $conn: Connection
+    
+    # add to connection list
+    @conns.push($conn)
+    
+    # make conn inherit bot handlers
+    $conn.handlers.*addListener(@handlers, bot: *self)
 }
 
 method removeConnection {
-    need $connection: Connection
-    @conns.remove($connection)
-    $connection.handlers.*removeParent(@handlers)
-    @connection.handlers.*removeListener(@handlers)
+    need $conn: Connection
+    @conns.remove($conn)
+    $conn.handlers.*removeListener(@handlers)
 }
 
 method connect {
-    for $c in @conns
-        $c.connect()
+    for $conn in @conns
+        $conn.connect()
 }
 
 method description {
-    $s = ""
-    if @conns.length != 1: $s = "s"
-    return "IRC::Bot(@conns.length connection$s)"
+    return "IRC::Bot(@conns.length connection@conns.s)"
 }

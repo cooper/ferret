@@ -11,8 +11,8 @@ init {
 
     #> the connection object to associate the message with,
     #| used for source and target properties.
-    want @connection: Connection
-    weaken @connection
+    want @conn: Connection
+    weaken @conn
 }
 
 #> Parses IRC data
@@ -102,7 +102,7 @@ method parse {
 
 #> User or channel object from the first parameter.
 prop target {
-    return @connection?.getTarget(@params[0])
+    return @conn?.getTarget(@params[0])
 }
 
 prop? _parsedSource {

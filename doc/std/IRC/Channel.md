@@ -8,7 +8,7 @@ This is the IRC::Channel class.
 ## Initializer
 
 ```
-$channel = Channel($connection: Connection, $name: Str)
+$channel = Channel($conn: Connection, $name: Str)
 ```
 
 Creates a new Channel class instance.
@@ -16,7 +16,7 @@ Creates a new Channel class instance.
 
 ### Arguments
 
-* __connection__: Connection  
+* __conn__: Connection  
 
 * __name__: [Str](/doc/std/String.md)  
 

@@ -2,7 +2,7 @@ package IRC
 class Server
 
 init {
-    need @connection: Connection
+    need @conn: Connection
     need @name: Str
-    weaken @connection
+    weaken @conn
 }
