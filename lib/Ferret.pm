@@ -340,15 +340,15 @@ sub add_binding {
 
     # define the event in the context.
     $context->set_property($_ => $class)
-        foreach ($class->{name}, split /\s+/, $opts{alias} || '');
+        foreach ($class->name, split /\s+/, $opts{alias} || '');
 
     # on_bind callback with class object.
     $opts{on_bind}($class) if $opts{on_bind};
 
     # other binding was delayed.
-    if (my $delayed = $delay_class_bindings{ $class->{name} }) {
+    if (my $delayed = $delay_class_bindings{ $class->name }) {
         $f->add_binding(%$_) foreach @$delayed;
-        delete $delay_class_bindings{ $class->{name} };
+        delete $delay_class_bindings{ $class->name };
     }
 
     return $class_bindings{ $opts{perl_package} }{class} = $class;

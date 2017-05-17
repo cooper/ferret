@@ -680,7 +680,7 @@ sub description {
     }
 
     my $prop_str = @lines > 1 ?
-        join("\n", '', map("    $_", @lines), '') : " @lines ";
+        join("\n", '', map("    $_", @lines), '') : "@lines";
     return sprintf '%s(%s)', $parents, $prop_str;
 }
 
