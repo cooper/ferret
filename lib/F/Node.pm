@@ -183,7 +183,6 @@ sub find_doc_comment {
 sub is_node     { 1                       } # is a node
 sub is_closure  {                         } # isn't a closure
 sub children    { @{ shift->{children} }  } # all child elements
-sub children_c  { shift->children         } # closure children (all)
 sub first_child { (shift->children)[0]    } # first child
 sub last_child  { (shift->children)[-1]   } # last child
 

@@ -50,22 +50,3 @@ sub show {
 }
 show($document);
 ```
-
-### $node->children_c
-
-Some statements with [closures](Closure.md) have child expression(s)
-which are not within the closure. This is a variation of `->children` that
-returns ONLY the children within the closure.  
-
-For any non-closure, this will return a list identical to `->children`.
-
-```ruby
-for $a in $b {
-    $c
-    $d
-}
-```
-```perl
-say join ' ', map $_->desc, $for->children;   # includes $a, $b, $c, $d
-say join ' ', map $_->desc, $for->children_c; # includes $c, $d
-```
