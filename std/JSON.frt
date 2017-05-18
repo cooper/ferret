@@ -1,7 +1,7 @@
 class JSON 1.0
 
 #< Provides JSON serializing and deserializing, done correctly and fast.
-#| Based on [JSON::XS](http://search.cpan.org/perldoc?JSON%3A%3AXS).
+#| Based on [JSON::XS](https://metacpan.org/pod/JSON::XS).
 #| Basic operations are accessible via [class functions](#class-functions).
 #| Advanced options are available through the use of a JSON
 #| [class instance](#initializer).
@@ -147,10 +147,12 @@ method decoderDone {
     $objects = @xs.perlCall("incr_parse", CONTEXT: "list") catch $err
         fail Error(:JSONError, "JSON incr_parse() error", subError: $err)
 
-    if $objects.*isa(List)
-        found -> $objects.length
+    # did not find any objects
+    if !$objects || !$objects.*isa(List) || $objects.empty
+        fail Error(:JSONError, "No objects found")
 
-    data -> $objects
+    found -> $objects.length
+    data  -> $objects
 }
 
 #> Resets the decoder buffer.

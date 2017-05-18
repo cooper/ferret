@@ -16,7 +16,7 @@ double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
 $string.length
 ```
 
-Computed property. Length of the string.
+Computed property. Character length of the string.
 
 
 
