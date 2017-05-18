@@ -20,6 +20,11 @@ my @methods = (
     setHint => {
         need => '$key:Str $value:Str',
         code => \&_setHint
+    },
+    prefix => {
+        need => '$msg:Str',
+        want => '$type:Sym',
+        code => \&_prefix
     }
 );
 
@@ -64,6 +69,7 @@ sub _setHint {
     return $ret;
 }
 
+
 sub update_position {
     my ($err, $pos) = @_;
     return if !defined $pos;
@@ -90,12 +96,6 @@ sub description {
     foreach my $key (@hint_keys) {
         my $val = $err->{hints}{$key};
         $fmt .= "    $key: $val\n";
-    }
-
-    # sub error
-    if (my $sub_err = $err->property('subError')) {
-        return $fmt if $opts{ignore}{$sub_err}++;
-        return "$fmt -> ".$sub_err->description;
     }
 
     return $fmt;

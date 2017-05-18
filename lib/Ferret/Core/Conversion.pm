@@ -410,9 +410,10 @@ sub ffunction_smart {
 
         # an error occurred.
         if (!defined $ret && $@) {
+            (my $msg = $@) =~ s/at (\S+)\.pm.*$//;
             throw(NativeCode => undef, [
                 Name     => $name || 'unknown function'
-            ], $@);
+            ], $msg);
             return;
         }
 

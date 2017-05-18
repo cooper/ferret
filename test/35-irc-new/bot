@@ -1,5 +1,6 @@
 #!/usr/bin/env ferret -r
-$conf = Config::JSON2("config.json").parse()
+$conf = Config::JSON2("config.json").parse() catch $e:
+    throw $e.prefix("Failed to parse bot configuration")
 
 # after parsing config, get rid of File and NATIVE.slurp
 delete *scope.*ISA[0].File

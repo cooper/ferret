@@ -86,8 +86,8 @@ init {
 #| initialization.
 method encode {
     need $data  #< an object to convert to JSON text
-    json -> @xs.encode($data) catch $err
-        fail Error(:JSONError, "JSON encode error", subError: $err)
+    json -> @xs.encode($data) catch $e
+        fail Error(:JSONError, "JSON encode error: $e.msg")
 }
 
 #> Decodes a JSON text.
@@ -95,8 +95,8 @@ method encode {
 #| provided at initialization.
 method decode {
     need $json: Str #< a JSON text to parse and convert to a Ferret object
-    data -> @xs.decode($json) catch $err
-        fail Error(:JSONError, "JSON decode error", subError: $err)
+    data -> @xs.decode($json) catch $e
+        fail Error(:JSONError, "JSON decode error: $e.msg")
 }
 
 #>  Adds a JSON text fragment to the decoder buffer.
@@ -131,8 +131,8 @@ method decoderAdd {
 
     # call ->incr_parse in void context.
     # this is to just add text to the buffer.
-    @xs.perlCall("incr_parse", $fragment, CONTEXT: "void") catch $err
-        fail Error(:JSONError, "JSON incr_parse() error", subError: $err)
+    @xs.perlCall("incr_parse", $fragment, CONTEXT: "void") catch $e
+        fail Error(:JSONError, "JSON incr_parse() error: $e.msg")
 
     added -> true
 }
@@ -144,8 +144,8 @@ method decoderDone {
 
     # call ->incr_parse in list context.
     # this will extract as many objects as possible.
-    $objects = @xs.perlCall("incr_parse", CONTEXT: "list") catch $err
-        fail Error(:JSONError, "JSON incr_parse() error", subError: $err)
+    $objects = @xs.perlCall("incr_parse", CONTEXT: "list") catch $e
+        fail Error(:JSONError, "JSON incr_parse() error: $e.msg")
 
     # did not find any objects
     if !$objects || !$objects.*isa(List) || $objects.empty
