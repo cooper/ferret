@@ -119,7 +119,7 @@ Example: `8.root(3)` -> `2`.
 
 #### Arguments
 
-* __root__: [Num](/doc/std/Number.md) - The root. For example, `3` is the cube root.
+* __root__: [Num](/doc/std/Number.md) - Root. For example, `3` is the cube root.
 
 
 

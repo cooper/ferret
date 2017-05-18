@@ -55,7 +55,7 @@ prop odd {
     return *self % 2 != 0
 }
 
-#> the Nth root of the number M, returning a complex number if `N` is even and
+#> Nth root of the number M, returning a complex number if `N` is even and
 #| `M < 0`.
 method root {
     need $root: Num

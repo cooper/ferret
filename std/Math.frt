@@ -1,12 +1,12 @@
 package Math
 
-#> the ratio of a circle's circumference to it's diameter
+#> ratio of a circle's circumference to it's diameter
 share $π ?= 4 * atan2(1, 1)
 
 #> alias for `Math.π`
 share $pi ?= $π
 
-#> the base of the natural logarithm
+#> base of the natural logarithm
 share $e ?= exp(1)
 
 #> Sine, expressed in radians.

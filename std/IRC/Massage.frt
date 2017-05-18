@@ -9,7 +9,7 @@ init {
     if $data
         @parse($data)
 
-    #> the connection object to associate the message with,
+    #> connection object to associate the message with,
     #| used for source and target properties.
     want @conn: Connection
     weaken @conn

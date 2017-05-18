@@ -3,7 +3,7 @@ class String
 #| typically representing characters. String literals are delimited by
 #| double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
 
-#> The length of the string
+#> length of the string
 prop length
 
 #> A string based on the original with an uppercase transformation
@@ -16,11 +16,11 @@ prop lowercase
 #| string by the provided separator.
 method split {
 
-    #> the substring separator. The default is the empty string, which results
+    #> substring separator. The default is the empty string, which results
     #| in a list of individual characters.
     want $separator: Str|Rgx = ""
 
-    #> the number of substrings to extract.
+    #> number of substrings to extract.
     #| If specified, the returned list will have at most this number
     #| of strings. The final string in that list may include occurrences
     #| of the separator.
@@ -51,7 +51,7 @@ method fill {
 #> Returns a boolean true value if the prefix exists.
 method hasPrefix {
 
-    #> the prefix to look for
+    #> prefix to look for
     need $prefix: Str
 
 }
@@ -61,7 +61,7 @@ method hasPrefix {
 #| have that prefix, a copy of the original string is returned.
 method trimPrefix {
 
-    #> the prefix to remove
+    #> prefix to remove
     need $prefix: Str
 
 }
@@ -70,7 +70,7 @@ method trimPrefix {
 #> Returns a boolean true value if the suffix exists.
 method hasSuffix {
 
-    #> the suffix to look for
+    #> suffix to look for
     need $suffix: Str
 
 }
@@ -80,7 +80,7 @@ method hasSuffix {
 #| have that suffix, a copy of the original string is returned.
 method trimSuffix {
 
-    #> the suffix to remove
+    #> suffix to remove
     need $suffix: Str
 
 }

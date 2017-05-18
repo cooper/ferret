@@ -57,7 +57,7 @@ Computed property. Magnitude of the vector.
 $v.unitVector
 ```
 
-Computed property. The unit vector in the direction of this vector.
+Computed property. Unit vector in the direction of this vector.
 
 
 

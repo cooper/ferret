@@ -16,7 +16,7 @@ double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
 $string.length
 ```
 
-Computed property. The length of the string.
+Computed property. Length of the string.
 
 
 
@@ -52,10 +52,10 @@ string by the provided separator.
 
 #### Arguments
 
-* *optional* __separator__: [Str](/doc/std/String.md) | [Rgx](/doc/std/Regex.md) - The substring separator. The default is the empty string, which results
+* *optional* __separator__: [Str](/doc/std/String.md) | [Rgx](/doc/std/Regex.md) - Substring separator. The default is the empty string, which results
 in a list of individual characters.
 
-* *optional* __limit__: [Num](/doc/std/Number.md) - The number of substrings to extract.
+* *optional* __limit__: [Num](/doc/std/Number.md) - Number of substrings to extract.
 If specified, the returned list will have at most this number
 of strings. The final string in that list may include occurrences
 of the separator.
@@ -98,7 +98,7 @@ Returns a boolean true value if the prefix exists.
 
 #### Arguments
 
-* __prefix__: [Str](/doc/std/String.md) - The prefix to look for.
+* __prefix__: [Str](/doc/std/String.md) - Prefix to look for.
 
 
 
@@ -115,7 +115,7 @@ have that prefix, a copy of the original string is returned.
 
 #### Arguments
 
-* __prefix__: [Str](/doc/std/String.md) - The prefix to remove.
+* __prefix__: [Str](/doc/std/String.md) - Prefix to remove.
 
 
 
@@ -130,7 +130,7 @@ Returns a boolean true value if the suffix exists.
 
 #### Arguments
 
-* __suffix__: [Str](/doc/std/String.md) - The suffix to look for.
+* __suffix__: [Str](/doc/std/String.md) - Suffix to look for.
 
 
 
@@ -147,7 +147,7 @@ have that suffix, a copy of the original string is returned.
 
 #### Arguments
 
-* __suffix__: [Str](/doc/std/String.md) - The suffix to remove.
+* __suffix__: [Str](/doc/std/String.md) - Suffix to remove.
 
 
 

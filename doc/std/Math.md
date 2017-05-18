@@ -284,7 +284,7 @@ Takes `e` (the base of the natural logarithm) to a power.
 Math.π
 ```
 
-The ratio of a circle's circumference to it's diameter.
+Ratio of a circle's circumference to it's diameter.
 
 ### pi
 
@@ -300,7 +300,7 @@ Alias for `Math.π`.
 Math.e
 ```
 
-The base of the natural logarithm.
+Base of the natural logarithm.
 
 
 End of the Math package.

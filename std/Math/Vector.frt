@@ -27,7 +27,7 @@ prop magnitude {
     return @items.map! { -> $_ ^ 2 }.sum.sqrt
 }
 
-#> the unit vector in the direction of this vector
+#> unit vector in the direction of this vector
 prop unitVector {
     return *self / @magnitude
 }

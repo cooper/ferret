@@ -48,7 +48,7 @@ prop cbrt
 #| Example: `8.root(3)` -> `2`.
 method root {
 
-    #> The root. For example, `3` is the cube root.
+    #> Root. For example, `3` is the cube root.
     need $root: Num
 }
 
