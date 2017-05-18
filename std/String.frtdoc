@@ -3,7 +3,7 @@ class String
 #| typically representing characters. String literals are delimited by
 #| double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
 
-#> length of the string
+#> character length of the string
 prop length
 
 #> A string based on the original with an uppercase transformation

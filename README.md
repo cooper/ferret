@@ -236,6 +236,8 @@ Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
         * [Server](doc/std/IRC/Server.md) - Represents an IRC server
         * [User](doc/std/IRC/User.md) - Represents an IRC user
         * [Channel](doc/std/IRC/Channel.md) - Represents an IRC channel
+* Encoding
+    * [JSON](doc/std/JSON.md) - JSON serialization and deserialization
 * Development
     * [Test](doc/std/Test.md) - Basic test suite
 
