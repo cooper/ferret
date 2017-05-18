@@ -659,7 +659,7 @@ sub description {
         $value = $opts{ignore}{$value}++ ? '(recursion)' :
             blessed $value ? join "\n    ", split /\n/,
             _pdescription($value, %opts) : '(computed)';
-        push @lines, "$prop_name = $value";
+        push @lines, split /\n/, "$prop_name = $value";
 
     }
 
