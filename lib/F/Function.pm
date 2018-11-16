@@ -284,7 +284,7 @@ sub markdown_fmt {
 
         # operator
         $method->{operator}                             ?
-        $instn_name." $$method{operator} ($signature)"  :
+        "$instn_name $$method{operator} ($signature)"   :
 
         # property
         $method->{is_prop}                              ?
@@ -292,10 +292,10 @@ sub markdown_fmt {
 
         # initializer
         $method->is_init                                ?
-        $instn_name.' = '.$class_name."($signature)"    :
+        "$instn_name = $class_name($signature)"         :
 
         # normal method
-        $owner_name.'.'.$method->{name}."($signature)"  ;
+        "$owner_name.$$method{name}($signature)"        ;
 
     # handle arguments.
     my $arguments = '';

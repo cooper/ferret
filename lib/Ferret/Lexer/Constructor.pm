@@ -360,12 +360,12 @@ sub c_CLOSURE_E {
     undef $is_anon_func if $p->parent->type eq 'On';
 
     # do not allow anon funcs in void context
-    if ($is_anon_func && !$c->instruction) {
-        return $c->unexpected([
-            'to close anonymous function',
-            'Anonymous function is not permitted in void context'
-        ]);
-    }
+    # if ($is_anon_func && !$c->instruction) {
+    #     return $c->unexpected([
+    #         'to close anonymous function',
+    #         'Anonymous function is not permitted in void context'
+    #     ]);
+    # }
 
     # terminate anon funcs and gathers
     if (!$is_semi and $is_anon_func || $is_gather) {
