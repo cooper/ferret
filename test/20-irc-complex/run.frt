@@ -1,7 +1,5 @@
-share $bot =   IRCBot::Bot(addr: "k.notroll.net", nick: "bootie", user: "ferret")
-share $i = IRC::Connection(addr: "k.notroll.net", nick: "booby",  user: "ferret")
+share $bot = IRCBot::Bot(addr: "k.notroll.net", nick: "bootie", user: "ferret")
 $bot.autojoin = ["#k"]
-$i.autojoin = ["#k"]
 
 $bot.addCommand("info") {
     need $msg
@@ -87,4 +85,3 @@ func ircsay {
 }
 
 $bot.connect()
-$i.connect()

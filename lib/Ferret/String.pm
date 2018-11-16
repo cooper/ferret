@@ -29,7 +29,7 @@ my @methods = (
         need => '$rhs:Rgx',
         code => \&_op_sim
     },
-    'x' => {
+    'X' => {
         need => '$ehs:Num',
         code => \&_op_mul
     },

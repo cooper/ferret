@@ -43,7 +43,7 @@ my @methods = (
         code => \&_op_div,
         need => '$rhs:Num'
     },
-    'x' => {
+    'X' => {
         code => \&_op_mul,
         need => '$rhs:Num'
     },

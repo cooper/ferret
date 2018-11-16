@@ -35,6 +35,7 @@ sub desc_type {
     my $func = shift;
     if ($func->is_method) {
         my $method = $func;
+        return "operator ($$method{operator})" if $method->{operator};
         my $main = $method->{main}    ? 'class '            : '';
         my $type = $method->{is_prop} ? 'computed property' : 'method';
         my $lazy = $method->{p_set}   ? ' (lazy)'           : '';

@@ -240,7 +240,6 @@ sub space {
         UnresolvedDependencies => $pos, undef,
         $acceptable[-1]
     ) if $die;
-    print "POSTPONING @acceptable\n";
 
     # otherwise store it for the after_content() check
     push @{ $context->f->{pending_spaces}{$file_name} ||= [] },

@@ -67,7 +67,7 @@ my %semi_follows = map { $_ => 1 } qw(
 my %operator_tok_to_method = (
     OP_ADD      => '+',
     OP_SUB      => '-',
-    OP_MUL      => 'x',
+    OP_MUL      => 'X',
     OP_DIV      => '/',
     OP_MOD      => '%',
     OP_POW      => '^',

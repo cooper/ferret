@@ -20,11 +20,6 @@ my @methods = (
     setHint => {
         need => '$key:Str $value:Str',
         code => \&_setHint
-    },
-    prefix => {
-        need => '$msg:Str',
-        want => '$type:Sym',
-        code => \&_prefix
     }
 );
 
