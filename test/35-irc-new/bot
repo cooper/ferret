@@ -162,7 +162,7 @@ func handlePerl {
 }
 
 func getParameter {
-    need $msg: IRC::Massage
+    need $msg: IRC::Message
     $string = $msg.params[1].fromWord(1) || ""
     return $string.split("_NL_").join("\n")
 }

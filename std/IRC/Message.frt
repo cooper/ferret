@@ -1,5 +1,5 @@
 package IRC
-class Massage
+class Message
 
 init {
 

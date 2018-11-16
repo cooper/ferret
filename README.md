@@ -232,7 +232,7 @@ Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
         * [Request](doc/std/HTTP/Request.md) - Represents an HTTP request
     * [IRC](doc/std/IRC.md) - IRC suite
         * [Connection](doc/std/IRC/Connection.md) - IRC client
-        * [Massage](doc/std/IRC/Massage.md) - Represents an IRC message
+        * [Message](doc/std/IRC/Message.md) - Represents an IRC message
         * [Server](doc/std/IRC/Server.md) - Represents an IRC server
         * [User](doc/std/IRC/User.md) - Represents an IRC user
         * [Channel](doc/std/IRC/Channel.md) - Represents an IRC channel
