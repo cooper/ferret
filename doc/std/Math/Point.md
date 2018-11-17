@@ -60,6 +60,16 @@ $pt.distanceFromOrigin
 
 Computed property. Distance between this point and the origin `(0, 0)`.
 
+
+
+### Equality operator (==)
+
+```
+$pt == ($ehs: Point)
+```
+
+Equality of two points.
+
 ## Class properties
 
 ### origin

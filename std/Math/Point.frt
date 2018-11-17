@@ -38,3 +38,9 @@ prop distanceFromOrigin {
 method description {
     return "(@x, @y)"
 }
+
+#> equality of two points
+operator == {
+    need $ehs: Point
+    return $ehs.x == @x && $ehs.y == @y
+}
