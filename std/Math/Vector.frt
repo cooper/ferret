@@ -13,24 +13,16 @@ init {
 }
 
 #> dimension of the vector
-prop dimension {
-    return @items.length
-}
+.dimension -> @items.length
 
 #> human-readable dimension of the vector
-prop dimensionHR {
-    return @dimension + "D"
-}
+.dimensionHR -> @dimension + "D"
 
 #> magnitude of the vector
-prop magnitude {
-    return @items.map! { -> $_ ^ 2 }.sum.sqrt
-}
+.magnitude -> @items.map! { -> $_ ^ 2 }.sum.sqrt
 
 #> unit vector in the direction of this vector
-prop unitVector {
-    return *self / @magnitude
-}
+.unitVector -> *self / @magnitude
 
 #> returns the unit vector in the direction of the given axis
 method axisUnitVector {
@@ -38,23 +30,12 @@ method axisUnitVector {
     return Vector.axisUnitVector(@dimension, $axis)
 }
 
-#> for a >=1D vector, the first comonent
-prop x {
-    return *self[0]
-}
-
-#> for a >=2D vector, the second component
-prop y {
-    return *self[1]
-}
-
-#> for a >=3D vector, the third component
-prop z {
-    return *self[2]
-}
+.x -> *self[0]  #< for a >=1D vector, the first comonent
+.y -> *self[1]  #< for a >=2D vector, the second component
+.z -> *self[2]  #< for a >=3D vector, the third component
 
 #> for a 2D vector, its direction, measured in radians
-prop direction {
+.direction {
     if @dimension != 2
         throw Error(:DimensionError, "Direction only exists in 2D")
     return Math.atan2(@y, @x)
