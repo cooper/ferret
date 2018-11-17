@@ -311,8 +311,11 @@ sub markdown_fmt {
 
     # handle comments.
     my $comment = $method->doc_comment;
-    if (!length $comment && $method->is_init) {
-        $comment = "Creates a new $class_name class instance.";
+    if (!length $comment) {
+        $comment = "Creates a new $class_name class instance."
+            if $method->is_init;
+        my $last = ($method->filter_descendants(type => 'Return'))[0];
+        $comment = $last->find_doc_comment if $last;
     }
 
     my $fmt = $method->{is_prop} ? 'computed' : 'method';

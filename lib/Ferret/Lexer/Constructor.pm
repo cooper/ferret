@@ -1197,6 +1197,13 @@ sub c_OP_NOT {
 sub c_OP_MAYBE {
     my ($c, $value) = @_;
 
+    # special case for shorthand computed properties
+    my $last_el = $c->last_el;
+    if ($last_el && $c->node->type eq 'Class' && $last_el->type eq 'Function' && $last_el->{is_prop}) {
+        $last_el->{p_set}++;
+        return;
+    }
+
     # Rule Maybe[0]:
     #   Number of children must be exactly one (1).
 
@@ -1204,7 +1211,6 @@ sub c_OP_MAYBE {
     #   When inside a TypedClass, children must be of type Bareword.
 
     # must come after expression.
-    my $last_el = $c->last_el;
     return $c->unexpected if !$last_el || !$last_el->is_type('Expression');
 
     # if this is a list, it can only have one item.
@@ -1448,6 +1454,14 @@ sub c_VAR_SYM {
 sub c_VAR_PROP {
     my ($c, $value) = @_;
 
+    # so um, if the current node is a class,
+    # this is maybe shorthand notation for a computed property implementation
+    if ($c->node->parent && $c->node->parent->type eq 'Class') {
+        # abandon the instruction
+        $c->abandon_node;
+        return $c->simulate(METHOD => { name => $value, is_prop => 1 });
+    }
+
     # Rule PropertyVariable[0]:
     #   Must be somewhere inside an InsideBody, FunctionBody, or Type.
 
@@ -1564,11 +1578,12 @@ sub c_METHOD {
     # Rule Method[0]:
     #   Must be a direct child of a Class.
 
+    my $n = $c->next_tok || '';
     my $method = F::new('Function',
         %$value,
         event_cb  => 1,
         is_method => 1,
-        no_body   => ($c->next_tok || '') ne 'CLOSURE_S'
+        no_body   => $n ne 'CLOSURE_S' && $n ne 'OP_RETURN' && $n ne 'OP_MAYBE' # this is quite a hack
     );
 
     $c->node->adopt($method);
@@ -1733,6 +1748,18 @@ sub c_OP_RETURN {
         return;
     }
 
+    # hmm, if the current node is a class and the previous element is
+    # a computed property header, this is shorthand
+    my $p  = $c->node->parent;
+    my $cp = $c->last_el;
+    if ($p && $cp && $p->type eq 'Class' && $cp->type eq 'Function' && $cp->{is_prop}) {
+        my $instr = $c->abandon_node;
+        $instr->{will_close_closure}++;
+        $c->simulate('CLOSURE_S');
+        $c->adopt_and_set_node($instr);
+        return $c->simulate(OP_RETURN => $value);
+    }
+
     # OK, at this point it has to be an actual return or return pair.
 
     # check the last element.
@@ -1743,14 +1770,13 @@ sub c_OP_RETURN {
         # starting an instruction.
         if ($c->node->type ne 'Instruction' || $c->node->children != 0) {
             return $c->expected(
-                'a bareword key (or nothing)',
+                'a bareword key (or nothing) but found '.$c->node->type,
                 'at left of return operator (->)'
             ) unless $word->type eq 'Bareword';
         }
 
         # if it does start the instruction, pretend it's a return keyword
         return $c->simulate('KEYWORD_RETURN');
-
     }
 
     # forget about the bareword.

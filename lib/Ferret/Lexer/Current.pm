@@ -56,6 +56,15 @@ sub adopt_and_set_node {
     return $c->set_node($new);
 }
 
+sub abandon_node {
+    my $c = shift;
+    my $n = $c->node;
+    my $p = $c->node->parent;
+    $p->abandon($n);
+    $c->{node} = $p;
+    return $n;
+}
+
 # close the current node or n nodes.
 sub close_node {
     my ($c, $n) = (shift, shift || 1);

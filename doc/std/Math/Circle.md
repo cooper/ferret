@@ -122,7 +122,7 @@ Computed property. Area.
 $circle.d
 ```
 
-Once-computed property. Diameter length.
+Computed property. Diameter length.
 
 
 
@@ -133,16 +133,6 @@ $circle.c
 ```
 
 Computed property. Circumference.
-
-
-
-### formula
-
-```
-$circle.formula
-```
-
-Computed property. Formula in center-radius notation.
 
 
 
@@ -163,6 +153,16 @@ $circle.circumference
 ```
 
 Computed property. Circumference. Same as `c`.
+
+
+
+### formula
+
+```
+$circle.formula
+```
+
+Computed property. Formula in center-radius notation.
 
 
 
