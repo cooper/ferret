@@ -2,53 +2,78 @@
 
 This is the Math::Line class.
 
-Represents a line segment.
+Represents a line.
 
 
 ## Initializer
 
 ```
-$line = Line($pt1: Point, $pt2: Point)
+$line = Line($m: Num, $c: Num)
 ```
 
-Creates a line segment given two endpoints.
+Creates a line given slope and y-intercept.
 
 
 ### Arguments
 
-* __pt1__: Point - An endpoint.
+* __m__: [Num](/doc/std/Number.md) - Slope.
 
-* __pt2__: Point - Another endpoint.
+* __c__: [Num](/doc/std/Number.md) - Slope.
+
+
+
+## Initializer
+
+```
+$line = Line($m: Num, $pt: Point)
+```
+
+Creates a line given slope and a point.
+
+
+### Arguments
+
+* __m__: [Num](/doc/std/Number.md) - Slope.
+
+* __pt__: Point - Point on the line.
 
 ## Methods
 
-### length
+### m
 
 ```
-$line.length
+$line.m
 ```
 
-Computed property. Length of the line segment.
+Computed property. Slope.
 
 
 
-### endpoints
-
-```
-$line.endpoints
-```
-
-Computed property. A list of endpoints.
-
-
-
-### midpoint
+### slope
 
 ```
-$line.midpoint
+$line.slope
 ```
 
-Computed property. Midpoint of the line segment.
+Computed property. Slope. same as `m`.
+
+
+
+### formula
+
+```
+$line.formula
+```
+
+Computed property. 
+
+
+
+### Equality operator (==)
+
+```
+$line == ($ehs: Line)
+```
 
 
 
