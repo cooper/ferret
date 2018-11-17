@@ -2,18 +2,19 @@ package Math
 class Circle
 #< represents a circle
 
+#> unit circle
 share $unit ?= *class(1, 0, 0)
 
 #> creates a circle given radius and center coordinates
 init {
-    need @r: Num #< radius
-    need @h: Num #< x-coordinate of center
-    need @k: Num #< y-coordinate of center
+    need @r: Num    #< radius
+    need @h: Num    #< x-coordinate of center
+    need @k: Num    #< y-coordinate of center
 }
 
 #> creates a circle given radius and center
 init {
-    need @r: Num #< radius
+    need @r: Num    #< radius
     need $center: Point #< center
     @h = $center.x
     @k = $center.y
@@ -27,7 +28,7 @@ init {
     @k = 0
 }
 
-prop r  #< radius
+prop r  #< radius length
 prop h  #< center x-coordinate
 prop k  #< center y-coordinate
 
@@ -36,7 +37,7 @@ prop? center {
     return Math::Point(@h, @k)
 }
 
-#> squared radius
+#> squared radius length
 prop? r2 { 
     return @r ^ 2
 }
@@ -46,7 +47,7 @@ prop area {
     return Math.pi * @r2
 }
 
-#> diameter
+#> diameter length
 prop? d {
     return @r * 2
 }
@@ -63,7 +64,7 @@ prop formula {
     return "$x^2 + $y^2 = " + @r2
 }
 
-#> diameter. Same as `d`
+#> diameter length. Same as `d`
 prop diameter {
     return @d
 }
@@ -85,6 +86,12 @@ method isTangent {
     $m = $line.m    # slope
     $c = $line.c    # y-int
     return (@r2 - @h^2) * $m^2 - 2 * $m * @h * ($c - @k) + @r2 - ($c - @k)^2 == 0
+}
+
+#> tests whether a line segment is a chord of the circle
+method isChord {
+    need $seg: Segment
+    return @hasPoint($seg.pt1) && @hasPoint($seg.pt2)
 }
 
 method description {

@@ -62,7 +62,7 @@ Creates a circle at the origin given area.
 $circle.r
 ```
 
-Property. Radius.
+Property. Radius length.
 
 
 
@@ -102,7 +102,7 @@ Once-computed property. Center point.
 $circle.r2
 ```
 
-Once-computed property. Squared radius.
+Once-computed property. Squared radius length.
 
 
 
@@ -122,7 +122,7 @@ Computed property. Area.
 $circle.d
 ```
 
-Once-computed property. Diameter.
+Once-computed property. Diameter length.
 
 
 
@@ -152,7 +152,7 @@ Computed property. Formula in center-radius notation.
 $circle.diameter
 ```
 
-Computed property. Diameter. Same as `d`.
+Computed property. Diameter length. Same as `d`.
 
 
 
@@ -196,6 +196,21 @@ Tests whether a line is tangent to the circle.
 
 
 
+### isChord
+
+```
+$circle.isChord($seg: Segment)
+```
+
+Tests whether a line segment is a chord of the circle.
+
+
+#### Arguments
+
+* __seg__: Segment  
+
+
+
 ### Equality operator (==)
 
 ```
@@ -211,6 +226,8 @@ Equality of two circles.
 ```
 Circle.unit
 ```
+
+Unit circle.
 
 
 
