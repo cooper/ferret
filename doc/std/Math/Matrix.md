@@ -23,13 +23,23 @@ Creates a matrix with the given entries and row count.
 
 ## Methods
 
+### m
+
+```
+$mtrx.m
+```
+
+Property. Number of rows.
+
+
+
 ### rows
 
 ```
 $mtrx.rows
 ```
 
-Computed property. Number of rows.
+Computed property. Number of rows. Same as `m`.
 
 
 

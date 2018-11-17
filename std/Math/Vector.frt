@@ -25,9 +25,9 @@ init {
 .unitVector -> *self / @magnitude
 
 #> returns the unit vector in the direction of the given axis
-method axisUnitVector {
+.axisUnitVector {
     need $axis: VectorAxis #< axis number or letter, starting at 1 or "i"
-    return Vector.axisUnitVector(@dimension, $axis)
+    -> Vector.axisUnitVector(@dimension, $axis)
 }
 
 .x -> *self[0]  #< for a >=1D vector, the first comonent
@@ -38,7 +38,7 @@ method axisUnitVector {
 .direction {
     if @dimension != 2
         throw Error(:DimensionError, "Direction only exists in 2D")
-    return Math.atan2(@y, @x)
+    -> Math.atan2(@y, @x)
 }
 
 #> addition of two vectors
@@ -49,7 +49,7 @@ operator + {
     $items = gather for $i in 0..@items.lastIndex {
         take *self[$i] + $ehs[$i]
     }
-    return Vector(items: $items)
+    -> Vector(items: $items)
 }
 
 #> allows you to take the opposite vector `-$u`
@@ -57,7 +57,7 @@ operator - {
     need $lhs: Num
     if $lhs != 0
         throw(:InvalidOperation, "Unsupported operation")
-    return Vector(items: gather for $x in @items {
+    -> Vector(items: gather for $x in @items {
         take -$x
     })
 }
@@ -70,42 +70,42 @@ operator - {
     $items = gather for $i in 0..@items.lastIndex {
         take *self[$i] - $rhs[$i]
     }
-    return Vector(items: $items)
+    -> Vector(items: $items)
 }
 
 #> scalar multiplication of the vector
 operator * {
     need $ehs: Num
-    return Vector(items: @items.map! { -> $_ * $ehs })
+    -> Vector(items: @items.map! { -> $_ * $ehs })
 }
 
 #> scalar division of the vector
 operator / {
     need $rhs: Num
-    return *self * (1 / $rhs)
+    -> *self * (1 / $rhs)
 }
 
 #> dot product of two vectors
 operator * {
     need $ehs: Vector
-    return @dot($ehs)
+    -> @dot($ehs)
 }
 
 #> vector equality
 operator == {
     need $ehs: Vector
     if $ehs.dimension != @dimension
-        return false
+        -> false
     for $i in 0..@items.lastIndex {
         if *self[$i] == $ehs[$i]
             next
-        return false
+        -> false
     }
-    return true
+    -> true
 }
 
 #> dot product of this vector and another of the same dimension
-method dot {
+.dot {
     need $ehs: Vector
     if $ehs.dimension != @dimension
         throw Error(:DimensionError, "Dimension mismatch $ehs.dimensionHR != @dimensionHR")
@@ -113,66 +113,66 @@ method dot {
     for $i in 0..@items.lastIndex {
         $dot += *self[$i] * $ehs[$i]
     }
-    return $dot
+    -> $dot
 }
 
 #> cross product of two 3D vectors
-method cross {
+.cross {
     need $ehs: Vector
     if $ehs.dimension != 3 || @dimension != 3
         throw Error(:DimensionError, "Cross product only exists in 3D")
     @a = *self[1] * $ehs[2] - *self[2] * $ehs[1]
     @b = *self[2] * $ehs[0] - *self[0] * $ehs[2]
     @c = *self[0] * $ehs[1] - *self[1] * $ehs[0]
-    return Vector(@a, @b, @c)
+    -> Vector(@a, @b, @c)
 }
 
 #> angle between this vector and another of the same dimension, measured in
 #| radians
-method angleBetween {
+.angleBetween {
     need $ehs: Vector
     # a·b = |a||b|cosθ
     $cosθ = @dot($ehs) / (@magnitude * $ehs.magnitude)
-    return Math.acos($cosθ)
+    -> Math.acos($cosθ)
 }
 
 #> true if this vector is orthogonal to another of the same dimension
 # consider: the dot product is also zero if either is a zero vector. should
-# we still return true in that case?
-method orthogonalTo {
+# we still -> true in that case?
+.orthogonalTo {
     need $ehs: Vector
-    return @dot($ehs) == 0
+    -> @dot($ehs) == 0
 }
 
 #> true if this vector is parallel to another of the same dimension
-method parallelTo {
+.parallelTo {
     need $ehs: Vector
     if $ehs.dimension != @dimension
         throw Error(:DimensionError, "Dimension mismatch $ehs.dimensionHR != @dimensionHR")
     $u1 = @unitVector
     $u2 = $ehs.unitVector
     if $u1 == $u2 || -$u1 == $u2
-        return true
-    return false
+        -> true
+    -> false
 }
 
 #> fetches the component at the given index. Allows Vector to conform to
 #| IndexedRead such that `$vector[N]` is the N+1th component.
-method getValue {
+.getValue {
     need $index: Num
     $n = $index + 1
     if @dimension < $n
         throw Error(:DimensionError, "@dimensionHR vector has no component $n")
-    return @items[$index]
+    -> @items[$index]
 }
 
 #> returns a copy of the vector
 method copy {
-    return Vector(items: @items.copy!)
+    -> Vector(items: @items.copy!)
 }
 
 method description {
-    return "<" + @items.join(", ") + ">"
+    -> "<" + @items.join(", ") + ">"
 }
 
 #> returns the zero vector in the given dimension
@@ -180,7 +180,7 @@ func zeroVector {
     need $dimension: Num
     if $dimension < 1
         throw Error(:DimensionError, "Need dimension >= 1D")
-    return Vector(items: gather for $i in 1..$dimension { take 0 })
+    -> Vector(items: gather for $i in 1..$dimension { take 0 })
 }
 
 #> returns the unit vector for the given dimension and axis
@@ -196,17 +196,17 @@ func axisUnitVector {
         }
         take 0
     }
-    return Vector(items: $items)
+    -> Vector(items: $items)
 }
 
 func _axisToNumber {
     need $axis: Num | Char
     if $axis.*isa(Num)
-        return $axis
+        -> $axis
     $o = $axis.ord
     if $o > 119
-        return $o - 119
-    return $o - 104
+        -> $o - 119
+    -> $o - 104
 }
 
 #> An interface which accepts an axis letter starting at "i" or number starting

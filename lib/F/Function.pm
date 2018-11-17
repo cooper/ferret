@@ -173,6 +173,10 @@ sub close : method {
         return $func->SUPER::close->close;
     }
 
+    # computed properties can't have wants or needs
+    delete $func->{is_prop}
+        if $func->arguments;
+
     return $func->SUPER::close(@_);
 }
 

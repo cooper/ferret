@@ -47,13 +47,13 @@ init {
 }
 
 #> tests whether a point is on the circle
-method hasPoint {
+.hasPoint {
     need $pt: Point
     -> ($pt.x - @h)^2 + ($pt.y - @k)^2 == @r2
 }
 
 #> tests whether a line is tangent to the circle
-method isTangent {
+.isTangent {
     need $line: Line
     $m = $line.m    # slope
     $c = $line.c    # y-int
@@ -61,7 +61,7 @@ method isTangent {
 }
 
 #> tests whether a line segment is a chord of the circle
-method isChord {
+.isChord {
     need $seg: Segment
     -> @hasPoint($seg.pt1) && @hasPoint($seg.pt2)
 }
