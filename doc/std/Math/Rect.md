@@ -76,20 +76,20 @@ Computed property. Top right vertex of the rectangle.
 
 
 
-### bottomLine
+### bottom
 
 ```
-$rect.bottomLine
+$rect.bottom
 ```
 
 Computed property. Line segment formed by the bottom vertices of the rectangle.
 
 
 
-### topLine
+### top
 
 ```
-$rect.topLine
+$rect.top
 ```
 
 Computed property. Line segment formed by the top vertices of the rectangle.

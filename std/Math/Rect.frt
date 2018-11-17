@@ -42,13 +42,13 @@ prop topRight {
 }
 
 #> line segment formed by the bottom vertices of the rectangle
-prop bottomLine {
-    return Line(@bottomLeft, @bottomRight)
+prop bottom {
+    return Segment(@bottomLeft, @bottomRight)
 }
 
 #> line segment formed by the top vertices of the rectangle
-prop topLine {
-    return Line(@topLeft, @topRight)
+prop top {
+    return Segment(@topLeft, @topRight)
 }
 
 #> center point of the rectangle

@@ -1,5 +1,5 @@
 package Math
-class Line
+class Segment
 #< represents a line segment
 
 #> creates a line segment given two endpoints
