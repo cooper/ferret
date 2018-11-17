@@ -25,7 +25,7 @@ support for complex numbers as well through the [Complex](Complex.md) class.
 $number.even
 ```
 
-Computed property. Boolean evenness of the number.
+Property. Boolean evenness of the number.
 
 
 
@@ -35,7 +35,7 @@ Computed property. Boolean evenness of the number.
 $number.odd
 ```
 
-Computed property. Boolean oddness of the number.
+Property. Boolean oddness of the number.
 
 
 
@@ -45,7 +45,7 @@ Computed property. Boolean oddness of the number.
 $number.round
 ```
 
-Computed property. Nearest integer to the number.
+Property. Nearest integer to the number.
 Examples: `3.5` -> `4`, `3.4` -> `3`.
 
 
@@ -56,7 +56,7 @@ Examples: `3.5` -> `4`, `3.4` -> `3`.
 $number.ceil
 ```
 
-Computed property. Smallest integer that is greater than or equal to the number.
+Property. Smallest integer that is greater than or equal to the number.
 Example: `3.001.ceil` -> `4`.
 
 
@@ -67,7 +67,7 @@ Example: `3.001.ceil` -> `4`.
 $number.floor
 ```
 
-Computed property. Greatest integer less than or equal to the number.
+Property. Greatest integer less than or equal to the number.
 Example: `3.999` -> `3`.
 
 
@@ -78,7 +78,7 @@ Example: `3.999` -> `3`.
 $number.square
 ```
 
-Computed property. Square of the number (`n ^ 2`).
+Property. Square of the number (`n ^ 2`).
 Example: `2.square` -> `4`.
 
 
@@ -89,7 +89,7 @@ Example: `2.square` -> `4`.
 $number.sqrt
 ```
 
-Computed property. Square root of the number (`n ^ (1/2)`).
+Property. Square root of the number (`n ^ (1/2)`).
 Returns a complex number if `n < 0`.
 Example: `4.sqrt` -> `2`.
 
@@ -101,7 +101,7 @@ Example: `4.sqrt` -> `2`.
 $number.cbrt
 ```
 
-Computed property. Cube root of the number (`n ^ (1/3)`).
+Property. Cube root of the number (`n ^ (1/3)`).
 Example: `8.cbrt` -> `2`.
 
 

@@ -16,7 +16,7 @@ double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
 $string.length
 ```
 
-Computed property. Character length of the string.
+Property. Character length of the string.
 
 
 
@@ -26,7 +26,7 @@ Computed property. Character length of the string.
 $string.uppercase
 ```
 
-Computed property. A string based on the original with an uppercase transformation.
+Property. A string based on the original with an uppercase transformation.
 
 
 
@@ -36,7 +36,7 @@ Computed property. A string based on the original with an uppercase transformati
 $string.lowercase
 ```
 
-Computed property. A string based on the original with a lowercase transformation.
+Property. A string based on the original with a lowercase transformation.
 
 
 

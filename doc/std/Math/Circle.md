@@ -62,7 +62,7 @@ Creates a circle at the origin given area.
 $circle.r
 ```
 
-Computed property. Radius.
+Property. Radius.
 
 
 
@@ -72,7 +72,7 @@ Computed property. Radius.
 $circle.h
 ```
 
-Computed property. Center x-coordinate.
+Property. Center x-coordinate.
 
 
 
@@ -82,7 +82,7 @@ Computed property. Center x-coordinate.
 $circle.k
 ```
 
-Computed property. Center y-coordinate.
+Property. Center y-coordinate.
 
 
 

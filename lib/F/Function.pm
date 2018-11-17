@@ -36,9 +36,9 @@ sub desc_type {
     if ($func->is_method) {
         my $method = $func;
         return "operator ($$method{operator})" if $method->{operator};
-        my $main = $method->{main}    ? 'class '            : '';
-        my $type = $method->{is_prop} ? 'computed property' : 'method';
-        my $lazy = $method->{p_set}   ? ' (lazy)'           : '';
+        my $main = $method->{main}    ? 'class ' : '';
+        my $type = $method->{is_prop} ? ($method->body ? 'computed ' : '').'property' : 'method';
+        my $lazy = $method->{p_set}   ? ' (lazy)' : '';
         return "$main$type '$$method{name}'$lazy";
     }
     return 'anonymous function' if $func->anonymous;
@@ -323,7 +323,9 @@ sub markdown_fmt {
         heading     => $head,
         example     => $example,
         arguments   => $arguments,
-        computed    => $method->{p_set} ? 'Once-computed' : 'Computed'
+        type        => !$method->body ?
+                       "Property" : $method->{p_set} ?
+                       'Once-computed property' : 'Computed property'
     };
 }
 

@@ -45,7 +45,7 @@ Creates a line given slope and a point.
 $line.m
 ```
 
-Computed property. Slope.
+Property. Slope.
 
 
 
