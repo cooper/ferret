@@ -18,7 +18,7 @@ Creates a line given slope and y-intercept.
 
 * __m__: [Num](/doc/std/Number.md) - Slope.
 
-* __c__: [Num](/doc/std/Number.md) - Slope.
+* __c__: [Num](/doc/std/Number.md) - Y-intercept.
 
 
 
@@ -55,7 +55,7 @@ Computed property. Slope.
 $line.slope
 ```
 
-Computed property. Slope. same as `m`.
+Computed property. Slope. Same as `m`.
 
 
 
@@ -65,7 +65,7 @@ Computed property. Slope. same as `m`.
 $line.formula
 ```
 
-Computed property. 
+Computed property. Formula in slope-intercept notation.
 
 
 
@@ -74,6 +74,8 @@ Computed property.
 ```
 $line == ($ehs: Line)
 ```
+
+Equality of two lines.
 
 
 

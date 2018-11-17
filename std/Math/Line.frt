@@ -5,7 +5,7 @@ class Line
 #> creates a line given slope and y-intercept
 init {
     need @m: Num #< slope
-    need @c: Num #< slope
+    need @c: Num #< y-intercept
 }
 
 #> creates a line given slope and a point
@@ -18,11 +18,12 @@ init {
 #> slope
 prop m
 
-#> slope. same as `m`
+#> slope. Same as `m`
 prop slope {
     return @m
 }
 
+#> formula in slope-intercept notation
 prop formula {
     if @c < 0:
         return "y = @m" + "x - " + @c.abs
@@ -33,6 +34,7 @@ method description {
     return @formula
 }
 
+#> equality of two lines
 operator == {
     need $ehs: Line
     return $ehs.m == @m && $ehs.c == @c
