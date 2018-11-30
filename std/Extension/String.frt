@@ -25,20 +25,18 @@ type Any {
     transform Str($_)
 }
 
-method word {
+.word {
     need $wordI: Num
     if $wordI < 0
-        return @split(/\s+/)[$wordI]
-    return @split(/\s+/, limit: $wordI + 2)[$wordI]
+        -> @split(/\s+/)[$wordI]
+    -> @split(/\s+/, limit: $wordI + 2)[$wordI]
 }
 
-method fromWord {
+.fromWord {
     need $wordN: Num
     if $wordN < 0
-        return @split(/\s+/)[$wordN]
-    return @split(/\s+/, limit: $wordN + 1)[$wordN]
+        -> @split(/\s+/)[$wordN]
+    -> @split(/\s+/, limit: $wordN + 1)[$wordN]
 }
 
-prop? empty {
-    return @length == 0
-}
+.empty? -> @length == 0

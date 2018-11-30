@@ -8,23 +8,21 @@ type Pairs {
 }
 
 #> True if the list is empty.
-prop empty {
-    return @length == 0
-}
+.empty -> @length == 0
 
 #> Returns a copy of the list by mapping each element to another value based on
 #| a transformation code.
-method map {
+.map {
     need $code: Code
-    return gather for $el in *self {
+    -> gather for $el in *self {
         take $code($el)
     }
 }
 
 #> Returns a copy of the list containing only the elements that satisfy a code.
-method grep {
+.grep {
     need $code: Code
-    return gather for $el in *self {
+    -> gather for $el in *self {
         if $code($el): take $el
     }
 }
@@ -38,28 +36,28 @@ method flatten {
         else
             $new.push($el)
     }
-    return $new
+    -> $new
 }
 
 #> Returns a reversed copy of the list.
 method reverse {
     $new = []
-    return gather for $i in @lastIndex..0:
+    -> gather for $i in @lastIndex..0:
         take *self[$i]
 }
 
 #> Copies the list, ignoring all possible occurrences of a specified value.
 method withoutAll {
     need $what
-    return @grep! { -> $what != $_ }
-    #return @grep(func { -> $what != $_ })
+    -> @grep! { -> $what != $_ }
+    # -> @grep(func { -> $what != $_ })
 }
 
 #> Copies the list, ignoring the first occurrence of a specified value.
 method without {
     need $what
     var $found
-    return gather for ($i, $el) in *self {
+    -> gather for ($i, $el) in *self {
         if !$found && $what == $el {
             $found = true
             next
@@ -103,95 +101,89 @@ method removeAll {
 #| value.
 method contains {
     need $what
-    return @any! { -> $what == $_ }
+    -> @any! { -> $what == $_ }
 }
 
 #> Finds the first element to satisfy a code.
 method first {
     need $code: Code
     for $el in *self {
-        if $code($el): return $el
+        if $code($el): -> $el
     }
-    return undefined
+    -> undefined
 }
 
 #> Returns the index of the first occurrence of the given value
 method indexOf {
     need $what
     for ($i, $el) in *self {
-        if $what == $el: return $i
+        if $what == $el: -> $i
     }
-    return undefined
+    -> undefined
 }
 
 #> Returns true if at least one element satisfies a code.
 method any {
     need $code: Code
     for $el in *self {
-        if $code($el): return true
+        if $code($el): -> true
     }
-    return false
+    -> false
 }
 
 #> Returns true if all elements satisfy a code.
 method all {
     need $code: Code
     for $el in *self {
-        if !$code($el): return false
+        if !$code($el): -> false
     }
-    return true
+    -> true
 }
 
 #> Returns the sum of all elements in the list or `undefined` if the list is
 #| empty.
-prop sum {
+.sum {
     if @empty
-        return undefined
+        -> undefined
     $c = *self[0]
     for $i in 1 .. @lastIndex {
         $c = $c + *self[$i]
     }
-    return $c
+    -> $c
 }
 
 #> Returns the sum of all elements in the list or `0` (zero) if the list is
 #| empty. Useful for lists of numbers.
-prop sum0 {
+.sum0 {
     $c = 0
     for $el in *self {
         $c = $c + $el
     }
-    return $c
+    -> $c
 }
 
 #> Returns the first element in the list.
-prop firstItem {
-    return *self[0]
-}
+.firstItem -> *self[0]
 
 #> Returns the last element in the list.
-prop lastItem {
-    return *self[@lastIndex]
-}
+.lastItem -> *self[@lastIndex]
 
 #> If the list has length one, returns an empty string, otherwise `"s"`
-prop s {
+.s {
     if @length == 1
-        return ""
-    return "s"
+        -> ""
+    -> "s"
 }
 
 #> Returns an iterator for the list. This allows lists to be used in a for loop.
-prop iterator {
-    return ListIterator(*self) : Iterator
-}
+.iterator -> ListIterator(*self) : Iterator
 
 #> Adding lists together results in an ordered consolidation of the lists.
 operator + {
     need $rhs: List
     $new = @copy()
     $new.push(items: $rhs)
-    return $new
+    -> $new
 }
 
 #> Subtracting list B from list A results in a new list containing all elements
@@ -201,5 +193,5 @@ operator - {
     $new = @copy()
     for $remove in $rhs:
         $new.removeAll($remove)
-    return $new
+    -> $new
 }

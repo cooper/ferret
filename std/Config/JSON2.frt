@@ -7,5 +7,5 @@ init {
 
 method parse {
     $jsonData = File(@filePath).slurp!
-    return JSON.decode($jsonData).data
+    -> JSON.decode($jsonData).data
 }

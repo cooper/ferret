@@ -30,9 +30,9 @@ init {
 
 #> Convenient method for a GET request.
 #| See the [`request`](#request) method.
-method get {
+.get {
     need $url: Str  #< HTTP URL to request
-    return @request(
+    -> @request(
         httpMethod: :GET,
         url:        $url
     )
@@ -40,16 +40,16 @@ method get {
 
 #> Convenient method for a POST request.
 #| See the [`request`](#request) method.
-method post {
+.post {
     need $url: Str  #< HTTP URL to request
-    return @request(
+    -> @request(
         httpMethod: :POST,
         url:        $url
     )
 }
 
 #> Creates an [`HTTP::Request`](Request.md).
-method request {
+.request {
 
     #> Request HTTP method.
     need $httpMethod: Method
@@ -57,7 +57,7 @@ method request {
     #> HTTP URL to request
     need $url: Str
 
-    return HTTP::Request(
+    -> HTTP::Request(
         client:     *self,
         httpMethod: $httpMethod,
         url:        $url

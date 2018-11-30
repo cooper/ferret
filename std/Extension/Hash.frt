@@ -1,12 +1,7 @@
 class Hash <K?, V?>
 
-prop empty {
-    return @length == 0
-}
-
-prop iterator {
-    return HashIterator(*self) : Iterator
-}
+.empty -> @length == 0
+.iterator -> HashIterator(*self) : Iterator
 
 class OrderedHash <K?, V?>
 
@@ -17,11 +12,9 @@ init {
     Hash<K, V>.init(*self)()
 }
 
-prop keys {
-    return @orderedKeys
-}
+.keys -> @orderedKeys
 
-method pushPair {
+.pushPair {
     need $key: K, $value: V
 
     # remove the existing location
@@ -32,8 +25,8 @@ method pushPair {
     @orderedKeys.push($key)
 }
 
-prop iterator {
+.iterator {
     $it = HashIterator(*self)
     $it.keysLeft = @orderedKeys.copy()
-    return $it : Iterator
+    -> $it : Iterator
 }

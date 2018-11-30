@@ -27,7 +27,7 @@ method addConnection {
 }
 
 #> removes a connection from this bot
-method removeConnection {
+.removeConnection {
     need $conn: Connection
     @conns.remove($conn)
     $conn.handlers.*removeListener(@handlers)
