@@ -11,7 +11,7 @@ are [real numbers](Number.md) and `i` is the
 `a` and `b` are commonly called the "real part" and "imaginary part"
 respectively, despite both being [real numbers](Number.md).
 
-Complex numbers can also be constructed from a polar representations
+Complex numbers can also be constructed from polar representations
 `r(cosθ + isinθ)` or `re^(iθ)` with [`Complex.polar()`](#polar).
 
 

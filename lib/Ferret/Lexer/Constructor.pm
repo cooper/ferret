@@ -1708,23 +1708,6 @@ sub c_KEYWORD_DEFER {
     return $defer;
 }
 
-# function/method return statement.
-sub c_KEYWORD_RETURN {
-    my ($c, $value) = @_;
-
-    # Rule Return[0]:
-    #   Must be somewhere inside a Function or Method.
-
-    # Rule Return[1]:
-    #   Number of children must be no more than one (1).
-
-    # Rule Return[2]:
-    #   Children must be of type Expression.
-
-    my $ret = F::new('Return');
-    return $c->adopt_and_set_node($ret);
-}
-
 # the return operator.
 sub c_OP_RETURN {
     my ($c, $value) = @_;
@@ -1774,8 +1757,19 @@ sub c_OP_RETURN {
             ) unless $word->type eq 'Bareword';
         }
 
-        # if it does start the instruction, pretend it's a return keyword
-        return $c->simulate('KEYWORD_RETURN');
+        # if it does start the instruction, it's a return statement
+            
+        # Rule Return[0]:
+        #   Must be somewhere inside a Function or Method.
+
+        # Rule Return[1]:
+        #   Number of children must be no more than one (1).
+
+        # Rule Return[2]:
+        #   Children must be of type Expression.
+
+        my $ret = F::new('Return');
+        return $c->adopt_and_set_node($ret);
     }
 
     # forget about the bareword.

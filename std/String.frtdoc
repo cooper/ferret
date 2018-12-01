@@ -4,17 +4,17 @@ class String
 #| double quotes, like so: `"The quick brown fox jumps over the lazy dog"`.
 
 #> character length of the string
-prop length
+.length
 
 #> A string based on the original with an uppercase transformation
-prop uppercase
+.uppercase
 
 #> A string based on the original with a lowercase transformation
-prop lowercase
+.lowercase
 
 #> Returns a list of substrings based on the division of the original
 #| string by the provided separator.
-method split {
+.split {
 
     #> substring separator. The default is the empty string, which results
     #| in a list of individual characters.
@@ -39,7 +39,7 @@ method split {
 #|
 #| For example, `"Hi <<name>>!".fill(name: "Steve")` returns `"Hi Steve!"`.
 #|
-method fill {
+.fill {
 
     #> If provided, the keys and values in this hash will be used to
     #| fill the placeholders rather than the named argument pairs.
@@ -49,7 +49,7 @@ method fill {
 
 #> Looks for the provided substring at the beginning (left side) of the string.
 #> Returns a boolean true value if the prefix exists.
-method hasPrefix {
+.hasPrefix {
 
     #> prefix to look for
     need $prefix: Str
@@ -59,7 +59,7 @@ method hasPrefix {
 #> Returns a string with the provided substring removed from the
 #| beginning (left side) of the original string. If the string does not
 #| have that prefix, a copy of the original string is returned.
-method trimPrefix {
+.trimPrefix {
 
     #> prefix to remove
     need $prefix: Str
@@ -68,7 +68,7 @@ method trimPrefix {
 
 #> Looks for the provided substring at the end (right side) of the string.
 #> Returns a boolean true value if the suffix exists.
-method hasSuffix {
+.hasSuffix {
 
     #> suffix to look for
     need $suffix: Str
@@ -78,7 +78,7 @@ method hasSuffix {
 #> Returns a string with the provided substring removed from the
 #| end (right side) of the original string. If the string does not
 #| have that suffix, a copy of the original string is returned.
-method trimSuffix {
+.trimSuffix {
 
     #> suffix to remove
     need $suffix: Str

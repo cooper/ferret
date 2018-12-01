@@ -16,10 +16,10 @@ my ($position, $file, $nested);
 # when changing this, update Keywords.md
 my $keyword_reg = '\\b(?:'.join('|', qw{
     package     class       end         init
-    method      func        prop        load
+    method      func        load
     want        need        share       var
     on          before      after       inside
-    if          else        return      stop
+    if          else        stop
     true        false       undefined   defer
     for         in          gather      take
     next        last        redo        continue
@@ -59,7 +59,7 @@ my %semi_follows = map { $_ => 1 } qw(
     VAR_SELF        VAR_SPEC        VAR_SYM
     OP_CALL         OP_ELLIP        REGEX
     KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED
-    KEYWORD_RETURN  KEYWORD_STOP    BAREWORD
+    KEYWORD_STOP    BAREWORD
     KEYWORD_NEXT    KEYWORD_LAST    KEYWORD_REDO
     KEYWORD_ELSE    OP_RETURN
 );
@@ -526,17 +526,6 @@ sub tok_BAREWORD {
         return [ FUNCTION => { name => $value } ];
     }
 
-    # property.
-    if ($last->[0] eq 'KEYWORD_PROP') {
-        delete $tokens->[-1];
-
-        return [ METHOD => {
-            name    => $value,
-            p_set   => $last->[1] && $last->[1] eq 'set',
-            is_prop => 1
-        } ];
-    }
-
     # method.
     if ($last->[0] eq 'KEYWORD_METHOD') {
         delete $tokens->[-1];
@@ -592,13 +581,7 @@ sub tok_OP_NOT {
 
 sub tok_OP_MAYBE {
     my ($tokens, $value) = @_;
-
-    # if it follows 'prop' keyword, it's a lazy computed property.
     my $last = $tokens->[-1] or return;
-    if ($last->[0] eq 'KEYWORD_PROP') {
-        $last->[1] = 'set';
-        return [];
-    }
 
     # if it follows 'type' or 'alias' keyword, it's a lazy type.
     if ($last->[0] eq 'KEYWORD_TYPE' || $last->[0] eq 'ALIAS') {

@@ -42,7 +42,7 @@ func checkID {
     if $age < 21 {
         underage -> true : Bool
         say("Sorry, $name. Come back later.")
-        return
+        ->
     }
 
     say("Welcome, $name.")
@@ -117,7 +117,7 @@ course, stops the execution of the function at that point. The function then
 yields the returned value instead of the [return object](#return-objects).
 
 ```
-return $value
+-> $value
 ```
 
 A return with no value stops the execution of the function, yielding the
@@ -125,7 +125,7 @@ A return with no value stops the execution of the function, yielding the
 in the `checkID()` example.
 
 ```
-return
+->
 ```
 
 Functions with no return value do not need an explicit return statement.
@@ -176,7 +176,7 @@ func checkID {
         # they would continue execution--
         # return does NOT stop event propagation.
         #
-        return
+        ->
 
     }
 
@@ -238,7 +238,7 @@ fail Error(:Unimplemented, "This function is not yet implemented")
 
 `fail` does NOT throw an exception, nor does it stop the execution of the
 thread. It only stops the execution of the current function and stores the
-error. You should use `fail` in place of `return` any time the function did not
+error. You should use `fail` in place of `->` any time the function did not
 achieve what it intended to or in place of `throw` when non-fatal errors occur
 but execution of the thread can continue.
 
@@ -256,7 +256,7 @@ Functions may accept a variable number of arguments.
 ```
 func getSum {
     need $nums: Num...
-    return $nums.sum
+    -> $nums.sum
 }
 
 getSum(1, 2, 3, 4, 5)   # 15
@@ -314,7 +314,7 @@ func enterBar before :default, :checkID {
     want $age: Int = 0
     want $name: Str = "stranger"
     if $age >= 21
-        return
+        ->
     stop # cancel all remaining callbacks
     fail Error(:UnderageError, "Sorry $name...")
 }
@@ -330,7 +330,7 @@ enterBar(age: 15)               # :UnderageError "Sorry stranger..."
 [`stop`](Keywords.md#stop) cancels any remaining callbacks for the particular
 call but does NOT stop the execution of the current callback function.
 
-Remember: The [`return`](Keywords.md#return) statement stops the execution
+Remember: The [`->`](Operators.md#return-operator) statement stops the execution
 of the current callback function but does NOT stop the propagation of the event.
 
 Use them in conjunction to achieve both.
@@ -413,7 +413,7 @@ op + {
 ### Computed properties
 
 Computed properties are methods also, except their return values are
-evaluated at the time the property is accessed.
+evaluated at the time the property is accessed. 
 
 ```
 prop direction {
@@ -433,7 +433,12 @@ Method short-hand syntax is allowed for computed properties.
 }
 ```
 
-For once-computed properties, add a question mark:
+If the property name is suffixed by a question mark, its value will
+only be computed once. After the first evaluation, the returned value will be
+stored as the semi-permanent property value. This works similarly to lazy
+assignment with the
+[lazy assignment operator `?=`](Operators.md#lazy-assignment-operator).
+
 ```
 .odd? -> *self % 2 != 0
 ```

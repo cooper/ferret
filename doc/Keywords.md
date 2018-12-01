@@ -178,7 +178,7 @@ $x = 1
 
 func wontChangeX {
     var $x = 2
-    return $x
+    -> $x
 }
 
 wontChangeX()   # returns 2
@@ -351,7 +351,7 @@ spam(end: 30)
 # Anonymous function
 $anon = func {
     need $x: Num, $y: Num
-    return $x + $y
+    -> $x + $y
 }
 
 doSomethingWithAnon($anon, $other_args)
@@ -456,7 +456,7 @@ particular call.
 
 This does not affect any future calls, only the current one. Also note that it
 does not emulate a function return; any statements below it will still execute
-unless it is followed by an explicit `return` statement.
+unless it is followed by an explicit `->` statement.
 
 ```
 # on INT, ask "are you sure?"
@@ -469,7 +469,7 @@ on Signal.INT.trap before :default {
         say("Are you sure?")
         $asked = true
         stop    # cancel further callbacks
-        return  # note that stop does not affect the remainder of the callback
+        ->      # note that stop does not affect the remainder of the callback
     }
     say("Got second INT. Terminating!")
 }
@@ -483,10 +483,10 @@ $ret = detail someFunction()
 
 Requests "more detail" in the return value of a function call.
 
-This means that, regardless of any explicit `return` statements that may exist,
-the call will always return the [return object](Variables.md#special-variables).
+This means that, regardless of any explicit `->` statements that may exist,
+the call will always return the [return object](Functions.md#return-objects).
 
-If at least one explicit `return` did exist, the most recent one determines the
+If at least one explicit `->` did exist, the most recent one determines the
 value of the `result` property of the return object.
 
 Consider this example:
@@ -494,7 +494,7 @@ Consider this example:
 func A {
     x -> "a return value"
     y -> "another value"
-    return "the ultimate value"
+    -> "the ultimate value"
 }
 A()
 ```
@@ -539,7 +539,7 @@ hook <name> [{ <statements> }]
 ```
 
 Exactly the same as the [`method`](#method) keyword, except that it is used by
-convention for event hooks.
+convention for event hooks and produces different documentation.
 
 Usually the body is omitted, but you can still provide one if your class needs
 a default responder for its own hook.
@@ -561,7 +561,8 @@ Declares a class instance initializer.
 
 A class may have any number of initializers. Initialization succeeds as long as
 at least one of them is satisfied. The first one found is considered default and
-dictates the `init` signature.
+dictates the `init` signature. Thus, you have to specify arg names for all
+initializers besides the default one.
 
 ```
 class Person
@@ -576,7 +577,7 @@ init {
 init {
     need $firstName: Str, $lastName: Str
     need $age: Num, $gender: Sym
-    return Person("$firstName $lastName", $age, $gender)
+    -> Person("$firstName $lastName", $age, $gender)
 }
 
 end
@@ -587,31 +588,6 @@ $john = Person("John Doe", 43, :male)
 # uses secondary initializer.
 # note the args for a secondary initializer must be explicit.
 $jane = Person(firstName: "Jane", lastName: "Doe", age: 42, gender: :female)
-```
-
-### prop
-
-```
-prop[?] <name> { <statements> }
-```
-
-Declares a computed property (instance variable).
-
-If the keyword is spelled `prop?` with a question mark, its value will
-only be computed once. After the first evaluation, the returned value will be
-stored as the semi-permanent property value. This works similarly to lazy
-assignment with the [`?=`](Operators.md#lazy-assignment-operator).
-
-```
-class Line
-
-prop midpoint {
-    return @pt1.midpoint(@pt2)
-}
-```
-
-```
-$line.midpoint  # returns a Point, created on the spot
 ```
 
 ### op
@@ -650,12 +626,12 @@ class Duration
 
 operator + {
     need $ehs: Duration # the side does not matter for addition
-    return @addDuration($rhs)
+    -> @addDuration($rhs)
 }
 
 operator - {
     need $rhs: Duration # the side matters for subtraction
-    return @subtractDuration($rhs)
+    -> @subtractDuration($rhs)
 }
 ```
 
@@ -671,7 +647,7 @@ Conditional statement.
 
 The code within the block will be executed only if `condition` represents a true
 value. In Ferret, all values are true other than `false`,
-`undefined`, and empty [return objects](Variables.md#special-variables).
+`undefined`, and empty [return objects](Functions.md#return-objects).
 
 If the body of the conditional is a single statement, the curly brackets `{` and
 `}` may be omitted, provided that the statement occurs on a separate line from
@@ -760,44 +736,6 @@ else if true
 else
     say("This will not be reached")
 ```
-
-### return
-
-```
-return [<value>]
-```
-
-Terminates the current function or method, returning `value`.
-
-If the return value is omitted or no `return` statement is ever reached, the
-function yields the return object
-([special variable](Variables.md#special-variables) `*return`).
-
-When used within an event callback, it is possible that the provided value will
-not ultimately be returned by the event call. If multiple callbacks have an
-explicit `return` statement, the value of the lattermost statement is used.
-
-```
-func simple {
-    return "t"
-}
-
-func complex {
-    want $x: Num
-    if $x {
-        gotX  -> true
-        value -> $x
-        return
-    }
-    return "reached bottom"
-}
-
-simple()    # returns "t"
-complex(5)  # returns (gotX: true, value: 5)
-complex()   # returns "reached bottom"
-```
-
-See also the return operator [`->`](Operators.md#return-operator).
 
 ### for
 
@@ -957,7 +895,7 @@ defer { <statements> }
 Postpones the execution of code until the current routine reaches its end.
 
 This is useful to guarantee that something be done after a routine executes,
-regardless of whether it terminated early by `return` or other means.
+regardless of whether it terminated early by `->` or other means.
 
 `defer` can only exist within functions, methods, and callbacks.
 If multiple instances of `defer` occur in a routine, they are executed in the
@@ -1184,7 +1122,7 @@ callbacks. It requires one argument: an error object.
 
 When `fail` is reached, the `error` return pair is set to the provided error
 object. The current function yields the
-[return object](Variables.md#special-variables) `*return` with this error
+[return object](Functions.md#return-objects) with this `error`
 property set. If used within an event, it will stop the propagation, cancelling
 any remaining callbacks.
 
@@ -1192,7 +1130,7 @@ This is useful because the [`catch`](#catch) keyword relies on the `error`
 property for nonfatal error handling.
 
 Based on its behavior, `fail $x` is functionally equivalent to the following:
-`error -> $x; stop; return`.
+`error -> $x; stop; ->`.
 
 ```
 func alwaysFails {

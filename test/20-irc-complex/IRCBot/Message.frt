@@ -20,7 +20,7 @@ init {
 }
 
 # find the command
-prop? command {
+.command? {
 
     # find it
     if @parts.length != 0 && @parts[0].hasPrefix(".") {
@@ -32,7 +32,7 @@ prop? command {
     -> false
 }
 
-prop? commandHasParameters -> @parts.length > 1
+.commandHasParameters? -> @parts.length > 1
 
 # get a phrase starting with word N.
 .fromWord {

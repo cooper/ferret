@@ -126,16 +126,29 @@ See also [`OP_ASSIGN`](#assignment-operator).
 
     ->
 
-Adds a named value to the return object of a function.
+The return operator does three things:
 
-All functions, methods, and callbacks start with an empty return object. This is
+1. With a bareword to its left and expression at right, adds a named value
+   to the [return object](Functions.md#return-objects)
+   of the function but allows execution to continue.
+2. With nothing to its left and an expression at right, overrides the return
+   object with the specified single return value and stops execution of the
+   function.
+3. All by itself, as a standalone instruction, stops execution of the
+   function, yielding the return object in its current state.
+
+All functions, methods, and callbacks start with an empty
+[return object](Functions.md#return-objects). This is
 useful for returning multiple values, especially if the routine is extensible
 through user-defined event callbacks which may find use in returning values.
-Within the body of the function, the return object is represented by the
-[special variable](Variables.md#special-variables) `*return`.
 
-This operator, in the form of `propName -> $value`, provides a more appealing
-syntax for the functionally equivalent `*return.propName = $value`.
+
+__Case 1__ - Within the body of the function, the return object is represented by
+the [special variable](Variables.md#special-variables) `*return`, but rarely
+should you need to access it that way because of the convenient syntax provided
+by this operator. The return operator, in the form of `propName -> $value`,
+provides a more appealing syntax for the functionally equivalent
+`*return.propName = $value`.
 
     func addOneToEach {
         need $x: Num, $y: Num
@@ -145,16 +158,50 @@ syntax for the functionally equivalent `*return.propName = $value`.
 
     addOneToEach(5, 10)  # returns (newX: 6, newY: 11)
 
-Additionally, it can be used in place of the [`return`](Keywords.md#return)
-keyword in the form `-> $returnValue`. This is only valid when nothing or
-exactly one value is returned. By convention, this syntax is only used in
-one-liners and anonymous functions passed as arguments.
+__Case 2__ -  The return operator can be used in place of the return keyword
+that exists in many other languages, like so: `-> $returnValue`. Ferret has
+no return keyword. Consider the following one-liner as an example:
 
-    [1,2,3].map! { -> $_ * 2 }  # [2, 4, 6]
+    [1,2,3].map! { -> $_ * 2 }      # [2, 4, 6]
+
+Note that When used within an event callback, it is possible that the provided
+value will not ultimately be returned by the event call. If multiple callbacks
+have an explicit `->` statement, the value of the lattermost statement is used.
+
+```
+func simple {
+    -> "t"
+}
+
+func complex {
+    want $x: Num
+    if $x {
+        gotX  -> true
+        value -> $x
+        ->
+    }
+    -> "reached bottom"
+}
+
+simple()    # returns "t"
+complex(5)  # returns (gotX: true, value: 5)
+complex()   # returns "reached bottom"
+```
+
+__Case 3__ - The return operator can stop execution of the function without
+providing a value. In this case, the functions yields the
+[return object](Functions.md#return-objects), NOT a void value.
+
+    func calculate {
+        
+        # in progress already, so return!
+        if $alreadyCalculating
+            ->
+
+        # continue...
+    }
 
 Tokenized as `OP_RETURN`.
-
-See also the [`return`](Keywords.md#return) keyword.
 
 ### Namespace separator
 
@@ -220,7 +267,7 @@ arguments which will be passed to the implementation as a list.
 
     func getSum {
         need $nums: Num...
-        return $nums.sum
+        -> $nums.sum
     }
 
     getSum(1, 2, 3, 4, 5)   # 15

@@ -24,32 +24,25 @@ init {
     need @x: Num, @y: Num
 }
 
-method distanceTo {
+.distanceTo {
     need $pt2: Point
     $dx = @x - $pt2.x
     $dy = @y - $pt2.y
-    return sqrt($dx ^ 2 + $dy ^ 2)
+    -> sqrt($dx ^ 2 + $dy ^ 2)
 }
 
-prop distanceFromOrigin {
-    return @distanceTo(*class(0, 0))
-}
+.distanceFromOrigin
+    -> @distanceTo(*class(0, 0))
 
-prop pretty {
-    return "(@x, @y)"
-}
+.pretty -> "(@x, @y)"
 
-method toString {
-    return @pretty
-}
+.toString -> @pretty
 
-method description {
-    return "Point" + @pretty
-}
+.description -> "Point" + @pretty
 
 func midpoint {
     need $pt1: Point, $pt2: Point
-    return *class(
+    -> *class(
         x: ($pt1.x + $pt2.x) / 2,
         y: ($pt1.y + $pt2.y) / 2
     )
@@ -57,7 +50,7 @@ func midpoint {
 
 func distanceBetween {
     need $pt1: Point, $pt2: Point
-    return $pt1.distanceTo($pt2)
+    -> $pt1.distanceTo($pt2)
 }
 ```
 

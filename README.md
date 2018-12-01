@@ -221,6 +221,7 @@ Otherwise, head to `#k` on `irc.notroll.net` and start complaining.
         * [Point](doc/std/Math/Point.md) - 2D points
         * [Line](doc/std/Math/Line.md) - Line segments
         * [Rect](doc/std/Math/Rect.md) - Rectangles
+        * [Circle](doc/std/Math/Circle.md) - Circles
         * [Vector](doc/std/Math/Vector.md) - Vectors of any dimension
         * [Matrix](doc/std/Math/Matrix.md) - Matrices of any dimensions
 * Date and time
