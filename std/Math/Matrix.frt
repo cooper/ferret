@@ -101,7 +101,7 @@ operator - {
     }
 }
 
-method description {
+.description {
     $str = ""
     for $row in @rowList
         $str += "[ " + $row.join(" ") + " ]" + "\n"

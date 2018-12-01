@@ -15,24 +15,17 @@ init {
     @c = $pt.y - @m * $pt.x
 }
 
-#> slope
-prop m
-
-#> slope. Same as `m`
-prop slope {
-    return @m
-}
+.m              #< slope
+.slope -> @m    #< slope. Same as `m`
 
 #> formula in slope-intercept notation
-prop formula {
+.formula {
     if @c < 0:
-        return "y = @m" + "x - " + @c.abs
-    return "y = @m" + "x + @c"
+        -> "y = @m" + "x - " + @c.abs
+    -> "y = @m" + "x + @c"
 }
 
-method description {
-    return @formula
-}
+.description -> @formula
 
 #> equality of two lines
 operator == {

@@ -66,9 +66,7 @@ init {
     -> @hasPoint($seg.pt1) && @hasPoint($seg.pt2)
 }
 
-method description {
-    -> "( (@h, @k) r = @r )"
-}
+.description -> "( (@h, @k) r = @r )"
 
 #> equality of two circles
 operator == {
