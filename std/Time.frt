@@ -197,7 +197,7 @@ prop weekdayName {
 #################
 
 #> add a duration to a timepoint
-operator + {
+op + {
     need $ehs: Duration
     $t = @copy!
     $t.dt.add_duration($ehs.dtd)
@@ -205,7 +205,7 @@ operator + {
 }
 
 #> subtract a duration from a timepoint
-operator - {
+op - {
     need $rhs: Duration
     $t = @copy!
     $t.dt.subtract_duration($rhs.dtd)

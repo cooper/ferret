@@ -40,7 +40,7 @@ method description {
 }
 
 #> equality of two points
-operator == {
+op == {
     need $ehs: Point
     return $ehs.x == @x && $ehs.y == @y
 }

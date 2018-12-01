@@ -28,7 +28,7 @@ init {
 .description -> @formula
 
 #> equality of two lines
-operator == {
+op == {
     need $ehs: Line
     return $ehs.m == @m && $ehs.c == @c
 }

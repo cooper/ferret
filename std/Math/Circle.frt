@@ -69,7 +69,7 @@ init {
 .description -> "( (@h, @k) r = @r )"
 
 #> equality of two circles
-operator == {
+op == {
     need $ehs: Circle
     -> $ehs.center == @center && $ehs.r == @r
 }

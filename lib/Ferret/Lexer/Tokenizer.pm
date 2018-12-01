@@ -26,7 +26,7 @@ my $keyword_reg = '\\b(?:'.join('|', qw{
     type        alias       delete      weaken
     can         satisfies   transform   isa
     detail      throw       fail        catch
-    hook        operator    __END__
+    hook        op          __END__
 }).')\\b';
 
 # these tokens do not have values.
@@ -488,7 +488,7 @@ sub tok_KEYWORD {
         return [ METHOD => { name => 'initializer__', main => 1 } ];
     }
 
-    if ($value eq 'operator') {
+    if ($value eq 'op') {
         return [ KEYWORD_METHOD => ];
     }
 

@@ -90,25 +90,25 @@ method root {
 }
 
 #> addition of complex numbers
-operator + {
+op + {
     need $rhs: Complex
     return Complex(@a + $rhs.a, @b + $rhs.b)
 }
 
 #> addition of complex and real numbers
-operator + {
+op + {
     need $ehs: Num
     return Complex(@a + $ehs, @b)
 }
 
 #> subtraction of complex numbers
-operator - {
+op - {
     need $rhs: Complex
     return Complex(@a - $rhs.a, @b - $rhs.b)
 }
 
 #> subtraction of real number from complex number
-operator - {
+op - {
     need $rhs: Num
     return Complex(@a - $rhs, @b)
 }
@@ -116,13 +116,13 @@ operator - {
 #> subtraction of complex number from real number
 # this is like (r)-(a+bi)
 # so it's r - a - bi
-operator - {
+op - {
     need $lhs: Num
     return Complex($lhs - @a, -@b)
 }
 
 #> multiplication of complex numbers
-operator * {
+op * {
     need $rhs: Complex
     return Complex(
         @a * $rhs.a - @b * $rhs.b,
@@ -131,13 +131,13 @@ operator * {
 }
 
 #> multiplication of real and complex numbers
-operator * {
+op * {
     need $ehs: Num
     return Complex($ehs * @a, $ehs * @b)
 }
 
 #> division of complex numbers
-operator / {
+op / {
     need $rhs: Complex
     $conj = $rhs.conj
     $num = *self * $conj
@@ -149,7 +149,7 @@ operator / {
 }
 
 #> division of complex number by real number
-operator / {
+op / {
     need $rhs: Num
     return Complex(
         @a / $rhs,
@@ -161,7 +161,7 @@ operator / {
 #|
 #| This can get expensive for large powers.
 #| For a quicker but less precise alternative, use [`.pow()`](#pow).
-operator ^ {
+op ^ {
     need $rhs: Num
     if $rhs <= 0
         return 1
@@ -169,19 +169,19 @@ operator ^ {
 }
 
 #> Real number to a complex power
-operator ^ {
+op ^ {
     need $lhs: Num
     return Complex.polar($lhs ^ @a, @b * Math.log($lhs))
 }
 
 #> equality of complex numbers
-operator == {
+op == {
     need $ehs: Complex
     return @a == $ehs.a && @b == $ehs.b
 }
 
 #> equality of complex number and real number
-operator == {
+op == {
     need $ehs: Num
     return @a == $ehs && @b == 0
 }

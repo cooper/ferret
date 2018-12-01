@@ -179,7 +179,7 @@ method all {
 .iterator -> ListIterator(*self) : Iterator
 
 #> Adding lists together results in an ordered consolidation of the lists.
-operator + {
+op + {
     need $rhs: List
     $new = @copy()
     $new.push(items: $rhs)
@@ -188,7 +188,7 @@ operator + {
 
 #> Subtracting list B from list A results in a new list containing all elements
 #| found in A but not found in B. Example: `[1,2,3,4,5] - [3,5]` -> `[1,2,4]`.
-operator - {
+op - {
     need $rhs: List
     $new = @copy()
     for $remove in $rhs:

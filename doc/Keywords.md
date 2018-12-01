@@ -614,10 +614,10 @@ prop midpoint {
 $line.midpoint  # returns a Point, created on the spot
 ```
 
-### operator
+### op
 
 ```
-operator <op> { <statements> }
+op <op> { <statements> }
 ```
 
 Exactly the same as the [`method`](#method) keyword, except that it is used by
