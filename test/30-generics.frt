@@ -4,18 +4,14 @@ init {
     @items = []
 }
 
-method push {
+.push {
     need $item: Element
-    return @items.push($item)
+    -> @items.push($item)
 }
 
-method pop {
-    return @items.pop()
-}
+method pop -> @items.pop()
 
-method description {
-    return "Stack " + @items.*description
-}
+.description -> "Stack " + @items.*description
 
 end
 

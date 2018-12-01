@@ -76,7 +76,7 @@ func handlePerl {
 
 func convertNewlines {
     need $string: Str
-    return $string.split("_NL_").join("\n")
+    -> $string.split("_NL_").join("\n")
 }
 
 func ircsay {

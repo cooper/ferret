@@ -1,8 +1,7 @@
 class String
 
-method doubledLength {
-    return @length! * 2
-}
+method doubledLength
+    -> @length! * 2
 
 end
 

@@ -12,54 +12,40 @@ init {
 }
 
 #> a list of the four vertices of the rectangle
-prop vertices {
-    return [
-        @topLeft,
-        @topRight,
-        @bottomLeft,
-        @bottomRight
-    ]
-}
+.vertices -> [
+    @topLeft,
+    @topRight,
+    @bottomLeft,
+    @bottomRight
+]
 
 #> bottom left vertex of the rectangle
-prop bottomLeft {
-    return @origin
-}
+.bottomLeft -> @origin
 
 #> bottom right vertex of the rectangle
-prop bottomRight {
-    return Point(@origin.x + @width, @origin.y)
-}
+.bottomRight -> Point(@origin.x + @width, @origin.y)
 
 #> top left vertex of the rectangle
-prop topLeft {
-    return Point(@origin.x, @origin.y + @height)
-}
+.topLeft -> Point(@origin.x, @origin.y + @height)
 
 #> top right vertex of the rectangle
-prop topRight {
-    return Point(@origin.x + @width, @origin.y + @height)
-}
+.topRight -> Point(@origin.x + @width, @origin.y + @height)
 
 #> line segment formed by the bottom vertices of the rectangle
-prop bottom {
-    return Segment(@bottomLeft, @bottomRight)
-}
+.bottom -> Segment(@bottomLeft, @bottomRight)
 
 #> line segment formed by the top vertices of the rectangle
-prop top {
-    return Segment(@topLeft, @topRight)
-}
+.top -> Segment(@topLeft, @topRight)
 
 #> center point of the rectangle
-prop center {
+.center {
     $x = @origin.x + @width  / 2
     $y = @origin.y + @height / 2
-    return Point($x, $y)
+    -> Point($x, $y)
 }
 
-method description {
+.description {
     $o = @origin
     $c = @center
-    return "[ @width" + "x@height; Origin($o.x, $o.y); Center($c.x, $c.y) ]"
+    -> "[ @width" + "x@height; Origin($o.x, $o.y); Center($c.x, $c.y) ]"
 }

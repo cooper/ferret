@@ -2,7 +2,7 @@
 
 func nonZeroCoodinates {
     need $pt: Math::Point
-    return gather {
+    -> gather {
         if $pt.x != 0
             take $pt.x
         if $pt.y != 0

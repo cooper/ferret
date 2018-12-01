@@ -10,6 +10,4 @@ init {
     want @encoding: Encoding = :utf8
 }
 
-method slurp {
-    return NATIVE.slurp(@path, @encoding)
-}
+method slurp -> NATIVE.slurp(@path, @encoding)

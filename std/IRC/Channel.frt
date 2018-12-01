@@ -8,7 +8,7 @@ init {
 }
 
 #> Sends a message to the channel
-method privmsg {
+.privmsg {
     need $message: Str::Any
     @conn.sendPrivmsg(@name, $message)
 }

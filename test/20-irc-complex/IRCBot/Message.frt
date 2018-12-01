@@ -26,18 +26,16 @@ prop? command {
     if @parts.length != 0 && @parts[0].hasPrefix(".") {
         $cmd = @parts[0].trimPrefix(".")
         if $cmd.length
-            return $cmd
+            -> $cmd
     }
 
-    return false
+    -> false
 }
 
-prop? commandHasParameters {
-    return @parts.length > 1
-}
+prop? commandHasParameters -> @parts.length > 1
 
 # get a phrase starting with word N.
-method fromWord {
+.fromWord {
     need $wordN: Num
-    return @message.split(" ", limit: $wordN + 1)[$wordN]
+    -> @message.split(" ", limit: $wordN + 1)[$wordN]
 }

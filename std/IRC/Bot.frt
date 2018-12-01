@@ -14,7 +14,7 @@ init {
 }
 
 #> adds a connection to this bot
-method addConnection {
+.addConnection {
     need $conn: Connection
     
     # add to connection list
@@ -39,6 +39,4 @@ method connect {
         $conn.connect()
 }
 
-method description {
-    return "IRC::Bot(@conns.length connection@conns.s)"
-}
+.description -> "IRC::Bot(@conns.length connection@conns.s)"

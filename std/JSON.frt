@@ -84,7 +84,7 @@ init {
 #> Encodes some data as JSON text.
 #| The output of this method is dependent on the various options provided at
 #| initialization.
-method encode {
+.encode {
     need $data  #< an object to convert to JSON text
     json -> @xs.encode($data) catch $e
         fail Error(:JSONError, "JSON encode error: $e.msg")
@@ -93,7 +93,7 @@ method encode {
 #> Decodes a JSON text.
 #| The success or failure of this method is dependent on the various options
 #| provided at initialization.
-method decode {
+.decode {
     need $json: Str #< a JSON text to parse and convert to a Ferret object
     data -> @xs.decode($json) catch $e
         fail Error(:JSONError, "JSON decode error: $e.msg")
@@ -126,7 +126,7 @@ method decode {
 #|  `.decoderDone().data` following either of these would yield the same result,
 #|  a list `[1, 2]`.
 #|
-method decoderAdd {
+.decoderAdd {
     need $fragment: Str #< a fragment of JSON text to add to the decoder buffer
 
     # call ->incr_parse in void context.
@@ -172,14 +172,14 @@ method decoderReset {
 #| See the [`.encode()`](#encode) method for more options.
 func encode {
     need $data  #< an object to convert to JSON text
-    return $default.encode($data)
+    -> $default.encode($data)
 }
 
 #> Convenient class function to decode UTF-8 JSON data.
 #| See the [`.decode()`](#decode) method for more options.
 func decode {
     need $json: Str #< a JSON text to parse and convert to a Ferret object
-    return $default.decode($json)
+    -> $default.decode($json)
 }
 
 alias stringify = encode

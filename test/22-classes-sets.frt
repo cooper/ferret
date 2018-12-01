@@ -8,8 +8,8 @@ init {
 
 method moo {
     if @moos
-        return "moo"
-    return "I am a nonverbal cow"
+        -> "moo"
+    -> "I am a nonverbal cow"
 }
 
 class Dog
@@ -20,8 +20,8 @@ init {
 
 method bark {
     if @barks
-        return "bark"
-    return "I had my bark box bred out of me"
+        -> "bark"
+    -> "I had my bark box bred out of me"
 }
 
 class Cat
@@ -30,18 +30,16 @@ init {
     want @mean = false
 }
 
-method meow {
-    return "meow"
-}
+method meow -> "meow"
 
 # usage: (cat, othercat).fight()
 func fight {
     need $cat1: Cat, $cat2: Cat
     if $cat1.mean
-        return "Cat 1 started a catfight!"
+        -> "Cat 1 started a catfight!"
     if $cat2.mean
-        return "Cat 2 started a catfight!"
-    return "nice cats don't fight"
+        -> "Cat 2 started a catfight!"
+    -> "nice cats don't fight"
 }
 
 end

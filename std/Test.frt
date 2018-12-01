@@ -15,61 +15,61 @@ init {
 }
 
 #> Test succeeds if `Bool($a) === true`.
-method trueValue {
+.trueValue {
     need $a #< test object
-    return @_test(Bool($a), "Value must be true")
+    -> @_test(Bool($a), "Value must be true")
 }
 
 #> Test succeeds if `$a === true`.
-method veryTrue {
+.veryTrue {
     need $a #< test object
-    return @_test($a === true, "Value must be exactly true")
+    -> @_test($a === true, "Value must be exactly true")
 }
 
 #> Test succeeds if `$a == $b`.
-method equal {
+.equal {
     need $a #< test object 1
     need $b #< test object 2
-    return @_test($a == $b, "Values must be equal")
+    -> @_test($a == $b, "Values must be equal")
 }
 
 #> Test succeeds if `$a === $b`.
-method objectsEqual {
+.objectsEqual {
     need $a #< test object 1
     need $b #< test object 2
-    return @_test($a === $b, "Objects must be exactly equal")
+    -> @_test($a === $b, "Objects must be exactly equal")
 }
 
 #> Test succeeds if `$a != $b`.
-method notEqual {
+.notEqual {
     need $a #< test object 1
     need $b #< test object 2
-    return @_test($a != $b, "Values must not be equal")
+    -> @_test($a != $b, "Values must not be equal")
 }
 
 #> Test succeeds if `$a !== $b`.
-method objectsNotEqual {
+.objectsNotEqual {
     need $a #< test object 1
     need $b #< test object 2
-    return @_test($a !== $b, "Objects must not be equal")
+    -> @_test($a !== $b, "Objects must not be equal")
 }
 
 #> Test succeeds of `$a` is an instance of class `$b`.
-method instanceOfClass {
+.instanceOfClass {
     need $a #< test object
     need $b #< test class
-    return @_test($a.*instanceOfClass($b), "Object must be an instance of the class")
+    -> @_test($a.*instanceOfClass($b), "Object must be an instance of the class")
 }
 
 #> Test succeeds of `$a` satisfies type `$b`.
-method fitsType {
+.fitsType {
     need $a #< test object
     need $b #< test type
-    return @_test($a.*isa($b), "Object must satisfy the type")
+    -> @_test($a.*isa($b), "Object must satisfy the type")
 }
 
 #> Prints the test review.
-method review {
+.review {
     want $quiet: Bool
     $failed = @tested - @passed
     $allOK  = @passed == @tested
@@ -88,7 +88,7 @@ method review {
     allOK   -> $allOK       #< true if all tests passed
 }
 
-method _test {
+._test {
     need $yes, $message
     @tested += 1
 
@@ -96,7 +96,7 @@ method _test {
     if $yes {
         @passed += 1
         pass -> true
-        return
+        ->
     }
 
     # it failed. stop now if this should be fatal

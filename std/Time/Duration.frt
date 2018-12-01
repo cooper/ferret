@@ -44,21 +44,21 @@ init {
     # want @timeZone
 }
 
-prop years          { -> @dtd.years!        : Int } #< years
-prop months         { -> @dtd.months!       : Int } #< months
-prop weeks          { -> @dtd.weeks!        : Int } #< weeks
-prop days           { -> @dtd.days!         : Int } #< days
-prop hours          { -> @dtd.hours!        : Int } #< hours
-prop minutes        { -> @dtd.minutes!      : Int } #< minutes
-prop seconds        { -> @dtd.seconds!      : Int } #< seconds
-prop nanoseconds    { -> @dtd.nanoseconds!  : Int } #< nanoseconds
+.years          -> @dtd.years!        : Int #< years
+.months         -> @dtd.months!       : Int #< months
+.weeks          -> @dtd.weeks!        : Int #< weeks
+.days           -> @dtd.days!         : Int #< days
+.hours          -> @dtd.hours!        : Int #< hours
+.minutes        -> @dtd.minutes!      : Int #< minutes
+.seconds        -> @dtd.seconds!      : Int #< seconds
+.nanoseconds    -> @dtd.nanoseconds!  : Int #< nanoseconds
 
 #> add two durations
 op + {
     need $ehs: Duration
     $d = @copy!
     $d.dtd.add_duration($ehs.dtd)
-    return $d
+    -> $d
 }
 
 #> subtract a duration from this one
@@ -66,17 +66,17 @@ op - {
     need $rhs: Duration
     $d = @copy!
     $d.dtd.subtract_duration($rhs.dtd)
-    return $d
+    -> $d
 }
 
 #> make a copy of this duration
 method copy {
     $d = Duration()
     $d.dtd = @dtd.clone!
-    return $d
+    -> $d
 }
 
-method description {
+.description {
     $possible = [
         "years",          @years,
         "months",         @months,
@@ -95,6 +95,6 @@ method description {
         take "$val $name"
     }
     if $items.empty
-        return "0 seconds"
-    return $items.join(", ")
+        -> "0 seconds"
+    -> $items.join(", ")
 }

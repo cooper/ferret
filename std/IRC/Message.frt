@@ -16,7 +16,7 @@ init {
 }
 
 #> Parses IRC data
-method parse {
+.parse {
     need $data: Str::NE #< a string of IRC-encoded data
     $words = $data.split(/\s+/)
 
@@ -101,11 +101,9 @@ method parse {
 }
 
 #> User or channel object from the first parameter.
-prop target {
-    return @conn?.getTarget(@params[0])
-}
+.target  -> @conn?.getTarget(@params[0])
 
-prop? _parsedSource {
+._parsedSource? {
     if !@source
         return
     if @source =~ /^(.+)!(.+)\@(.+)$/ {
@@ -115,6 +113,6 @@ prop? _parsedSource {
     }
 }
 
-prop nick { return @_parsedSource.nick }   #< source's nickname
-prop user { return @_parsedSource.user }   #< source's username (ident)
-prop host { return @_parsedSource.host }   #< source's host
+.nick -> @_parsedSource.nick    #< source's nickname
+.user -> @_parsedSource.user    #< source's username (ident)
+.host -> @_parsedSource.host    #< source's host

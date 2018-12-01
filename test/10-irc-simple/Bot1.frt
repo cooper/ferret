@@ -25,7 +25,7 @@ method connect {
     @sock.connect()
 }
 
-method send {
+.send {
     need $line
     say("send: $line")
     @sock.println($line)

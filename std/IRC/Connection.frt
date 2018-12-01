@@ -51,14 +51,14 @@ method connect {
 }
 
 #> Sends a line of IRC data
-method send {
+.send {
     need $line: Str #< a string outgoing data
     say("send: $line")
     @sock.println($line)
 }
 
 #> Handles a raw line of IRC data
-method _handleLine {
+._handleLine {
     need $line: Str
     say("recv: $line")
 
@@ -79,37 +79,37 @@ method _handleLine {
 # respect the CASEMAPPING token in RPL_ISUPPORT.
 
 #> Fetches a channel or user object.
-method getTarget {
+.getTarget {
     need $target: Str #< channel name or nickname
     # TODO: once we look at RPL_ISUPPORT, check that for channel prefixes
     if $target.hasPrefix("#")
-        return @getChannel($target)
+        -> @getChannel($target)
     else
-        return @getUser($target)
+        -> @getUser($target)
 }
 
 #> Fetches a channel object from a channel name
-method getChannel {
+.getChannel {
     need $name: Str #< channel name
     if $channel = @channels[$name.lowercase]
-        return $channel
-    return Channel(conn: *self, name: $name)
+        -> $channel
+    -> Channel(conn: *self, name: $name)
 }
 
 #> Fetches a user object from a nickname
-method getUser {
+.getUser {
     need $nick: Str #< nickname associated with the user
     if $user = @users[$nick.lowercase]
-        return $user
-    return User(conn: *self, nick: $nick)
+        -> $user
+    -> User(conn: *self, nick: $nick)
 }
 
 #> Fetches a server object from a server name
-method getServer {
+.getServer {
     need $name: Str #< server name
     if $server = @servers[$name.lowercase]
-        return $server
-    return Server(conn: *self, name: $name)
+        -> $server
+    -> Server(conn: *self, name: $name)
 }
 
 #=== Hooks ===#
@@ -130,7 +130,7 @@ hook disconnected {
 
 #> Creates a new IRC::Connection with the same options.
 method copy {
-    return *class(
+    -> *class(
         addr:       @addr,
         port:       @port,
         nick:       @nick,
@@ -140,6 +140,4 @@ method copy {
     )
 }
 
-method description {
-    return "IRC::Connection(@addr/@port)"
-}
+.description -> "IRC::Connection(@addr/@port)"

@@ -14,33 +14,29 @@ init {
 }
 
 #> returns the distance between this point and another
-method distanceTo {
+.distanceTo {
     need $pt2: Point
     $dx = @x - $pt2.x
     $dy = @y - $pt2.y
-    return sqrt($dx ^ 2 + $dy ^ 2)
+    -> sqrt($dx ^ 2 + $dy ^ 2)
 }
 
 #> given another point, returns the point centered between them
-method midpoint {
+.midpoint {
     need $pt2: Point
-    return Point(
+    -> Point(
         x: (@x + $pt2.x) / 2,
         y: (@y + $pt2.y) / 2
     )
 }
 
 #> distance between this point and the origin `(0, 0)`
-prop distanceFromOrigin {
-    return @distanceTo($origin)
-}
+.distanceFromOrigin -> @distanceTo($origin)
 
-method description {
-    return "(@x, @y)"
-}
+.description -> "(@x, @y)"
 
 #> equality of two points
 op == {
     need $ehs: Point
-    return $ehs.x == @x && $ehs.y == @y
+    -> $ehs.x == @x && $ehs.y == @y
 }

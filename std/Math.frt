@@ -17,7 +17,7 @@ share $e ?= exp(1)
 #|
 func sin {
     need $θ: Num
-    return NATIVE::Math.sin($θ)
+    -> NATIVE::Math.sin($θ)
 }
 
 #> Inverse sine.
@@ -28,7 +28,7 @@ func sin {
 #|
 func asin {
     need $num: Num
-    return atan2($num, (1 - $num ^ 2).sqrt)
+    -> atan2($num, (1 - $num ^ 2).sqrt)
 }
 
 #> Cosine, expressed in radians.
@@ -39,7 +39,7 @@ func asin {
 #|
 func cos {
     need $θ: Num
-    return NATIVE::Math.cos($θ)
+    -> NATIVE::Math.cos($θ)
 }
 
 #> Inverse cosine.
@@ -50,7 +50,7 @@ func cos {
 #|
 func acos {
     need $num: Num
-    return atan2((1 - $num ^ 2).sqrt, $num)
+    -> atan2((1 - $num ^ 2).sqrt, $num)
 }
 
 #> Tangent, expressed in radians.
@@ -61,7 +61,7 @@ func acos {
 #|
 func tan {
     need $θ: Num
-    return sin($θ) / cos($θ)
+    -> sin($θ) / cos($θ)
 }
 
 #> Two-argument inverse tangent.
@@ -84,7 +84,7 @@ func tan {
 #|
 func atan2 {
     need $y: Num, $x: Num
-    return NATIVE::Math.atan2($y, $x)
+    -> NATIVE::Math.atan2($y, $x)
 }
 
 #> Inverse tangent.
@@ -97,7 +97,7 @@ func atan2 {
 #| unlike [`atan2()`](#atan2) which adjusts to the proper quadrant.
 func atan {
     need $num: Num
-    return atan2($num, 1)
+    -> atan2($num, 1)
 }
 
 #> Secant, expressed in radians.
@@ -108,7 +108,7 @@ func atan {
 #|
 func sec {
     need $θ: Num
-    return 1 / cos($θ)
+    -> 1 / cos($θ)
 }
 
 #> Cosecant, expressed in radians.
@@ -119,7 +119,7 @@ func sec {
 #|
 func csc {
     need $θ: Num
-    return 1 / sin($θ)
+    -> 1 / sin($θ)
 }
 
 #> Cotangent, expressed in radians.
@@ -130,29 +130,29 @@ func csc {
 #|
 func cot {
     need $θ: Num
-    return cos($θ) / sin($θ)
+    -> cos($θ) / sin($θ)
 }
 
 #> natural logarithm (base *e*).
 func log {
     need $num: Num
-    return NATIVE::Math.log($num)
+    -> NATIVE::Math.log($num)
 }
 
 #> log base 10.
 func log10 {
     need $num: Num
-    return logb(10, $num)
+    -> logb(10, $num)
 }
 
 #> log base `$base`.
 func logb {
     need $base: Num, $num: Num
-    return log($num) / log($base)
+    -> log($num) / log($base)
 }
 
 #> takes `e` (the base of the natural logarithm) to a power.
 func exp {
     need $num: Num
-    return NATIVE::Math.exp($num)
+    -> NATIVE::Math.exp($num)
 }

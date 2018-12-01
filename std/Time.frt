@@ -51,7 +51,7 @@ type Month {
         need $num: Int | MonthSym
         if $num.*isa(Num)
             $num = $months[$num]
-        return $num : MonthSym
+        -> $num : MonthSym
     }
 }
 
@@ -82,7 +82,7 @@ type Weekday {
         need $num: Int | WeekdaySym
         if $num.*isa(Num)
             $num = $weekdays[$num]
-        return $num : WeekdaySym
+        -> $num : WeekdaySym
     }
 }
 
@@ -162,35 +162,12 @@ init {
 ### DATE COMPONENTS ###
 #######################
 
-#> year
-prop year {
-    return Year(@dt.year!) : Year
-}
-
-#> month
-prop month {
-    return Month(@dt.month!) : MonthSym
-}
-
-#> name of the month
-prop monthName {
-    return @month.name : Str
-}
-
-#> day of the month, 1-31
-prop day {
-    return Day(@dt.day!) : Day
-}
-
-#> day of the week
-prop weekday {
-    return Weekday(@dt.day_of_week!) : WeekdaySym
-}
-
-#> name of the day of the week
-prop weekdayName {
-    return @weekday.name : Str
-}
+.year           -> Year(@dt.year!) : Year                   #< year
+.month          -> Month(@dt.month!) : MonthSym             #< month
+.monthName      -> @month.name : Str                        #< name of the month
+.day            -> Day(@dt.day!) : Day                      #< day of the month, 1-31
+.weekday        -> Weekday(@dt.day_of_week!) : WeekdaySym   #< day of the week
+.weekdayName    -> @weekday.name : Str                      #< name of the day of the week
 
 #################
 ### OPERATORS ###
@@ -201,7 +178,7 @@ op + {
     need $ehs: Duration
     $t = @copy!
     $t.dt.add_duration($ehs.dtd)
-    return $t
+    -> $t
 }
 
 #> subtract a duration from a timepoint
@@ -209,7 +186,7 @@ op - {
     need $rhs: Duration
     $t = @copy!
     $t.dt.subtract_duration($rhs.dtd)
-    return $t
+    -> $t
 }
 
 #####################
@@ -220,26 +197,21 @@ op - {
 method copy {
     $t = Time.now!
     $t.dt = @dt.clone!
-    return $t
+    -> $t
 }
 
-method description {
-    return @dt.ymd("-") + " "  + @dt.hms(":")
-}
+.description -> @dt.ymd("-") + " "  + @dt.hms(":")
 
 #> returns the current time
-func now {
-    return Time()
-}
+func now -> Time()
 
 #> returns a time at the moment the current day started
 func today {
     $t = Time()
     $t.dt.truncate(to: "day")
-    return $t
+    -> $t
 }
 
 #> returns a time at the start of tomorrow
-func tomorrow {
-    return @today! + Duration(days: 1)
-}
+func tomorrow
+    -> @today! + Duration(days: 1)

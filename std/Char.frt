@@ -16,13 +16,12 @@ init {
 
     _character.init($from)(isInit: true) catch $e:
         throw $e
-    return $from
+
+    -> $from
 }
 
 init {
     need $isInit = true
 }
 
-prop ord {
-    return NATIVE.ord(*self)
-}
+.ord -> NATIVE.ord(*self)

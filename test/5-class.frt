@@ -8,20 +8,18 @@ init {
 
 method oneToRight {
     $pt = *class(@x + 1, @y)
-    return $pt
+    -> $pt
 }
 
-method pretty {
-    return ("(@x, @y)")
-}
+method pretty
+    -> ("(@x, @y)")
 
-method toString {
-    return @pretty()
-}
+method toString
+    -> @pretty()
 
 func midpoint {
     need $pt1, $pt2
-    return Point(
+    -> Point(
         x: ($pt1.x + $pt2.x) / 2,
         y: ($pt1.y + $pt2.y) / 2
     )

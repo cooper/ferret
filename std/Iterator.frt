@@ -30,23 +30,19 @@ init {
     @i = -1
 }
 
-prop more {
-    return @i < (@list.lastIndex || -1)
-}
+.more -> @i < (@list.lastIndex || -1)
 
-prop nextElement {
+.nextElement {
     @i += 1
-    return @list[@i]
+    -> @list[@i]
 }
 
-prop nextElements {
+.nextElements {
     @i += 1
-    return [ @i, @list[@i] ]
+    -> [ @i, @list[@i] ]
 }
 
-prop iterator {
-    return *self : Iterator
-}
+.iterator -> *self : Iterator
 
 #> An iterator implementation for hashes.
 class HashIterator
@@ -57,20 +53,16 @@ init {
     @keysLeft = $hash.keys
 }
 
-prop more {
-    return !@keysLeft.empty
-}
+.more -> !@keysLeft.empty
 
-prop nextElement {
+.nextElement {
     $key = @keysLeft.pop()
-    return @hash[$key]
+    -> @hash[$key]
 }
 
-prop nextElements {
+.nextElements {
     $key = @keysLeft.pop()
-    return [ $key, @hash[$key] ]
+    -> [ $key, @hash[$key] ]
 }
 
-prop iterator {
-    return *self : Iterator
-}
+.iterator -> *self : Iterator

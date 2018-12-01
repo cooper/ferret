@@ -167,13 +167,9 @@ op == {
 }
 
 #> returns a copy of the vector
-method copy {
-    -> Vector(items: @items.copy!)
-}
+method copy -> Vector(items: @items.copy!)
 
-method description {
-    -> "<" + @items.join(", ") + ">"
-}
+.description -> "<" + @items.join(", ") + ">"
 
 #> returns the zero vector in the given dimension
 func zeroVector {

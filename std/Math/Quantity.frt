@@ -11,20 +11,18 @@ init {
 
 method toBase {
     if @unit.isBase
-        return *self
-    return Quantity(@unit.multiplier * @num, @unit.base)
+        -> *self
+    -> Quantity(@unit.multiplier * @num, @unit.base)
 }
 
-method to {
+.to {
     need $unit: Unit
     $baseQ = @toBase!
     if $baseQ.unit == $unit
-        return $baseQ
+        -> $baseQ
     if $baseQ.unit != $unit.base
         throw Error(:notpossible, "sorry")
-    return Quantity($baseQ.num / $unit.multiplier, $unit)
+    -> Quantity($baseQ.num / $unit.multiplier, $unit)
 }
 
-method description {
-    return @num.*description + " " + @unit.suffix
-}
+.description -> @num.*description + " " + @unit.suffix

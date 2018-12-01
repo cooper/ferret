@@ -19,10 +19,10 @@ init {
     @relationships = [:]
 }
 
-method description {
+.description {
     if @isBase
-        return "Unit @suffix"
-    return "Unit @suffix = " + @multiplier.*description  + " @base.suffix"
+        -> "Unit @suffix"
+    -> "Unit @suffix = " + @multiplier.*description  + " @base.suffix"
 }
 
 # useless

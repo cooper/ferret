@@ -30,5 +30,5 @@ init {
 #> equality of two lines
 op == {
     need $ehs: Line
-    return $ehs.m == @m && $ehs.c == @c
+    -> $ehs.m == @m && $ehs.c == @c
 }

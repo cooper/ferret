@@ -10,7 +10,7 @@ say("waiting...")
 # therefore, the semicolon is required.
 
 say(something() {
-    return "any second now"
+    -> "any second now"
 }.message)
 
 func something {

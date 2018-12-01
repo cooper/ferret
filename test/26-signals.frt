@@ -13,7 +13,7 @@ on Signal.INT.trap before :default {
         say("Are you sure?")
         $asked = true
         stop    # cancel further callbacks
-        return  # note that stop does not affect the remainder of the callback
+        ->      # note that stop does not affect the remainder of the callback
     }
 
     say("Got second INT. Terminating!")

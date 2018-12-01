@@ -25,7 +25,7 @@ init {
 
     # if we have no imaginary part, return a real number
     if @b == 0
-        return @a
+        -> @a
 }
 
 #> Create a complex number in polar form given radius `r` and angle `θ`.
@@ -35,7 +35,7 @@ init {
     need $r: Num        #< distance from the origin in the complex plane
     need $θ: Num        #< angle between the positive real axis and the
                         #| position vector, measured in radians
-    return Complex.polar($r, $θ)
+    -> Complex.polar($r, $θ)
 }
 
 #> Create a complex number in polar form given radius `r` and angle `θ`.
@@ -45,7 +45,7 @@ func polar {
     need $r: Num        #< distance from the origin in the complex plane
     need $θ: Num        #< angle between the positive real axis and the
                         #| position vector, measured in radians
-    return Complex(
+    -> Complex(
         $r * Math.cos($θ),
         $r * Math.sin($θ)
     )
@@ -56,9 +56,7 @@ func polar {
 #| [complex plane](https://en.wikipedia.org/wiki/Complex_plane).
 #|
 #| In polar form, this is `r`.
-prop abs {
-    return (@a ^ 2 + @b ^ 2).sqrt
-}
+.abs -> (@a ^ 2 + @b ^ 2).sqrt
 
 #> [Argument](https://en.wikipedia.org/wiki/Argument_(complex_analysis)) of
 #| the complex number. On the
@@ -66,51 +64,47 @@ prop abs {
 #| angle `θ` between the positive real axis and the position vector.
 #|
 #| In polar form, this is `θ`.
-prop arg {
-    return Math.atan2(@b, @a)
-}
+.arg -> Math.atan2(@b, @a)
 
 #> [Conjugate](https://en.wikipedia.org/wiki/Complex_conjugate) of the complex
 #| number
-prop conj {
-    return Complex(@a, -@b)
-}
+.conj -> Complex(@a, -@b)
 
 #> [Square root](https://math.stackexchange.com/a/44500) of the complex number
-prop sqrt {
+.sqrt {
     $r = @abs
     $f = *self + $r
-    return $r.sqrt * $f / $f.abs
+    -> $r.sqrt * $f / $f.abs
 }
 
 #> Nth root of the complex number
-method root {
+.root {
     need $n: Num
-    return @abs.root($n) * Math.e ^ (i * @arg / $n)
+    -> @abs.root($n) * Math.e ^ (i * @arg / $n)
 }
 
 #> addition of complex numbers
 op + {
     need $rhs: Complex
-    return Complex(@a + $rhs.a, @b + $rhs.b)
+    -> Complex(@a + $rhs.a, @b + $rhs.b)
 }
 
 #> addition of complex and real numbers
 op + {
     need $ehs: Num
-    return Complex(@a + $ehs, @b)
+    -> Complex(@a + $ehs, @b)
 }
 
 #> subtraction of complex numbers
 op - {
     need $rhs: Complex
-    return Complex(@a - $rhs.a, @b - $rhs.b)
+    -> Complex(@a - $rhs.a, @b - $rhs.b)
 }
 
 #> subtraction of real number from complex number
 op - {
     need $rhs: Num
-    return Complex(@a - $rhs, @b)
+    -> Complex(@a - $rhs, @b)
 }
 
 #> subtraction of complex number from real number
@@ -118,13 +112,13 @@ op - {
 # so it's r - a - bi
 op - {
     need $lhs: Num
-    return Complex($lhs - @a, -@b)
+    -> Complex($lhs - @a, -@b)
 }
 
 #> multiplication of complex numbers
 op * {
     need $rhs: Complex
-    return Complex(
+    -> Complex(
         @a * $rhs.a - @b * $rhs.b,
         @a * $rhs.b + @b * $rhs.a
     )
@@ -133,7 +127,7 @@ op * {
 #> multiplication of real and complex numbers
 op * {
     need $ehs: Num
-    return Complex($ehs * @a, $ehs * @b)
+    -> Complex($ehs * @a, $ehs * @b)
 }
 
 #> division of complex numbers
@@ -142,7 +136,7 @@ op / {
     $conj = $rhs.conj
     $num = *self * $conj
     $den = $rhs  * $conj
-    return Complex(
+    -> Complex(
         $num.a / $den.a,
         $num.b / $den.a
     )
@@ -151,7 +145,7 @@ op / {
 #> division of complex number by real number
 op / {
     need $rhs: Num
-    return Complex(
+    -> Complex(
         @a / $rhs,
         @b / $rhs
     )
@@ -164,44 +158,44 @@ op / {
 op ^ {
     need $rhs: Num
     if $rhs <= 0
-        return 1
-    return *self * *self ^ ($rhs - 1)
+        -> 1
+    -> *self * *self ^ ($rhs - 1)
 }
 
 #> Real number to a complex power
 op ^ {
     need $lhs: Num
-    return Complex.polar($lhs ^ @a, @b * Math.log($lhs))
+    -> Complex.polar($lhs ^ @a, @b * Math.log($lhs))
 }
 
 #> equality of complex numbers
 op == {
     need $ehs: Complex
-    return @a == $ehs.a && @b == $ehs.b
+    -> @a == $ehs.a && @b == $ehs.b
 }
 
 #> equality of complex number and real number
 op == {
     need $ehs: Num
-    return @a == $ehs && @b == 0
+    -> @a == $ehs && @b == 0
 }
 
 #> Complex number to real power. This is an alternative implementation to the
 #| power operator which is faster but less precise.
-method pow {
+.pow {
     need $rhs: Num
     $log = Math.log(@abs)
-    return Complex.polar(
+    -> Complex.polar(
         Math.exp($rhs * $log),
         $rhs * @arg
     )
 }
 
-method description {
+.description {
     $r = @a
     $i = @b
     if $r == 0 && $i == 0
-        return "0"
+        -> "0"
     if $r == 0
         $r = ""
     if $i == 0
@@ -214,5 +208,5 @@ method description {
         $i = "+i"
     else
         $i = "+" + $i + "i"
-    return ($r + $i).trimPrefix("+")
+    -> ($r + $i).trimPrefix("+")
 }

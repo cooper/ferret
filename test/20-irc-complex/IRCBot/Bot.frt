@@ -39,7 +39,7 @@ init {
 
 }
 
-method addCommand {
+.addCommand {
     need $command: Str::LC, $callback
     if @commands[$command]
         overwrote -> true
@@ -51,13 +51,13 @@ method connect {
     @sock.connect()
 }
 
-method send {
+.send {
     need $line
     say("send: $line")
     @sock.println($line)
 }
 
-method handleLine {
+.handleLine {
     need $line
 
     # find command
@@ -80,7 +80,7 @@ method handleLine {
 
 }
 
-method privmsg {
+.privmsg {
     need $channel: Str, $message: Str
     for $line in $message.split("\n") {
         if !$line.empty
@@ -92,7 +92,7 @@ func _joinChannels {
 
     # check if already joined.
     if %_joinedChannels
-        return
+        ->; # FIXME: this is a bug
 
     if %autojoin {
         for $chan in %autojoin {

@@ -4,16 +4,15 @@ init {
     want @items: T...
 }
 
-method push {
+.push {
     need $item: T
     @items.push($item)
 }
 
-method pop {
-    return @items.pop()
-}
+method pop
+    -> @items.pop()
 
-method description {
+.description {
     $name = T.name
-    return "Stack<$name> " + @items.*description
+    -> "Stack<$name> " + @items.*description
 }

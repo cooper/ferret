@@ -18,12 +18,12 @@ $client ?= Client()
 #| [client](../HTTP/doc/Client.md).
 func get {
     need $url: Str
-    return $client.get(url: $url)
+    -> $client.get(url: $url)
 }
 
 #> Convenience method for calling `.post()` on the default
 #| [client](../HTTP/doc/Client.md).
 func post {
     need $url: Str
-    return $client.post(url: $url)
+    -> $client.post(url: $url)
 }
