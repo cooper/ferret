@@ -627,8 +627,9 @@ sub description {
 
     # Ferret description method
     if (!$no_method && !$obj->isa('Ferret::Prototype') && !$obj->{is_special}
-      and my $d_func = $obj->property('description')) {
-        return _pstring($d_func->call);
+      and my $ret = $obj->property('description')) {
+        $ret = $ret->call if $ret->is_code;
+        return _pstring($ret);
     }
 
     my ($skipped, @lines) = 0;
