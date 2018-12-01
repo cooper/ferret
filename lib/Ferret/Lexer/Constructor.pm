@@ -1748,11 +1748,10 @@ sub c_OP_RETURN {
         return;
     }
 
-    # hmm, if the current node is a class and the previous element is
-    # a computed property header, this is shorthand
-    my $p  = $c->node->parent;
+    # previous element is a function that has not been opened,
+    # so this is one-liner shorthand
     my $cp = $c->last_el;
-    if ($p && $cp && $p->type eq 'Class' && $cp->type eq 'Function' && $cp->{is_prop}) {
+    if ($cp && $cp->type eq 'Function' && !$cp->{open_pos} && !$cp->{one_liner}++) {
         my $instr = $c->abandon_node;
         $instr->{will_close_closure}++;
         $c->simulate('CLOSURE_S');
