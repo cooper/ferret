@@ -264,7 +264,7 @@ getSum(1, 2, 3, 4, 5)   # 15
 
 You can also pass a list as a named argument.
 
-````
+```
 $list = [6, 7, 8, 9]
 getSum(nums: $list)
 ```

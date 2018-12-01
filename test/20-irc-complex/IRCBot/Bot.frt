@@ -92,7 +92,7 @@ func _joinChannels {
 
     # check if already joined.
     if %_joinedChannels
-        ->; # FIXME: this is a bug
+        ->
 
     if %autojoin {
         for $chan in %autojoin {

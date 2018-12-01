@@ -61,7 +61,7 @@ my %semi_follows = map { $_ => 1 } qw(
     KEYWORD_TRUE    KEYWORD_FALSE   KEYWORD_UNDEFINED
     KEYWORD_RETURN  KEYWORD_STOP    BAREWORD
     KEYWORD_NEXT    KEYWORD_LAST    KEYWORD_REDO
-    KEYWORD_ELSE
+    KEYWORD_ELSE    OP_RETURN
 );
 
 my %operator_tok_to_method = (
