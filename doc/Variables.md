@@ -29,6 +29,9 @@ Tokenized as `VAR_SELF`.
 
 ## This variables
 
+Maybe don't use this. I [can't decide](https://github.com/cooper/ferret/issues/65)
+its fate.
+
 This variables are identified by the `%` sigil.
 
 This variables are valid within any function or method. They refer

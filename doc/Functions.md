@@ -433,6 +433,8 @@ Method short-hand syntax is allowed for computed properties.
 }
 ```
 
+#### Once-computed properties
+
 If the property name is suffixed by a question mark, its value will
 only be computed once. After the first evaluation, the returned value will be
 stored as the semi-permanent property value. This works similarly to lazy

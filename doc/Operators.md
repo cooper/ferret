@@ -164,7 +164,7 @@ no return keyword. Consider the following one-liner as an example:
 
     [1,2,3].map! { -> $_ * 2 }      # [2, 4, 6]
 
-Note that When used within an event callback, it is possible that the provided
+Note that when used within an event callback, it is possible that the provided
 value will not ultimately be returned by the event call. If multiple callbacks
 have an explicit `->` statement, the value of the lattermost statement is used.
 
@@ -228,6 +228,9 @@ Tokenized as `OP_PACK`.
 
 ### Inline if operator
 
+Maybe don't use this. I [can't decide](https://github.com/cooper/ferret/issues/58)
+its fate.
+
     ?
 
 Indicates that a value may not be present and ignores the entire current
@@ -254,8 +257,8 @@ Frequent use case involving named handlers
 
 Tokenized as `OP_MAYBE`.
 
-See also the [`prop?`](Keywords.md#prop) keyword and the
-[lazy assignment operator](#lazy-assignment-operator) (`?=`).
+See also [once-computed properties](Functions.md#once-computed-properties)
+and the [lazy assignment operator](#lazy-assignment-operator) (`?=`).
 
 ### Ellipsis
 
