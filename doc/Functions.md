@@ -315,8 +315,8 @@ func enterBar before :default, :checkID {
     want $name: Str = "stranger"
     if $age >= 21
         return
-    fail Error(:UnderageError, "Sorry $name...")
     stop # cancel all remaining callbacks
+    fail Error(:UnderageError, "Sorry $name...")
 }
 
 enterBar("John", age: 39)       # "Welcome John."
@@ -431,6 +431,11 @@ Method short-hand syntax is allowed for computed properties.
         throw Error(:DimensionError, "Direction only exists in 2D")
     -> Math.atan2(@y, @x)
 }
+```
+
+For once-computed properties, add a question mark:
+```
+.odd? -> *self % 2 != 0
 ```
 
 ## One-liner functions
