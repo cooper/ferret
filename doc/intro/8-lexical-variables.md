@@ -1,12 +1,12 @@
 # Lexical variables
 
-So far the only type of variables we've worked with are lexical.
+So far the only type of variables we've worked with is lexical.
 Recall what you learned about file scopes earlier. Similar rules
 apply to functions, `if` statements, `for` loops, and all sorts
 of constructs.
 
 
-This is fine.
+Take a look at this. This is fine.
 
     $something = "I'm giving up on you"
 
@@ -14,7 +14,7 @@ This is fine.
         say($something)
     }
 
-This produces a compile-time UndeclaredVariableReference error.
+But this is not. It produces a compile-time UndeclaredVariableReference error.
 
     func saySomething {
         say($something)
@@ -35,7 +35,7 @@ the value is overwritten:
     # Right now, $something is still "I'm giving up on you"
 
     saySomething()
-    # But now it's "Another message."
+    # But now it's "Another message." Even out here.
 
 However, if you explicitly re-initialize the variable with
 [`var`](../Keywords.md#var), it becomes local to the

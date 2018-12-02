@@ -9,5 +9,9 @@ Ferret's most basic data types are
 * [Regex](../std/Regex.md) - Regular expressions - `/(.*)/`
 * [List](../std/List.md) - Ordered lists - `[1, 2, "three"]`
 * [Hash](../std/Hash.md) - Key-value maps - `[a: "b", c: "d"]`
+* [Boolean](../std/Boolean.md) (abbr. Bool) - `true` and `false`
+
+Also, it's not really a type, but
+`undefined` is the object representing the absence of a value.
 
 [Next: for loops](11-for-loops.md)

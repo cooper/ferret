@@ -13,4 +13,4 @@ The same example from the last page is better written like this.
 
     inspect($evenSingleDigits)  # [ 0, 2, 4, 6, 8 ]
 
-[Next: defer](22-defer.md)
+[Next: Lists](24-lists.md)

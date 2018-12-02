@@ -1,0 +1,33 @@
+# Hashes continued
+
+Also unlike objects, hash keys do not have to be strings. Any value
+which is Hashable is permitted. That means anything where two
+distinct objects representing the same value can be identified in a
+consistent way.
+
+    $hash["One"] = 1
+    $hash[2] = "Two"
+    $hash[/regex/] = "Not sure why you'd do this, but you can"
+
+Hashes, too, can span multiple lines.
+
+    $hash = [
+        key:        "Value",
+        other:      11,
+        /regex/:    "That one has a weird non-string key",
+        lastOne:    "no comma needed after this"
+    ]
+
+There's even such thing as an ordered hash.
+
+    $hash = OrderedHash()
+    $hash.pushPair("first", "this is the first item")
+    $hash.pushPair("second", "this is the second item")
+
+    for ($k, $v) in $hash {
+        say("$k = $v")
+    }
+
+    # It'll always spit them out in the order they were added
+
+[Next: Typed lists and hashes](28-typed-lists-hashes.md)
