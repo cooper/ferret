@@ -1,8 +1,8 @@
 # inside
 
 Earlier I mentioned [property variables](../Variables.md#property-variables)
-briefly. Ferret has an `inside` construct which allows the properties of
-an object to be accessed as variables. 
+briefly. Ferret has an [`inside`](../Keywords.md#inside) construct which allows
+the properties of an object to be accessed as variables. 
 
 It's useful when accessing or altering several properties of the same object
 at once.

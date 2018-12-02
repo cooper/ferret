@@ -28,4 +28,4 @@ Of course, this works for ordered hashes too.
     $hash.pushPair("two", 2)
     $hash.pushPair(3, "three")  # ignored
 
-[Next: ]
+[Next: Classes](30-classes.md)

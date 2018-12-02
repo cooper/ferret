@@ -1,4 +1,4 @@
-# for conditional
+# for conditionals
 
 This use of `for` is functionally equivalent
 to `while (condition)` in C and others alike.

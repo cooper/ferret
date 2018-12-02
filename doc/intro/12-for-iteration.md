@@ -1,4 +1,4 @@
-# for iteration
+# for iterations
 
 Use `for..in` to iterate over a list.
 ```
@@ -20,4 +20,4 @@ The parentheses are required when using two variables and forbidden
 when there's just one. The variable(s) are defined only within the
 body of the `for` closure.
 
-[Next: for conditional](13-for-conditional.md)
+[Next: for conditionals](13-for-conditional.md)

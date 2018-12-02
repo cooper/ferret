@@ -8,4 +8,4 @@ But, it can be used three different ways.
 2. Conditional loops (like `while`)
 3. Infinite loops (like `while (true)`)
 
-[Next: For iteration](12-for-iteration.md)
+[Next: for iterations](12-for-iteration.md)

@@ -1,9 +1,9 @@
 # Hashes continued
 
 Also unlike objects, hash keys do not have to be strings. Any value
-which is Hashable is permitted. That means anything where two
-distinct objects representing the same value can be identified in a
-consistent way.
+which is Hashable is permitted. If an object is Hashable, it means
+another distinct object representing the same value can be compared
+against it in a consistent way.
 
     $hash["One"] = 1
     $hash[2] = "Two"
