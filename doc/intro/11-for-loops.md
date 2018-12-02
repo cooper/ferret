@@ -1,4 +1,4 @@
-# For loops
+# for loops
 
 Ferret has only one loop construct, [`for`](../Keywords.md#for).
 

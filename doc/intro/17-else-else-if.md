@@ -1,4 +1,4 @@
-# Else, else if
+# else, else if
 
 `else if` is spelled as two words in Ferret.
 
@@ -23,4 +23,4 @@ And an example without braces.
     else
         say("This will not be reached")
 
-[Next: Inside](18-inside.md)
+[Next: inside](18-inside.md)

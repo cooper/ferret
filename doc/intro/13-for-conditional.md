@@ -1,4 +1,4 @@
-# For conditional
+# for conditional
 
 This use of `for` is functionally equivalent
 to `while (condition)` in C and others alike.
@@ -12,8 +12,5 @@ for $fiveEs.length < 5 {
 
 say($fiveEs)    # eeeee
 ```
-
-You can break out of a conditional `for` loop early using
-[`last`](../Keywords.md#last).
 
 [Next: Infinite loops](14-infinite-loops.md)

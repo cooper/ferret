@@ -10,4 +10,4 @@ Ferret's most basic data types are
 * [List](../std/List.md) - Ordered lists - `[1, 2, "three"]`
 * [Hash](../std/Hash.md) - Key-value maps - `[a: "b", c: "d"]`
 
-[Next: For loops](11-for-loops.md)
+[Next: for loops](11-for-loops.md)

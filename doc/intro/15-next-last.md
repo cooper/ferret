@@ -10,7 +10,7 @@ for
 say("This part is outside the for loop")
 ```
 
-And as a one-liner, the colon may be used instead:
+And as a one-liner, the colon may be used instead.
 ```
 for $x in [1,2,3]: say($x)
 ```
@@ -20,6 +20,4 @@ can be used to skip an iteration, [`redo`](../Keywords.md#redo) to
 re-evaluate and restart an iteration, and [`last`](../Keywords.md#last)
 to break out of the loop entirely.
 
-
-
-[Next: If](16-if.md)
+[Next: if](16-if.md)
