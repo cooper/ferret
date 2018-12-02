@@ -704,9 +704,6 @@ else
 
 Allows you to chain [`if`](#if) conditional statements.
 
-`else if`, although always spelled as two separate words, is a combination
-keyword.
-
 The `if`/`else if` chain will continue until one of the conditions has a boolean
 true value. In that case, none of the remaining `else if` or `else` statements
 will be executed.
@@ -1209,9 +1206,9 @@ without considering arguments. For types, this is functionally equivalent to
 
 If the keyword is spelled `alias?` with a question mark, the alias
 will not be created until the first time it is referenced. This is only useful
-when the target itself is lazy-evaluated, such as a `type?` or `prop?`.
-This works similarly to lazy assignment with the
-[`?=`](Operators.md#lazy-assignment-operator)) operator.
+when the target itself is lazy-evaluated, such as a `type?` or
+once-computed property. This works similarly to the 
+[lazy assignment  operator `?=`](Operators.md#lazy-assignment-operator).
 
 The finished type or function will be available only within the
 [scope of interest](Scopes.md#scope-of-interest).
@@ -1228,8 +1225,6 @@ inside <object> { <statements> }
 ```
 
 Temporarily sets the topic variable `$_` to `<object>`.
-
-
 
 This is useful for a shorthand property syntax using
 [property variables](Variables.md#property-variables). Rather than writing
@@ -1258,8 +1253,6 @@ inspect($person) # (age: 26, name: "Pam")
 Provides a convenient way to write the common
 scenario of [`if`](#if) and [`inside`](#for) together:
 `if $x { inside $x { ... } }` can be written simply as `if inside $x { ... }`.
-
-`if inside`, although always spelled as two words, is a combination keyword.
 
 ```
 func getNames {
@@ -1323,8 +1316,6 @@ Compliment to [`gather`](#gather). Adds a value to a consolidated list.
 Provides a convenient way to write the common
 scenario of [`gather`](#gather) and [`for`](#for) together:
 `gather { for { ... } }` can be written simply as `gather for { ... }`.
-
-`gather for`, although always spelled as two words, is a combination keyword.
 
 ```
 $evenSingleDigits = gather for $n in 0..9 {

@@ -12,6 +12,7 @@ This documentation explains the uses of all operators.
 
 Terminates an instruction. The semicolon is optional and can be inferred
 in most cases, depending on which type of token terminates a line.
+However, it's useful on occasion for one-liners.
 
     doSomething(); doSomethingElse()
 

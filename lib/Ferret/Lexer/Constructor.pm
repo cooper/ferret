@@ -588,8 +588,6 @@ sub c_ANGLE_S {
     # Rule TypedClass[1]:
     #   Number of children must be no less than two (2).
 
-
-
     # it's a class declaration.
     if ($last_el->type eq 'Class') {
 

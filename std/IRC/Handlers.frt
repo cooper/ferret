@@ -39,7 +39,7 @@ func myInfo {
 
 func endOfMOTD {
     if !%autojoin || %_didAutojoin
-        return
+        ->
     %sendJoin(channelNames: %autojoin)
     %_didAutojoin = true
 }
@@ -53,7 +53,7 @@ func hiddenHost {
 # during registration, add underscores to nickname as necessary
 func nickInUse {
     if %registered
-        return
+        ->
     %me.nick += "_"
     %sendNick(%me.nick)
 }

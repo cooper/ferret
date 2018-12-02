@@ -105,7 +105,7 @@ init {
 
 ._parsedSource? {
     if !@source
-        return
+        ->
     if @source =~ /^(.+)!(.+)\@(.+)$/ {
         nick -> $1
         user -> $2

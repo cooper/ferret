@@ -9,12 +9,12 @@ func privmsg {
 
     # commands only work in channels right now
     if !$msg.target.*isa(Channel)
-        return
+        ->
 
     # find the command
     $trim = detail $msg.params[1].word(0).trimPrefix(".")
     if !$trim.trimmed # if it didn't have the prefix, it's not a command
-        return
+        ->
     $command = $trim.result
 
     # call the command if it exists

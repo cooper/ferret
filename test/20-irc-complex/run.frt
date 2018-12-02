@@ -9,12 +9,12 @@ $bot.addCommand("info") {
 $bot.addCommand("t") {
     need $msg
     if !$msg.commandHasParameters
-        return
+        ->
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.tokenize(pretty: true)
     if $res.error {
         $bot.privmsg($msg.channel, Str($res.error))
-        return
+        ->
     }
     $bot.privmsg($msg.channel, $res.pretty)
 }
@@ -22,12 +22,12 @@ $bot.addCommand("t") {
 $bot.addCommand("c") {
     need $msg
     if !$msg.commandHasParameters
-        return
+        ->
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.construct(pretty: true)
     if $res.error {
         $bot.privmsg($msg.channel, Str($res.error))
-        return
+        ->
     }
     $bot.privmsg($msg.channel, $res.pretty)
 }
@@ -35,11 +35,11 @@ $bot.addCommand("c") {
 $bot.addCommand("e") {
     need $msg
     if !$msg.commandHasParameters
-        return
+        ->
     $res = COMPILER(convertNewlines($msg.fromWord(1))).eval()
     if $res.error {
         $bot.privmsg($msg.channel, Str($res.error))
-        return
+        ->
     }
     $string = inspect(value: $res.result, quiet: true).string
     $bot.privmsg($msg.channel, $string)
@@ -48,11 +48,11 @@ $bot.addCommand("e") {
 $bot.addCommand("pe") {
     need $msg
     if !$msg.commandHasParameters
-        return
+        ->
     $res = COMPILER(convertNewlines($msg.fromWord(1))).perlEval()
     if $res.error {
         $bot.privmsg($msg.channel, Str($res.error))
-        return
+        ->
     }
     $string = inspect(value: $res.result, quiet: true).string
     $bot.privmsg($msg.channel, $string)
@@ -64,12 +64,12 @@ $bot.addCommand("pp", handlePerl)
 func handlePerl {
     need $msg
     if !$msg.commandHasParameters
-        return
+        ->
     $c = COMPILER(convertNewlines($msg.fromWord(1)))
     $res = $c.compile($msg.command == "p")
     if $res.error {
         $bot.privmsg($msg.channel, Str($res.error))
-        return
+        ->
     }
     $bot.privmsg($msg.channel, $res.perl)
 }
