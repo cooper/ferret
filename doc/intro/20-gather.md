@@ -3,8 +3,9 @@
 [`gather`](../Keywords.md#gather) constructs a list by pushing the
  values of each [`take`](#take) that occurs within its body.
 
-`gather` constructs are standard expressions and can therefore be used in
-assignments, function calls, and almost anywhere else.
+These blocks are expressions and can therefore be used in
+assignments, function calls, and almost anywhere else that a
+value is accepted.
 
 ```
 $evenSingleDigits = gather {
