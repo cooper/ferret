@@ -1,4 +1,4 @@
-# Method shorthand
+# Function and method shorthand
 
 If a method body contains at least one
 [`want`](../Keywords.md#want) or [`need`](../Keywords.md#need),
@@ -33,4 +33,4 @@ This works for functions outside of classes, too. Sorry that I'm only just now m
 
     func doNothing -> "I am a pointless function also"
 
-[Next: ]
+[Next: Class functions and variables](37-class-functions-variables.md)

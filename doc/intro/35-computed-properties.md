@@ -31,4 +31,4 @@ If we accessed that `approxBirthYear` property, changed the Person's `age`,
 and accessed `approxBirthYear` again, it would then be incorrect. That's
 because the value will only be evaluated once when `?` is present.
 
-[Next: Method shorthand](36-method-shorthand.md)
+[Next: Function and method shorthand](36-function-method-shorthand.md)

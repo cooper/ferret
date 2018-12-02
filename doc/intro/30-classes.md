@@ -13,7 +13,7 @@ level and look like this.
 
     class Person
 
-They are terminated by either [`end`](../Keywords.md)(#end), another
+They are terminated by either [`end`](../Keywords.md#end), another
 `class` declaration, or the end of the file.
 
 [Next: Initializers](31-initializers.md)

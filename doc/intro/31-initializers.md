@@ -16,7 +16,7 @@ you to do so.
     }
 
 Those variables prefixed with the `@` sigil are
-[instance variables](../Variables.md#instance-variable), which I
+[instance variables](../Variables.md#instance-variables), which I
 mentioned very briefly a little while ago.
 
 In this example, the initializer requires a string name and numeric
