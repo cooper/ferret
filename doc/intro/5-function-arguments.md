@@ -29,4 +29,4 @@ to proceed...
     registerUser("Aubrey")              # UnsatisfiedArguments error
     registerUser(age: 49)               # Here's your username: anonymous49
 
-[Next: Types](6.md)
+[Next: Argument types](6-argument-types.md)

@@ -55,4 +55,4 @@ innermost scope.
 the first assignment of a new lexical variable has the same effect
 as declaring it explicitly with `var`.
 
-[Next: Other types of variables](9.md)
+[Next: Other types of variables](9-other-variables.md)

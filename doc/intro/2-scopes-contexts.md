@@ -36,4 +36,4 @@ main.frt
     share $who
     say("Hello, $who!")
 
-[Next: Imports and file loading](3.md)
+[Next: Imports and file loading](3-importing-loading.md)

@@ -19,4 +19,4 @@ statements do not halt execution of the function. It continues until
 the end, and the function yields its
 [return object](../Functions.md#return-objects).
 
-[Next: Lexical variables](8.md)
+[Next: Lexical variables](8-lexical-variables.md)

@@ -28,4 +28,4 @@ the passed value does not comply, you can fall back to another value.
     registerUser("Mitchell", 21)        # Here's your username: Mitchell21
     registerUser(21, 21)                # Here's your username: anonymous21
     
-[Next: Multiple return values](7.md)
+[Next: Multiple return values](7-multiple-returns.md)

@@ -8,4 +8,4 @@ Functions in Ferret look like this.
 
     sayHello()      # Hello, World!
 
-[Next: Function arguments](5.md)
+[Next: Function arguments](5-function-arguments.md)

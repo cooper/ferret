@@ -9,4 +9,4 @@ later, but just in case they appear in any examples...
 * Special variables - `*x`
 * Symbols - `:x`
 
-[Next: Types](10.md)
+[Next: Types](10-types.md)

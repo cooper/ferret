@@ -31,4 +31,4 @@ main.frt
 Notice how `load Math` was not needed since we referenced the Math package
 in the code.
 
-[Next: Functions](4.md)
+[Next: Functions](4-functions.md)
