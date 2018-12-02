@@ -9,3 +9,5 @@ Ferret's most basic data types are
 * [Regex](../std/Regex.md) - Regular expressions - `/(.*)/`
 * [List](../std/List.md) - Ordered lists - `[1, 2, "three"]`
 * [Hash](../std/Hash.md) - Key-value maps - `[a: "b", c: "d"]`
+
+[Next: For loops](11-for-loops.md)
