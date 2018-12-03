@@ -4,8 +4,7 @@ class Hash <K?, V?>
 .iterator -> *self
 
 method reset {
-    say("RESET")
-    @keysLeft = @keys.copy()
+    @keysLeft = @keys.reverse!
 }
 
 .more -> !@keysLeft.empty

@@ -24,11 +24,5 @@ init {
 
 .pushPair {
     need $key: K, $value: V
-
-    # remove the existing location
-    if @orderedKeys.remove($key).removed
-        overwritten -> true
-
     *self[$key] = $value
-    @orderedKeys.push($key)
 }
