@@ -214,6 +214,11 @@ my $once_ret_func = $loop_ret_func;
 sub iterate {
     my ($f, $outer_scope, $collection, $var_name, $code, $pos) = @_;
     my $iterator = $collection->iterator($pos);
+
+    # reset iterator state here
+    $iterator->call_prop('reset')
+        if $iterator->property('reset');
+
     while (Ferret::truth($iterator->property('more'))) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);
         my $value = $iterator->property('nextElement');
@@ -244,6 +249,10 @@ sub iterate_pair {
     my ($f, $outer_scope, $collection,
         $var1_name, $var2_name, $code, $pos) = @_;
     my $iterator = $collection->iterator($pos);
+
+    # reset iterator state here
+    $iterator->call_prop('reset')
+        if $iterator->property('reset');
 
     while (Ferret::truth($iterator->property('more'))) {
         my $scope = Ferret::Scope->new($f, parent => $outer_scope);

@@ -41,7 +41,8 @@ method flatten {
 
 #> Returns a reversed copy of the list.
 method reverse {
-    $new = []
+    if @empty
+        -> *self
     -> gather for $i in @lastIndex..0:
         take *self[$i]
 }
@@ -194,4 +195,24 @@ op - {
     for $remove in $rhs:
         $new.removeAll($remove)
     -> $new
+}
+
+# Iterator methods
+
+.iterator -> *self
+
+method reset {
+    @i = -1
+}
+
+.more -> @i < (@lastIndex || -1)
+
+.nextElement {
+    @i += 1
+    -> *self[@i]
+}
+
+.nextElements {
+    @i += 1
+    -> [ @i, *self[@i] ]
 }

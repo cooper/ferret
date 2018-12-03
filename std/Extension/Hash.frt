@@ -1,32 +1,21 @@
 class Hash <K?, V?>
 
 .empty -> @length == 0
-.iterator -> HashIterator(*self) : Iterator
+.iterator -> *self
 
-class OrderedHash <K?, V?>
-
-init {
-    @orderedKeys = []
-
-    # make the object a hash
-    Hash<K, V>.init(*self)()
+method reset {
+    say("RESET")
+    @keysLeft = @keys.copy()
 }
 
-.keys -> @orderedKeys
+.more -> !@keysLeft.empty
 
-.pushPair {
-    need $key: K, $value: V
-
-    # remove the existing location
-    if @orderedKeys.remove($key).removed
-        overwritten -> true
-
-    *self[$key] = $value
-    @orderedKeys.push($key)
+.nextElement {
+    $key = @keysLeft.pop()
+    -> *self[$key]
 }
 
-.iterator {
-    $it = HashIterator(*self)
-    $it.keysLeft = @orderedKeys.copy()
-    -> $it : Iterator
+.nextElements {
+    $key = @keysLeft.pop()
+    -> [ $key, *self[$key] ]
 }
