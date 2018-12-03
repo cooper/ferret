@@ -26,7 +26,7 @@ then turn it into both a string and a number with completely different values.
     Num.init($o)(4)
 
     # The object now has tons of conflicts for things like operator
-    # implementations. The most recently added object always wins.
+    # implementations. The most recently added parent always wins.
 
     say($o * 5)         # "20"      Because Num's implemention of * wins
     say($o.uppercase)   # "MAGIC"   Because only Str has an uppercase property
@@ -35,4 +35,4 @@ I'm not sure if it was worth telling you all that. Just thought you might
 find it interesting to know what's happening behind the scenes. And
 hopefully the Adult example from earlier makes more sense now???
 
-[Next: ]
+[Next: Class extensions](41-class-extensions.md)

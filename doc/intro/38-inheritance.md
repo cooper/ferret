@@ -4,7 +4,7 @@ In Ferret, an object can belong to any number of classes.
 While it might not sound particularly useful when worded that way,
 this is how class inheritance works in Ferret.
 
-But it's not really class inheritance... Rather than classes
+Er, it's not really class inheritance... Rather than classes
 inheriting from or extending each other, you just have the object
 assume the roles of multiple classes.
 
@@ -49,7 +49,7 @@ purchasing powers.
 
     .buySomething {
         need $what: Str, $cvv: Num
-        say("Buying a $what with CC # @creditCardNumber and CVV $cvv")
+        say("Buying a $what with CC# @creditCardNumber and CVV $cvv")
     }
 
 Now we can create an Adult and access the properties and methods of

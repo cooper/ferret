@@ -3,7 +3,7 @@
 Sorry I keep fibbing to you. I just want to explain things in a way that
 is maybe familiar, only to then confuse you on the pages following.
 
-> But it's not really class inheritance... Rather than classes
+> Er, it's not really class inheritance... Rather than classes
 > inheriting from or extending each other, you just have the object
 > assume the roles of multiple classes.
 
@@ -16,10 +16,7 @@ When you create a class and define properties and methods on it, they're
 added to its `proto` property. It's just a regular object which the
 instances of the class inherit from directly.
 
-This is a demonstration of a method definition without using any class
-specific syntax. Never do this. It's hideous.
-
-    # Normal way
+Recall what the normal way looks like.
 
     class Person
 
@@ -28,9 +25,8 @@ specific syntax. Never do this. It's hideous.
         newAge -> @age += 1
     }
 
-    end
-
-    # Basically the same as doing
+Then take a look at this demonstration of a method definition without
+using any class specific syntax. But never do this. It's hideous.
 
     Person.proto.haveBirthday = func {
         oldAge -> *self.age
