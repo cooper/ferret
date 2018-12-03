@@ -9,7 +9,7 @@ classes in this tutorial, as most all Ferret data types such as
 String, Number, List, and Hash are class instance objects.
 
 [`class`](../Keywords.md#class) declarations occur at the document
-level and look like this.
+or package level and look like this.
 
     class Person
 
