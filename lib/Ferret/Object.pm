@@ -399,8 +399,8 @@ sub add_parent {
     $obj->{isa_changes}++;
     my $isa = $obj->{isa};
     # TODO: if $new_parent is a Ferret array, convert to Perl array ref.
-    unshift @$isa, $new_parent;
-    weaken($isa->[0]);
+    push @$isa, $new_parent;
+    weaken($isa->[$#$isa]);
 }
 
 # revoke an object of parenthood.
