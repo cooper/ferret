@@ -22,37 +22,4 @@ But this is not. It produces a compile-time UndeclaredVariableReference error.
 
     $something = "I'm giving up on you"
 
-Usually, if a lexical variable exists and you assign to it,
-the value is overwritten:
-
-    $something = "I'm giving up on you"
-
-    func saySomething {
-        $something = "Another message"
-        say($something)
-    }
-
-    # Right now, $something is still "I'm giving up on you"
-
-    saySomething()
-    # But now it's "Another message." Even out here.
-
-However, if you explicitly re-initialize the variable with
-[`var`](../Keywords.md#var), it becomes local to the
-innermost scope.
-
-    $something = "I'm giving up on you"
-
-    func saySomething {
-        var $something = "Another message"
-        say($something)    
-    }
-
-    saySomething()  # Spits out "Another message"
-    say($something) # Spits out "I'm giving up on you"
-
-`var` is only ever required in these cases. Any other time,
-the first assignment of a new lexical variable has the same effect
-as declaring it explicitly with `var`.
-
-[Next: Other types of variables](9-other-variables.md)
+[Next: Lexical variables continued](8.5-lexical-variables-2.md)

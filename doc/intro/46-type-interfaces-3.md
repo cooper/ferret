@@ -13,7 +13,8 @@ provided conditions. These keywords can be used in a type declaration:
   interface yields the object with the transformation applied. If the transform yields
   `undefined`, the object does not comply to the interface.
 
-Here's an example of a transform type.
+Here's an example of a transform type which conveniently spits our a lowercased version of
+a string. All strings conform since the only condition is `isa Str`.
 
     type LowercaseString {
         isa Str
@@ -28,6 +29,6 @@ Here's an example of a transform type.
 
     turnLowercase("MAGIC")  # magic
 
- That's the built-in `String::Lowercase` (or `Str::LC`), by the way.
+p.s. `Str::LC` and `Str::UC` already exist.
 
- [Next: ]
+ [Next: events maybe]

@@ -1,17 +1,15 @@
 # Scopes and contexts
 
-All Ferret code exists within a private [scope](../Scopes.md).
+All Ferret code exists within a private [**scope**](../Scopes.md).
 
 Execution of a Ferret program begins at the file level. There's
-no `main` routine-- you just jump right into the first line of
-the running file.
+no `main` routine-- we just jump right into the first line.
 
     say("Hello, World!")
 
 By default, variables are accessible only within the scope where
-they're defined. At the top level of a file, the scope is private
-to that file. So, `$who` below would not be accessible in another
-file.
+they're defined. So, `$who` below would not be accessible in another
+file since it belongs to the private top level file scope.
 
     $who = "World"
     say("Hello, $who!")
@@ -20,8 +18,8 @@ However, all files belong to a public [context](../Scopes.md#context).
 The context is specified by a [`package`](../Keywords.md#package)
 declaration. When omitted, `package main` is presumed.
 
-To expose `$who` to other files, we'll add both to `package Greeting`
-and [`share`](../Keywords.md#share) the variable.
+To expose `$who` to another file, we'll add both files to
+`package Greeting` and [`share`](../Keywords.md#share) the variable.
 
 vars.frt
 

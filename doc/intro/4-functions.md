@@ -1,6 +1,6 @@
 # Functions
 
-Functions in Ferret look like this.
+**Functions** in Ferret are created with [`func`](../Keywords.md#func).
 
     func sayHello {
         say("Hello, World!")

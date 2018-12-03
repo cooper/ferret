@@ -1,7 +1,7 @@
 # Function arguments
 
 To make things look neater, function arguments are written
-inside the body rather than the function declaration header.
+inside the body rather than in the function declaration header.
 
 Here, we [`want`](../Keywords.md#want) a name to be passed so
 we know who we're saying hello to, but if not, we're not going

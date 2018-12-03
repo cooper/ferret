@@ -25,7 +25,7 @@ main.frt
     package Greeting
     load vars
 
-    share $who
+    share $who  # This is now available from vars.frt
     say("Hey $who, did you know the value of π is " + Math.pi + "?")
 
 Notice how `load Math` was not needed since we referenced the Math package

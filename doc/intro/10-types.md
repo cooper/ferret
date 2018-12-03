@@ -11,6 +11,7 @@ Ferret's most basic data types are
 * [Hash](../std/Hash.md) - Key-value maps - `[a: "b", c: "d"]`
 * [Boolean](../std/Boolean.md) (abbr. Bool) - `true` and `false`
 * [Symbol](../std/Symbol.md) (abbr. Sym) - `:symbol`
+* [Function](../Functions.md) (abbr. Func) - `func {}`
 
 Although not really a type, it seems like a good time to mention that
 `undefined` is the object representing the absence of a value.
