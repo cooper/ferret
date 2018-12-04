@@ -29,12 +29,12 @@ And to undo that...
 
 FYI, lists can span multiple lines.
 
-    $list = (
+    $list = [
         1,
         2,
         3           # Comma is not needed after last item.
                     # Compiler is smart enough to keep the
                     # instruction open until the list terminates.
-    )
+    ]
 
 [Next: Hashes](26-hashes.md)

@@ -8,10 +8,10 @@ values just like it has named arguments.
         need $x: Num, $y: Num
 
         sum         -> $x + $y
-        quotient    -> $x * $y
+        product     -> $x * $y
     }
 
-    performMath(1, 2)               # Returns object (sum: 3, quotient: 2)
+    performMath(1, 2)               # Returns object (sum: 3, product: 2)
     performMath(x: 3, y: 4).sum     # 7
 
 Note how, unlike `->` in previous examples, these named return pair
