@@ -205,7 +205,7 @@ sub do_file {
     my $abs     = abs_path($file);
     my $is_docs = $ext eq '.frtdoc';
     my $ret     = { file => $file, abs => $abs };
-    my %meta    = get_metadata($file);
+    my %meta    = get_metadata($abs);
 
     # writing to .md.
     if ($is_docs) {

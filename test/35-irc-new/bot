@@ -13,7 +13,7 @@ share $conn = IRC::Connection(
     nick: $conf["nick"],
     user: $conf["user"],
     real: $conf["real"]
-) catch $e: throw $e;
+)
 
 on $bot.commands.info {
     need $channel
@@ -104,13 +104,44 @@ on $bot.commands.ii {
     handleEval($msg, $channel, true, true)
 }
 
+on $bot.commands.t {
+    need $msg, $channel
+    $res = COMPILER(getParameter($msg)).tokenize(pretty: true)
+    if $res.error {
+        $channel.privmsg($res.error)
+        ->
+    }
+    $channel.privmsg($res.pretty)
+}
+
+on $bot.commands.c {
+    need $msg, $channel
+    $res = COMPILER(getParameter($msg)).construct(pretty: true)
+    if $res.error {
+        $channel.privmsg($res.error)
+        ->
+    }
+    $channel.privmsg($res.pretty)
+}
+
+on $bot.commands.p {
+    need $msg, $channel
+    say("handle p with $msg and $channel")
+    handlePerl($msg, $channel, true)
+}
+
+on $bot.commands.pp {
+    need $msg, $channel
+    handlePerl($msg, $channel, false)
+}
+
 func handleEval {
     need $msg, $channel
     want $detailed, $veryDetailed
     $res = timeout(5) { -> COMPILER(getParameter($msg)).eval() }
     if $res.error {
         $channel.privmsg($res.error)
-        return
+        ->
     }
     $string = inspect(
         value:      $res.result,
@@ -121,42 +152,12 @@ func handleEval {
     $channel.privmsg($string)
 }
 
-on $bot.commands.t {
-    need $msg, $channel
-    $res = COMPILER(getParameter($msg)).tokenize(pretty: true)
-    if $res.error {
-        $channel.privmsg($res.error)
-        return
-    }
-    $channel.privmsg($res.pretty)
-}
-
-on $bot.commands.c {
-    need $msg, $channel
-    $res = COMPILER(getParameter($msg)).construct(pretty: true)
-    if $res.error {
-        $channel.privmsg($res.error)
-        return
-    }
-    $channel.privmsg($res.pretty)
-}
-
-on $bot.commands.p {
-    need $msg, $channel
-    handlePerl($msg, $channel, true)
-}
-
-on $bot.commands.pp {
-    need $msg, $channel
-    handlePerl($msg, $channel, false)
-}
-
 func handlePerl {
     need $msg, $channel, $mini
     $res = COMPILER(getParameter($msg)).compile(mini: $mini)
     if $res.error {
         $channel.privmsg($res.error)
-        return
+        ->
     }
     $channel.privmsg($res.perl)
 }
@@ -164,7 +165,7 @@ func handlePerl {
 func getParameter {
     need $msg: IRC::Message
     $string = $msg.params[1].fromWord(1) || ""
-    return $string.split("_NL_").join("\n")
+    -> $string.split("_NL_").join("\n")
 }
 
 func ircsay {

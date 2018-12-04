@@ -23,9 +23,4 @@ For hashes, you can specify types for both the keys and values.
 
 Of course, this works for ordered hashes too.
 
-    $hash = OrderedHash<Str, Num>()
-    $hash.pushPair("one", 1)
-    $hash.pushPair("two", 2)
-    $hash.pushPair(3, "three")  # ignored
-
 [Next: Classes](30-classes.md)

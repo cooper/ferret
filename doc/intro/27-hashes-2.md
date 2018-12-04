@@ -21,8 +21,8 @@ Hashes, too, can span multiple lines.
 There's even such thing as an ordered hash.
 
     $hash = OrderedHash()
-    $hash.pushPair("first", "this is the first item")
-    $hash.pushPair("second", "this is the second item")
+    $hash["first"]  = "this is the first item"
+    $hash["second"] = "this is the second item"
 
     for ($k, $v) in $hash {
         say("$k = $v")
