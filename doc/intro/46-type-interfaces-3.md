@@ -31,4 +31,4 @@ a string. All strings conform since the only condition is `isa Str`.
 
 p.s. `Str::LC` and `Str::UC` already exist.
 
- [Next: events maybe]
+ [Next: Events](47-events.md)
