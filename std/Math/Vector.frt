@@ -121,10 +121,10 @@ op == {
     need $ehs: Vector
     if $ehs.dimension != 3 || @dimension != 3
         throw Error(:DimensionError, "Cross product only exists in 3D")
-    @a = *self[1] * $ehs[2] - *self[2] * $ehs[1]
-    @b = *self[2] * $ehs[0] - *self[0] * $ehs[2]
-    @c = *self[0] * $ehs[1] - *self[1] * $ehs[0]
-    -> Vector(@a, @b, @c)
+    $a = *self[1] * $ehs[2] - *self[2] * $ehs[1]
+    $b = *self[2] * $ehs[0] - *self[0] * $ehs[2]
+    $c = *self[0] * $ehs[1] - *self[1] * $ehs[0]
+    -> Vector($a, $b, $c)
 }
 
 #> angle between this vector and another of the same dimension, measured in
