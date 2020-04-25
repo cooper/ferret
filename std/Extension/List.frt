@@ -232,6 +232,18 @@ op < {
     -> @length < $rhs
 }
 
+#> Lists are greater than numbers smaller than their length.
+op > {
+    need $lhs: Num
+    -> @length < $lhs
+}
+
+#> Lists are smaller than numbers greater than their length.
+op < {
+    need $lhs: Num
+    -> @length > $lhs
+}
+
 # Iterator methods
 
 .iterator -> *self
