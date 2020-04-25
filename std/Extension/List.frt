@@ -214,6 +214,24 @@ op == {
     -> true
 }
 
+#> Lists are equal to their numerical length.
+op == {
+    need $ehs: Num
+    -> @length == $ehs
+}
+
+#> Lists are greater than numbers smaller than their length.
+op > {
+    need $rhs: Num
+    -> @length > $rhs
+}
+
+#> Lists are smaller than numbers greater than their length.
+op < {
+    need $rhs: Num
+    -> @length < $rhs
+}
+
 # Iterator methods
 
 .iterator -> *self
