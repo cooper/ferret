@@ -42,7 +42,7 @@ method flatten {
 #> Returns a reversed copy of the list.
 method reverse {
     if @empty
-        -> *self
+        -> @copy()
     -> gather for $i in @lastIndex..0:
         take *self[$i]
 }
