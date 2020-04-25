@@ -884,20 +884,15 @@ sub weaken_index {
 }
 
 ###############################
-### EQUALITY AND INEQUALITY ###
+### EQUALITY AND INEQUALITY ### 
 ###############################
+# These are used only internally and retained for historical purposes
+
 
 # test object equality, return Ferret boolean
 sub equal_to {
     my ($left_obj, $right_obj, $scope) = @_;
-
-    # try normal equality first.
-    if (my $cmp = $left_obj->property('==')) {
-        return $cmp->call({ rhs => $right_obj, ehs => $right_obj });
-    }
-
-    # fallback to object equality.
-    return $left_obj->equal_to_exactly($right_obj, $scope);
+    return Ferret::Core::Operations::op_star('equal', $scope, undef, $left_obj, $right_obj);
 }
 
 # test exact object equality, return Ferret boolean
@@ -909,53 +904,25 @@ sub equal_to_exactly {
 # test object inequality, return Ferret boolean
 sub less_than {
     my ($left_obj, $right_obj, $scope) = @_;
-
-    # try to find a method first.
-    if (my $cmp = $left_obj->property('<')) {
-        return $cmp->call({ rhs => $right_obj, ehs => $right_obj });
-    }
-
-    return Ferret::false;
+    return Ferret::Core::Operations::op_star('less', $scope, undef, $left_obj, $right_obj);
 }
 
 # test object inequality or equality, return Ferret boolean
 sub less_than_equal {
-    my ($left_obj, $right_obj, $scope) = @_;
-
-    # try to find a method first.
-    if (my $cmp = $left_obj->property('<')) {
-        my $ret = $cmp->call({ rhs => $right_obj, ehs => $right_obj });
-        return Ferret::true if Ferret::truth($ret);
-    }
-
-    # fall back to equality.
-    return $left_obj->equal_to($right_obj, $scope);
+    return Ferret::true if Ferret::truth(&less_than);
+    return &equal_to;
 }
 
 # test object inequality, return Ferret boolean
 sub gr8r_than {
     my ($left_obj, $right_obj, $scope) = @_;
-
-    # try to find a method first.
-    if (my $cmp = $left_obj->property('>')) {
-        return $cmp->call({ rhs => $right_obj, ehs => $right_obj });
-    }
-
-    return Ferret::false;
+    return Ferret::Core::Operations::op_star('gr8r', $scope, undef, $left_obj, $right_obj);
 }
 
 # test object inequality or equality, return Ferret boolean
 sub gr8r_than_equal {
-    my ($left_obj, $right_obj, $scope) = @_;
-
-    # try to find a method first.
-    if (my $cmp = $left_obj->property('>')) {
-        my $ret = $cmp->call({ rhs => $right_obj, ehs => $right_obj });
-        return Ferret::true if Ferret::truth($ret);
-    }
-
-    # fall back to equality.
-    return $left_obj->equal_to($right_obj, $scope);
+    return Ferret::true if Ferret::truth(&gr8r_than);
+    return &equal_to;
 }
 
 ############################

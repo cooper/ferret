@@ -57,6 +57,12 @@ sub op_star {
             next;
         }
 
+        # special case for == to also check object equivalence
+        if ($star eq 'equal') {
+            $left = $left == $right ? Ferret::true : Ferret::false;
+            next;
+        }
+
         # both failed.
         Ferret::Core::Errors::throw(InvalidOperation => $pos, [
             Op  => $op,
