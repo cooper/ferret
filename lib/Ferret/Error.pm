@@ -64,7 +64,6 @@ sub _setHint {
     return $ret;
 }
 
-
 sub update_position {
     my ($err, $pos) = @_;
     return if !defined $pos;
