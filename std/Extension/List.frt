@@ -197,6 +197,23 @@ op - {
     -> $new
 }
 
+#> Lists are equal if all the elements are equal and in the same order.
+op == {
+    need $ehs: List
+
+    # first check if length is same
+    if @length != $ehs.length
+        -> false
+
+    # check each item
+    for ($i, $val) in *self {
+        if $ehs[$i] != $val
+            -> false
+    }
+
+    -> true
+}
+
 # Iterator methods
 
 .iterator -> *self
