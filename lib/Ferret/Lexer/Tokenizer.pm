@@ -73,7 +73,9 @@ my %operator_tok_to_method = (
     OP_POW      => '^',
     OP_SIM      => '=~',
     OP_RANGE    => '..',
-    OP_EQUAL    => '=='
+    OP_EQUAL    => '==',
+    OP_GR8R     => '>',
+    OP_LESS     => '<'
 );
 
 # reused formats

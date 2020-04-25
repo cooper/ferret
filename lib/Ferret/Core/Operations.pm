@@ -11,7 +11,7 @@ use List::Util qw(all first);
 
 BEGIN {
     no strict 'refs';
-    foreach my $star (qw/range pow mod mul div add _sub sim/) {
+    foreach my $star (qw/range pow mod mul div add _sub sim equal less gr8r/) {
         *$star = sub { op_star($star, @_) };
     }
 }
@@ -25,7 +25,9 @@ my %operators = (
     add     => '+',
     sub     => '-',
     sim     => '=~',
-    equal   => '=='
+    equal   => '==',
+    less    => '<',
+    gr8r    => '>',
 );
 
 sub op_star {
@@ -96,23 +98,7 @@ sub _do_operator {
     return $next;
 }
 
-################
-### EQUALITY ###
-################
-
-sub equal {
-    splice @_, 0, 2;
-    my $obj = shift;
-    while (@_) {
-        my $right = shift;
-        return Ferret::false if !bool($obj->equal_to($right));
-        $obj = $right;
-    }
-    return Ferret::true;
-}
-
-sub nequal { _not(&equal) }
-
+# object equivalance
 sub refs_equal {
     splice @_, 0, 2;
     my $obj = shift;
@@ -124,23 +110,15 @@ sub refs_equal {
     return Ferret::true;
 }
 
+# inverses
+sub nequal { _not(&equal) }
 sub refs_nequal { _not(&refs_equal) }
 
 ##################
 ### INEQUALITY ###
 ##################
 
-sub less {
-    splice @_, 0, 2;
-    my $obj = shift;
-    while (@_) {
-        my $right = shift;
-        return Ferret::false if !bool($obj->less_than($right));
-        $obj = $right;
-    }
-    return Ferret::true;
-}
-
+# TODO: make these use op_star
 sub less_e {
     splice @_, 0, 2;
     my $obj = shift;
@@ -152,17 +130,7 @@ sub less_e {
     return Ferret::true;
 }
 
-sub gr8r {
-    splice @_, 0, 2;
-    my $obj = shift;
-    while (@_) {
-        my $right = shift;
-        return Ferret::false if !bool($obj->gr8r_than($right));
-        $obj = $right;
-    }
-    return Ferret::true;
-}
-
+# TODO: make these use op_star
 sub gr8r_e {
     splice @_, 0, 2;
     my $obj = shift;
