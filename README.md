@@ -3,24 +3,12 @@
 Ferret is an [evented](https://github.com/cooper/evented-object), objective
 hobby programming language.
 
-![Editor](http://i.imgur.com/0Ebp32e.png)
+By *evented*, I mean that all functions are implemented as events, each of which can
+have any number of responders and return values. By *objective*, I mean that all
+values in Ferret are objects. By *hobby*, I mean that I know it will never be used by
+any project to be taken seriously.
 
-* [Concepts](#concepts)
-  * [Events](#events)
-  * [Inheritance](#inheritance)
-  * [Runtime](#runtime)
-  * [Compiled](#compiled)
-  * [Interpretable](#interpretable)
-* [Getting started](#getting-started)
-  * [Installation](#installation)
-  * [Writing](#writing)
-  * [Compiling](#compiling)
-  * [Running](#running)
-  * [Troubleshooting](#troubleshooting)
-* [Documentation](#documentation)
-  * [Language](#language)
-  * [Standard library](#standard-library)
-  * [Technical](#technical)
+![Editor](http://i.imgur.com/0Ebp32e.png)
 
 ## Concepts
 
@@ -37,23 +25,51 @@ breaking things.
 ### Inheritance
 
 Ferret features a [unique inheritance system](doc/Inheritance.md) in which all
-values are objects, each of which can inherit from any number of other objects.
+values are objects which can inherit from any number of other objects.
+
+
+Because Ferret objects can inherit from any objects, a class is not required
+for inheritance. Below is an example of basic inheritance without a class.
+
+```
+# create a specific person and an object representing any male
+$person = (name: "Jake", age: 22)
+$male = (gender: "male")
+
+# make Jake a male
+$person.*ISA.push($male)
+
+inspect($person)
+```
+
+Output:
+
+```
+[ Object ](
+    age = 22
+    name = "Jake"
+    (gender) = "male"
+)
+```
 
 ### Runtime
 
 Ferret's transparent runtime makes it easy to manage I/O, timers, asynchronous
-operations, and more – all without implementing your own event loop.
-
-If asynchronous operations are occurring at any given moment, a Ferret program
-continues processing until those operations are complete. Ferret also
-effortlessly makes use of system-optimized polling methods for I/O.
+operations, and more using system-optimized polling methods and without the need
+of a bulky event loop framework.
 
 ```
-delay(5) {
-    say("it's been five seconds!")    
+$t = Timer(5)
+
+on $t.tick {
+    say("five seconds have elapsed")
 }
 
-say("starting timer...")
+# Delay the first tick to 10 seconds
+delay(5) {
+    say("Starting timer...")
+    $t.start!
+}
 ```
 
 ### Compiled
@@ -67,13 +83,16 @@ cost of considerable overhead.
 say("Hello World!")
 ```
 
+```perl
+# Compiles to this Perl code...
+$$scope->{'say'}->([ str($f, "Hello world") ], $scope, undef, $pos->(1.2));
+```
+
 ### Interpretable
 
 While Ferret is a compiled language, its compiler and
-runtime are both written in an interpreted language. On top of that, the
-standard library provides an interface to the compiler. This allows Ferret to
-offer some features of interpreted languages such as compilation and
-evaluation during runtime.
+runtime are both written in an interpreted language. This allows for
+runtime compilation and evaluation.
 
 ```
 $code = "4.sqrt"
@@ -82,15 +101,21 @@ $two = COMPILER($code).eval().result
 
 ## Getting started
 
-1. [Install](https://atom.io) Atom.
-2. [Install](https://github.com/cooper/language-ferret) the `language-ferret` package.
-3. [Clone](#) this repository.
-4. [Install](#installation) Ferret.
-5. [Browse](test) the `test` directory for code snippet examples.
-6. [Explore](#documentation) the documentation.
-7. [Write](#writing) in Ferret. But only as a hobby.
+1. Check out the [Ferret tour](doc/intro/1-welcome)!
+2. Explore [documentation](#documentation) and [code snippets](test).
+3. [Install](#installation) Ferret.
+4. Get [`ferret-vscode`](https://github.com/cooper/ferret-vscode) or [`ferret-atom`](https://github.com/cooper/ferret-atom) for Ferret support in your preferred IDE.
+5. [Write](#writing) in Ferret. But only as a hobby.
 
 ### Installation
+
+Clone the repository first:
+
+```sh
+git clone --recursive https://github.com/cooper/ferret.git
+# OR (whichever is available on your git)
+git clone --recurse-submodules http://github.com/cooper/ferret.git
+```
 
 ### Dependencies
 
@@ -98,14 +123,6 @@ Ferret requires the following Perl modules from the CPAN:
 
 ```
 cpanm File::Slurp IO::Async Getopt::Long::Descriptive Data::Dump Perl::Tidy Types::Serialiser JSON::XS DateTime
-```
-
-The following core modules are also required but are likely already present on
-your system. If an error mentions any of them, you may need to upgrade them to
-their latest versions.
-
-```
-cpanm File::Find File::Basename Scalar::Util List::Util FindBin Carp POSIX Exporter
 ```
 
 ### Configuration
