@@ -602,6 +602,12 @@ sub listeners_and_arguments {
 ### MISCELLANEOUS ###
 #####################
 
+sub _ignore {
+    my ($ignore, $obj) = @_;
+    return if $obj->isa('Ferret::String') || $obj->isa('Ferret::Number');
+    return $ignore->{$_}++;
+};
+
 # %opts = (
 #   own_only    true if we should omit inherited properties
 #   compute     true if we should compute computed properties
@@ -657,7 +663,7 @@ sub description {
         $prop_name = "($prop_name)" if $owner != $obj;
 
         # indent lines
-        $value = $opts{ignore}{$value}++ ? '(recursion)' :
+        $value = _ignore($opts{ignore}, $value) ? '(recursion)' :
             blessed $value ? join "\n    ", split /\n/,
             _pdescription($value, %opts) : '(computed)';
         push @lines, split /\n/, "$prop_name = $value";

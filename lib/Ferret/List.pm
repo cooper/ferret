@@ -274,8 +274,9 @@ sub description {
     my ($list, %opts) = @_;
 
     # handle indents
+    my %ignore;
     my @values = map {
-        $opts{ignore}{$_}++ ? '(recursion)' :
+        Ferret::Object::_ignore(\%ignore, $_) ? '(recursion)' :
         join "\n    ", split /\n/, pdescription($_, %opts)
     } @{ $list->{list_items} };
 

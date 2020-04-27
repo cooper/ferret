@@ -157,8 +157,9 @@ sub description {
     my ($hash, %opts) = @_;
     my @keys = $hash->keys;
 
+    my %ignore;
     my @values = map {
-        $opts{ignore}{$_}++ ? '(recursion)' :
+        Ferret::Object::_ignore(\%ignore, $_) ? '(recursion)' :
         join "\n    ", split /\n/, pdescription($_, %opts)
     } $hash->values;
 

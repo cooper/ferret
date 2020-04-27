@@ -1,7 +1,6 @@
 class Time 1.0
 
 alias _PO = NATIVE::PerlObject
-load Time::Duration # FIXME
 
 ############################
 ### DATE COMPONENT TYPES ###
