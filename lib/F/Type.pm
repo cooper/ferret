@@ -133,13 +133,10 @@ sub markdown_fmt {
     # other requirements.
     my $conditions = '';
     if (@conditions) {
-        $type->{markdown_heading_level}++;
-        $conditions .= $type->get_markdown_heading('Restraints and transforms')."\n\n";
         $conditions .= "In order to comply, the object must satisfy ";
         $conditions .= "the following condition.\n"          if @conditions == 1;
         $conditions .= "each of the following conditions.\n" if @conditions != 1;
         $conditions .= $_ foreach @conditions;
-        $type->{markdown_heading_level}--;
     }
 
     return type => {

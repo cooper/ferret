@@ -145,9 +145,6 @@ have that suffix, a copy of the original string is returned.
 
 An interface to which only non-empty strings comply.
 
-
-#### Restraints and transforms
-
 In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Str](/doc/std/String.md).
@@ -158,9 +155,6 @@ In order to comply, the object must satisfy each of the following conditions.
 
 Performs an uppercase transformation.
 
-
-#### Restraints and transforms
-
 In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Str](/doc/std/String.md).
@@ -170,9 +164,6 @@ In order to comply, the object must satisfy each of the following conditions.
 ### Lowercase
 
 Performs a lowercase transformation.
-
-
-#### Restraints and transforms
 
 In order to comply, the object must satisfy each of the following conditions.
 

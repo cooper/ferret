@@ -168,9 +168,6 @@ Returns a time at the start of tomorrow.
 Month type accepting a month symbol or integer 1-12.
 Yields a MonthSym.
 
-
-#### Restraints and transforms
-
 In order to comply, the object must satisfy the following condition.
 
 1. __transform__: Determined at runtime; see code.
@@ -179,9 +176,6 @@ In order to comply, the object must satisfy the following condition.
 ### MonthSym
 
 Symbol month names, accepted for the month time component.
-
-
-#### Restraints and transforms
 
 In order to comply, the object must satisfy each of the following conditions.
 
@@ -194,9 +188,6 @@ In order to comply, the object must satisfy each of the following conditions.
 Weekday type accepting a weekday symbol or integer 1-7, starting with Monday.
 Yields a WeekdaySym.
 
-
-#### Restraints and transforms
-
 In order to comply, the object must satisfy the following condition.
 
 1. __transform__: Determined at runtime; see code.
@@ -205,9 +196,6 @@ In order to comply, the object must satisfy the following condition.
 ### WeekdaySym
 
 Symbol weekday names.
-
-
-#### Restraints and transforms
 
 In order to comply, the object must satisfy each of the following conditions.
 
@@ -219,9 +207,6 @@ In order to comply, the object must satisfy each of the following conditions.
 
 Hour 0-23.
 
-
-#### Restraints and transforms
-
 In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Num](/doc/std/Number.md).
@@ -231,9 +216,6 @@ In order to comply, the object must satisfy each of the following conditions.
 ### Nanosecond
 
 Nanosecond >= 0.
-
-
-#### Restraints and transforms
 
 In order to comply, the object must satisfy each of the following conditions.
 

@@ -155,9 +155,6 @@ Not a number. Alias `NaN` exists in the global context.
 
 An interface to which only even numbers conform.
 
-
-#### Restraints and transforms
-
 In order to comply, the object must satisfy each of the following conditions.
 
 1. __isa__: Must be an instance of [Num](/doc/std/Number.md).
@@ -167,9 +164,6 @@ In order to comply, the object must satisfy each of the following conditions.
 ### Odd
 
 An interface to which only odd numbers conform.
-
-
-#### Restraints and transforms
 
 In order to comply, the object must satisfy each of the following conditions.
 
@@ -181,9 +175,6 @@ In order to comply, the object must satisfy each of the following conditions.
 
 This interface promises an integer value, returning the `.floor` property
 of floating-point numbers. Alias `Int` exists in the global context.
-
-
-#### Restraints and transforms
 
 In order to comply, the object must satisfy each of the following conditions.
 

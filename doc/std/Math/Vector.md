@@ -321,9 +321,6 @@ An interface which accepts an axis letter starting at "i" or number starting
 at 1. For instance, a 3D vector is represented by axes i, j, and k, which
 correspond to the numbers 1, 2, and 3, respectively.
 
-
-#### Restraints and transforms
-
 In order to comply, the object must satisfy the following condition.
 
 1. __transform__: Converts letters starting at 'i' to axis numbers.
