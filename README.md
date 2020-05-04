@@ -8,7 +8,7 @@ have any number of responders and return values. By *objective*, I mean that all
 values in Ferret are objects. By *hobby*, I mean that I know it will never be used by
 any project to be taken seriously.
 
-![Editor](http://i.imgur.com/0Ebp32e.png)
+![Editor](https://i.imgur.com/pesdcsK.png)
 
 ## Concepts
 
