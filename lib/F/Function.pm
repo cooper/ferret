@@ -305,12 +305,9 @@ sub markdown_fmt {
     my $arguments = '';
     my @args = $method->arguments;
     if (@args && !$method->{operator}) {
-        $method->{markdown_heading_level}++;
-        $arguments .= $method->get_markdown_heading('Arguments')."\n";
         foreach my $arg (@args) {
             $arguments .= $arg->markdown_fmt_do."\n";
         }
-        $method->{markdown_heading_level}--;
     }
 
     # handle comments.

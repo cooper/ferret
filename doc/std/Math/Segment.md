@@ -14,8 +14,6 @@ $segment = Segment($pt1: Point, $pt2: Point)
 Creates a line segment given two endpoints.
 
 
-### Arguments
-
 * __pt1__: Point - An endpoint.
 
 * __pt2__: Point - Another endpoint.

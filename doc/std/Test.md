@@ -14,8 +14,6 @@ $test = Test()
 Creates a new Test class instance.
 
 
-### Arguments
-
 * *optional* __name__: Any - Test name.
 
 * *optional* __fatal__: Any - If true, a failed test will throw a fatal error.
@@ -32,8 +30,6 @@ $test.trueValue($a)
 Test succeeds if `Bool($a) === true`.
 
 
-#### Arguments
-
 * __a__: Any - Test object.
 
 
@@ -47,8 +43,6 @@ $test.veryTrue($a)
 Test succeeds if `$a === true`.
 
 
-#### Arguments
-
 * __a__: Any - Test object.
 
 
@@ -61,8 +55,6 @@ $test.equal($a, $b)
 
 Test succeeds if `$a == $b`.
 
-
-#### Arguments
 
 * __a__: Any - Test object 1.
 
@@ -79,8 +71,6 @@ $test.objectsEqual($a, $b)
 Test succeeds if `$a === $b`.
 
 
-#### Arguments
-
 * __a__: Any - Test object 1.
 
 * __b__: Any - Test object 2.
@@ -95,8 +85,6 @@ $test.notEqual($a, $b)
 
 Test succeeds if `$a != $b`.
 
-
-#### Arguments
 
 * __a__: Any - Test object 1.
 
@@ -113,8 +101,6 @@ $test.objectsNotEqual($a, $b)
 Test succeeds if `$a !== $b`.
 
 
-#### Arguments
-
 * __a__: Any - Test object 1.
 
 * __b__: Any - Test object 2.
@@ -129,8 +115,6 @@ $test.instanceOfClass($a, $b)
 
 Test succeeds of `$a` is an instance of class `$b`.
 
-
-#### Arguments
 
 * __a__: Any - Test object.
 
@@ -147,8 +131,6 @@ $test.fitsType($a, $b)
 Test succeeds of `$a` satisfies type `$b`.
 
 
-#### Arguments
-
 * __a__: Any - Test object.
 
 * __b__: Any - Test type.
@@ -163,8 +145,6 @@ $test.review()
 
 Prints the test review.
 
-
-#### Arguments
 
 * *optional* __quiet__: [Bool](/doc/std/Bool.md)  
 

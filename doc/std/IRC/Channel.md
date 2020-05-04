@@ -14,8 +14,6 @@ $channel = Channel($conn: Connection, $name: Str)
 Creates a new Channel class instance.
 
 
-### Arguments
-
 * __conn__: Connection  
 
 * __name__: [Str](/doc/std/String.md)  
@@ -30,8 +28,6 @@ $channel.privmsg($message: Str::Any)
 
 Sends a message to the channel.
 
-
-#### Arguments
 
 * __message__: Str::Any  
 

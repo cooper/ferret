@@ -14,8 +14,6 @@ $rect = Rect($x: Num, $y: Num, $width: Num, $height: Num)
 Creates a rectangle, given its origin (bottom-left vertex) and dimensions.
 
 
-### Arguments
-
 * __x__: [Num](/doc/std/Number.md) - X-coordinate of the rectangle's origin.
 
 * __y__: [Num](/doc/std/Number.md) - Y-coordinate of the rectangle's origin.

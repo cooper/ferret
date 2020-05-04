@@ -50,8 +50,6 @@ Returns a list of substrings based on the division of the original
 string by the provided separator.
 
 
-#### Arguments
-
 * *optional* __separator__: [Str](/doc/std/String.md) | [Rgx](/doc/std/Regex.md) - Substring separator. The default is the empty string, which results
 in a list of individual characters.
 
@@ -80,8 +78,6 @@ multi-line, they will be indented at the same depth as the placeholder.
 For example, `"Hi <<name>>!".fill(name: "Steve")` returns `"Hi Steve!"`.
 
 
-#### Arguments
-
 * *optional* __valueHash__: Hash - If provided, the keys and values in this hash will be used to
 fill the placeholders rather than the named argument pairs.
 
@@ -95,8 +91,6 @@ $string.hasPrefix($prefix: Str)
 
 Returns a boolean true value if the prefix exists.
 
-
-#### Arguments
 
 * __prefix__: [Str](/doc/std/String.md) - Prefix to look for.
 
@@ -113,8 +107,6 @@ beginning (left side) of the original string. If the string does not
 have that prefix, a copy of the original string is returned.
 
 
-#### Arguments
-
 * __prefix__: [Str](/doc/std/String.md) - Prefix to remove.
 
 
@@ -127,8 +119,6 @@ $string.hasSuffix($suffix: Str)
 
 Returns a boolean true value if the suffix exists.
 
-
-#### Arguments
 
 * __suffix__: [Str](/doc/std/String.md) - Suffix to look for.
 
@@ -144,8 +134,6 @@ Returns a string with the provided substring removed from the
 end (right side) of the original string. If the string does not
 have that suffix, a copy of the original string is returned.
 
-
-#### Arguments
 
 * __suffix__: [Str](/doc/std/String.md) - Suffix to remove.
 

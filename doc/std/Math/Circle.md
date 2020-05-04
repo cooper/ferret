@@ -14,8 +14,6 @@ $circle = Circle($r: Num, $h: Num, $k: Num)
 Creates a circle given radius and center coordinates.
 
 
-### Arguments
-
 * __r__: [Num](/doc/std/Number.md) - Radius.
 
 * __h__: [Num](/doc/std/Number.md) - X-coordinate of center.
@@ -33,8 +31,6 @@ $circle = Circle($r: Num, $center: Point)
 Creates a circle given radius and center.
 
 
-### Arguments
-
 * __r__: [Num](/doc/std/Number.md) - Radius.
 
 * __center__: Point - Center.
@@ -49,8 +45,6 @@ $circle = Circle($area: Num)
 
 Creates a circle at the origin given area.
 
-
-### Arguments
 
 * __area__: [Num](/doc/std/Number.md) - Area.
 
@@ -175,8 +169,6 @@ $circle.hasPoint($pt: Point)
 Tests whether a point is on the circle.
 
 
-#### Arguments
-
 * __pt__: Point  
 
 
@@ -190,8 +182,6 @@ $circle.isTangent($line: Line)
 Tests whether a line is tangent to the circle.
 
 
-#### Arguments
-
 * __line__: Line  
 
 
@@ -204,8 +194,6 @@ $circle.isChord($seg: Segment)
 
 Tests whether a line segment is a chord of the circle.
 
-
-#### Arguments
 
 * __seg__: Segment  
 

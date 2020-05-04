@@ -14,8 +14,6 @@ $client = Client()
 Creates a new Client class instance.
 
 
-### Arguments
-
 * *optional* __userAgent__: [Str](/doc/std/String.md) - HTTP user agent. Default is `"ferret-http/<version>"`.
 
 * *optional* __timeout__: [Num](/doc/std/Number.md) - Request timeout. Set to undefined for no timeout.
@@ -41,8 +39,6 @@ Convenient method for a GET request.
 See the [`request`](#request) method.
 
 
-#### Arguments
-
 * __url__: [Str](/doc/std/String.md) - HTTP URL to request.
 
 
@@ -57,8 +53,6 @@ Convenient method for a POST request.
 See the [`request`](#request) method.
 
 
-#### Arguments
-
 * __url__: [Str](/doc/std/String.md) - HTTP URL to request.
 
 
@@ -71,8 +65,6 @@ $client.request($httpMethod: Method, $url: Str)
 
 Creates an [`HTTP::Request`](Request.md).
 
-
-#### Arguments
 
 * __httpMethod__: Method - Request HTTP method.
 

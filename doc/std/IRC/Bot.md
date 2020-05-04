@@ -14,8 +14,6 @@ $bot = Bot()
 Creates a new Bot class instance.
 
 
-### Arguments
-
 * *optional* __commands__: Any  
 
 ## Methods
@@ -29,8 +27,6 @@ $bot.addConnection($conn: Connection)
 Adds a connection to this bot.
 
 
-#### Arguments
-
 * __conn__: Connection  
 
 
@@ -43,8 +39,6 @@ $bot.removeConnection($conn: Connection)
 
 Removes a connection from this bot.
 
-
-#### Arguments
 
 * __conn__: Connection  
 

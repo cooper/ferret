@@ -15,8 +15,6 @@ $v = Vector()
 Creates a vector with the given components.
 
 
-### Arguments
-
 * *optional* __items__: [Num](/doc/std/Number.md)...  Variable number of arguments. 
 
 ## Methods
@@ -69,8 +67,6 @@ $v.axisUnitVector($axis: VectorAxis)
 
 Returns the unit vector in the direction of the given axis.
 
-
-#### Arguments
 
 * __axis__: VectorAxis - Axis number or letter, starting at 1 or "i".
 
@@ -209,8 +205,6 @@ $v.dot($ehs: Vector)
 Dot product of this vector and another of the same dimension.
 
 
-#### Arguments
-
 * __ehs__: Vector  
 
 
@@ -223,8 +217,6 @@ $v.cross($ehs: Vector)
 
 Cross product of two 3D vectors.
 
-
-#### Arguments
 
 * __ehs__: Vector  
 
@@ -240,8 +232,6 @@ Angle between this vector and another of the same dimension, measured in
 radians.
 
 
-#### Arguments
-
 * __ehs__: Vector  
 
 
@@ -254,8 +244,6 @@ $v.orthogonalTo($ehs: Vector)
 
 True if this vector is orthogonal to another of the same dimension.
 
-
-#### Arguments
 
 * __ehs__: Vector  
 
@@ -270,8 +258,6 @@ $v.parallelTo($ehs: Vector)
 True if this vector is parallel to another of the same dimension.
 
 
-#### Arguments
-
 * __ehs__: Vector  
 
 
@@ -285,8 +271,6 @@ $v.getValue($index: Num)
 Fetches the component at the given index. Allows Vector to conform to
 IndexedRead such that `$vector[N]` is the N+1th component.
 
-
-#### Arguments
 
 * __index__: [Num](/doc/std/Number.md)  
 
@@ -311,8 +295,6 @@ Vector.zeroVector($dimension: Num)
 Returns the zero vector in the given dimension.
 
 
-#### Arguments
-
 * __dimension__: [Num](/doc/std/Number.md)  
 
 
@@ -325,8 +307,6 @@ Vector.axisUnitVector($dimension: Num, $axis: VectorAxis)
 
 Returns the unit vector for the given dimension and axis.
 
-
-#### Arguments
 
 * __dimension__: [Num](/doc/std/Number.md)  
 

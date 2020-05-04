@@ -14,8 +14,6 @@ $time = Time()
 Creates a new time given date components.
 
 
-### Arguments
-
 * *optional* __year__: Year - Year `>= 1`.
 
 * *optional* __month__: Month - Month symbol (e.g. `:January`) or 1-12.

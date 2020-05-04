@@ -14,8 +14,6 @@ $user = User($conn: Connection, $nick: Str)
 Creates a new User class instance.
 
 
-### Arguments
-
 * __conn__: Connection  
 
 * __nick__: [Str](/doc/std/String.md)  

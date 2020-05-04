@@ -23,8 +23,6 @@ Convenience method for calling `.get()` on the default
 [client](../HTTP/doc/Client.md).
 
 
-#### Arguments
-
 * __url__: [Str](/doc/std/String.md)  
 
 
@@ -38,8 +36,6 @@ HTTP.post($url: Str)
 Convenience method for calling `.post()` on the default
 [client](../HTTP/doc/Client.md).
 
-
-#### Arguments
 
 * __url__: [Str](/doc/std/String.md)  
 

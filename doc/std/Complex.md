@@ -29,8 +29,6 @@ If the given imaginary part is zero, the constructor returns the real part
 as a [real number](Number.md).
 
 
-### Arguments
-
 * __a__: [Num](/doc/std/Number.md) - Real part.
 
 * __b__: [Num](/doc/std/Number.md) - Imaginary part (a real number, though).
@@ -47,8 +45,6 @@ Create a complex number in polar form given radius `r` and angle `θ`.
 
 `z = r(cosθ + isinθ)`.
 
-
-### Arguments
 
 * __r__: [Num](/doc/std/Number.md) - Distance from the origin in the complex plane.
 
@@ -114,8 +110,6 @@ $z.root($n: Num)
 
 Nth root of the complex number.
 
-
-#### Arguments
 
 * __n__: [Num](/doc/std/Number.md)  
 
@@ -290,8 +284,6 @@ Complex number to real power. This is an alternative implementation to the
 power operator which is faster but less precise.
 
 
-#### Arguments
-
 * __rhs__: [Num](/doc/std/Number.md)  
 
 ## Class functions
@@ -306,8 +298,6 @@ Create a complex number in polar form given radius `r` and angle `θ`.
 
 `z = r(cosθ + isinθ)`.
 
-
-#### Arguments
 
 * __r__: [Num](/doc/std/Number.md) - Distance from the origin in the complex plane.
 

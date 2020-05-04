@@ -15,8 +15,6 @@ HTTP request objects generally are not created directly. Instead, use the
 methods provided by the [`Client`](Client.md) class.
 
 
-### Arguments
-
 * __client__: Client - An HTTP::Client, representing the user agent.
 
 * __url__: [Str](/doc/std/String.md) - HTTP URL to request.

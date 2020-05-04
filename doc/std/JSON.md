@@ -18,8 +18,6 @@ $json = JSON()
 Creates a new JSON class instance.
 
 
-### Arguments
-
 * *optional* __strict__: [Bool](/doc/std/Bool.md) - Enables strict decoding. This is default. If explicitly disabled,
 shell-style (#) comments are allowed, and extra commas are
 silently ignored. You may want to disable `strict` decoding for
@@ -65,8 +63,6 @@ The output of this method is dependent on the various options provided at
 initialization.
 
 
-#### Arguments
-
 * __data__: Any - An object to convert to JSON text.
 
 
@@ -81,8 +77,6 @@ Decodes a JSON text.
 The success or failure of this method is dependent on the various options
 provided at initialization.
 
-
-#### Arguments
 
 * __json__: [Str](/doc/std/String.md) - A JSON text to parse and convert to a Ferret object.
 
@@ -122,8 +116,6 @@ different inputs can have the same output. Consider the following
 a list `[1, 2]`.
 
 
-#### Arguments
-
 * __fragment__: [Str](/doc/std/String.md) - A fragment of JSON text to add to the decoder buffer.
 
 
@@ -162,8 +154,6 @@ Convenient class function to encode data to a UTF-8 JSON text.
 See the [`.encode()`](#encode) method for more options.
 
 
-#### Arguments
-
 * __data__: Any - An object to convert to JSON text.
 
 
@@ -177,8 +167,6 @@ JSON.decode($json: Str)
 Convenient class function to decode UTF-8 JSON data.
 See the [`.decode()`](#decode) method for more options.
 
-
-#### Arguments
 
 * __json__: [Str](/doc/std/String.md) - A JSON text to parse and convert to a Ferret object.
 

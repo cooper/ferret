@@ -14,8 +14,6 @@ $server = Server($conn: Connection, $name: Str)
 Creates a new Server class instance.
 
 
-### Arguments
-
 * __conn__: Connection  
 
 * __name__: [Str](/doc/std/String.md)  

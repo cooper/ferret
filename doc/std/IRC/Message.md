@@ -14,8 +14,6 @@ $message = Message()
 Creates a new Message class instance.
 
 
-### Arguments
-
 * *optional* __data__: [Str::NE](/doc/std/String.md) - A complete IRC message.
 
 * *optional* __conn__: Connection - Connection object to associate the message with,
@@ -31,8 +29,6 @@ $message.parse($data: Str::NE)
 
 Parses IRC data.
 
-
-#### Arguments
 
 * __data__: [Str::NE](/doc/std/String.md) - A string of IRC-encoded data.
 

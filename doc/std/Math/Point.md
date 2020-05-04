@@ -14,8 +14,6 @@ $pt = Point($x: Num, $y: Num)
 Creates a point given x- and y- coordinates.
 
 
-### Arguments
-
 * __x__: [Num](/doc/std/Number.md) - X-coordinate.
 
 * __y__: [Num](/doc/std/Number.md) - Y-coordinate.
@@ -31,8 +29,6 @@ $pt.distanceTo($pt2: Point)
 Returns the distance between this point and another.
 
 
-#### Arguments
-
 * __pt2__: Point  
 
 
@@ -45,8 +41,6 @@ $pt.midpoint($pt2: Point)
 
 Given another point, returns the point centered between them.
 
-
-#### Arguments
 
 * __pt2__: Point  
 

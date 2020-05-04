@@ -15,8 +15,6 @@ Creates a new duration given the time components.
 All components are integers.
 
 
-### Arguments
-
 * *optional* __years__: [Int](/doc/std/Number.md)  
 
 * *optional* __months__: [Int](/doc/std/Number.md)  

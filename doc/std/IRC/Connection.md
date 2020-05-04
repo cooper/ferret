@@ -14,8 +14,6 @@ $connection = Connection($addr: Str, $nick: Str)
 Creates a new Connection class instance.
 
 
-### Arguments
-
 * __addr__: [Str](/doc/std/String.md) - IRC server address.
 
 * *optional* __port__: [Num](/doc/std/Number.md) - IRC server port.
@@ -51,8 +49,6 @@ $connection.send($line: Str)
 Sends a line of IRC data.
 
 
-#### Arguments
-
 * __line__: [Str](/doc/std/String.md) - A string outgoing data.
 
 
@@ -65,8 +61,6 @@ $connection.getTarget($target: Str)
 
 Fetches a channel or user object.
 
-
-#### Arguments
 
 * __target__: [Str](/doc/std/String.md) - Channel name or nickname.
 
@@ -81,8 +75,6 @@ $connection.getChannel($name: Str)
 Fetches a channel object from a channel name.
 
 
-#### Arguments
-
 * __name__: [Str](/doc/std/String.md) - Channel name.
 
 
@@ -96,8 +88,6 @@ $connection.getUser($nick: Str)
 Fetches a user object from a nickname.
 
 
-#### Arguments
-
 * __nick__: [Str](/doc/std/String.md) - Nickname associated with the user.
 
 
@@ -110,8 +100,6 @@ $connection.getServer($name: Str)
 
 Fetches a server object from a server name.
 
-
-#### Arguments
 
 * __name__: [Str](/doc/std/String.md) - Server name.
 

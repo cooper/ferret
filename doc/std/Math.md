@@ -22,8 +22,6 @@ Domain:  `ℝ`
 Range:   `[-1, 1]`.
 
 
-#### Arguments
-
 * __θ__: [Num](/doc/std/Number.md)  
 
 
@@ -40,8 +38,6 @@ Domain:  `[-1, 1]`
 
 Range:   `ℝ`.
 
-
-#### Arguments
 
 * __num__: [Num](/doc/std/Number.md)  
 
@@ -60,8 +56,6 @@ Domain:  `ℝ`
 Range:   `[-1, 1]`.
 
 
-#### Arguments
-
 * __θ__: [Num](/doc/std/Number.md)  
 
 
@@ -79,8 +73,6 @@ Domain:  `[-1, 1]`
 Range:   `[0, π]`.
 
 
-#### Arguments
-
 * __num__: [Num](/doc/std/Number.md)  
 
 
@@ -97,8 +89,6 @@ Domain:  `x ≠ π/2 + kπ` for all integers `k`
 
 Range:   `ℝ`.
 
-
-#### Arguments
 
 * __θ__: [Num](/doc/std/Number.md)  
 
@@ -129,8 +119,6 @@ indeterminate       x = 0 and y = 0
 Note that `atan2(0, 0)` is not well-defined.
 
 
-#### Arguments
-
 * __y__: [Num](/doc/std/Number.md)  
 
 * __x__: [Num](/doc/std/Number.md)  
@@ -153,8 +141,6 @@ Note that the range of this function is `(-π/2, π/2)`,
 unlike [`atan2()`](#atan2) which adjusts to the proper quadrant.
 
 
-#### Arguments
-
 * __num__: [Num](/doc/std/Number.md)  
 
 
@@ -171,8 +157,6 @@ Domain:  `x ≠ π/2 + kπ` for all integers `k`
 
 Range:   `(–∞, –1] ∪ [1, ∞)`.
 
-
-#### Arguments
 
 * __θ__: [Num](/doc/std/Number.md)  
 
@@ -191,8 +175,6 @@ Domain:  `x ≠ kπ` for all integers `k`
 Range:   `(–∞, –1] ∪ [1, ∞)`.
 
 
-#### Arguments
-
 * __θ__: [Num](/doc/std/Number.md)  
 
 
@@ -210,8 +192,6 @@ Domain:  `x ≠ kπ` for all integers `k`
 Range:   `ℝ`.
 
 
-#### Arguments
-
 * __θ__: [Num](/doc/std/Number.md)  
 
 
@@ -224,8 +204,6 @@ Math.log($num: Num)
 
 Natural logarithm (base *e*).
 
-
-#### Arguments
 
 * __num__: [Num](/doc/std/Number.md)  
 
@@ -240,8 +218,6 @@ Math.log10($num: Num)
 Log base 10.
 
 
-#### Arguments
-
 * __num__: [Num](/doc/std/Number.md)  
 
 
@@ -254,8 +230,6 @@ Math.logb($base: Num, $num: Num)
 
 Log base `$base`.
 
-
-#### Arguments
 
 * __base__: [Num](/doc/std/Number.md)  
 
@@ -271,8 +245,6 @@ Math.exp($num: Num)
 
 Takes `e` (the base of the natural logarithm) to a power.
 
-
-#### Arguments
 
 * __num__: [Num](/doc/std/Number.md)  
 

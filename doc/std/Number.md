@@ -117,8 +117,6 @@ Returns a complex number if `M` is even and `N < 0`.
 Example: `8.root(3)` -> `2`.
 
 
-#### Arguments
-
 * __root__: [Num](/doc/std/Number.md) - Root. For example, `3` is the cube root.
 
 

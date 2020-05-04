@@ -14,8 +14,6 @@ $line = Line($m: Num, $c: Num)
 Creates a line given slope and y-intercept.
 
 
-### Arguments
-
 * __m__: [Num](/doc/std/Number.md) - Slope.
 
 * __c__: [Num](/doc/std/Number.md) - Y-intercept.
@@ -30,8 +28,6 @@ $line = Line($m: Num, $pt: Point)
 
 Creates a line given slope and a point.
 
-
-### Arguments
 
 * __m__: [Num](/doc/std/Number.md) - Slope.
 

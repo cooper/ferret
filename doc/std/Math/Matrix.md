@@ -15,8 +15,6 @@ $mtrx = Matrix($m: Int)
 Creates a matrix with the given entries and row count.
 
 
-### Arguments
-
 * __m__: [Int](/doc/std/Number.md) - Number of rows.
 
 * *optional* __items__: [Num](/doc/std/Number.md)... - Variable number of arguments. List of entries.
@@ -82,8 +80,6 @@ $mtrx.map($code: Code)
 Creates a matrix with the given transformation applied to each entry.
 
 
-#### Arguments
-
 * __code__: Code  
 
 
@@ -97,8 +93,6 @@ $mtrx.mapWith($rhs: Matrix, $code: Code)
 Creates a matrix with the given operation performed between each entry and
 its corresponding entry in another matrix of the same dimensions.
 
-
-#### Arguments
 
 * __rhs__: Matrix - Another matrix of the same dimensions.
 
