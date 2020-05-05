@@ -624,12 +624,12 @@ If no implementation exists for a given operation, a runtime error is thrown.
 package Time
 class Duration
 
-operator + {
+op + {
     need $ehs: Duration # the side does not matter for addition
     -> @addDuration($rhs)
 }
 
-operator - {
+op - {
     need $rhs: Duration # the side matters for subtraction
     -> @subtractDuration($rhs)
 }
